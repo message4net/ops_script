@@ -11,5 +11,4 @@
 	define(INC_IDX,'idx.inc.php');
 //加载页面
 	require_once(BASE_DIR.INC_DIR.INC_IDX);
-echo '1';
 ?>
