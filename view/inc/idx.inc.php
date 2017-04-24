@@ -1,10 +1,10 @@
 <?php
 class genIndex{
 	public function __construct(){
-		$this->genhtml();
+		$this->genhtml($_SESSION[loginflag]);
 	}
 
-	public function genhtml(){
+	public function genhtml($loginflag){
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -17,6 +17,7 @@ class genIndex{
 	</head>
 	<body>
 		<div id="main">
+<?php if($loginflag==1){ ?>
 			<div id="main_left">
 				<div id='logo'>运维sys</div>
 				<div id="menu_sub"></div>
@@ -27,8 +28,10 @@ class genIndex{
 				<div id="menu_func"></div>
 				<div id="content"></div>
 			</div>
+<?php }else{?>
 			<div id="main_login">
 			</div>
+<?php }?>
 		</div>
 	</body>
 </html>
