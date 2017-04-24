@@ -5,10 +5,13 @@
 	unset($basedir);
 //定义常数参数
 	define(CFG_DIR,'cfg/');
-	define(INC_DIR,'inc/');
-	define(CSS_DIR,'css/');
-	define(INC_IDX,'idx.inc.php');
 	define(CFG_SLF,'self.cfg.php');
+	define(INC_DIR,'inc/');
+	define(INC_IDX,'idx.inc.php');
+	define(CSS_DIR,'css/');
+	define(JS_DIR,'js/');
+	define(JS_JQ,'jquery-1.11.3.min.js');
+	define(JS_CLCK,'click.js');
 //加载页面
 	require_once(BASE_DIR.CFG_DIR.CFG_SLF);
 	require_once(BASE_DIR.INC_DIR.INC_IDX);
