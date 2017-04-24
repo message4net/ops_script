@@ -1,4 +1,4 @@
 <?php
-require_once('cfg/base.php');
+require_once('cfg/base.cfg.php');
 $inxpg=new genIndex();
 ?>
