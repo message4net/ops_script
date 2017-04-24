@@ -3,7 +3,7 @@
 	$basedir=str_replace('\\','/',dirname(dirname(__FILE__))).'/';
 	define(BASE_DIR,$basedir);
 	unset($basedir);
-	define(BASE_URL,'http://115.159.79.60/liujinmanage/view/')
+	define(BASE_URL,'http://127.0.0.1/http/ops_script/view/');
 //定义常数参数
 	define(CONF_DIR,'cfg/');
 	define(INC_DIR,'inc/');
