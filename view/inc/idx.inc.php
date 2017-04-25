@@ -11,15 +11,15 @@ class genIndex{
 	<head>
 		<base href="<?php echo BASE_URL; ?>">
 		<title>运维系统</title>
-		<link href="css/default.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="js/click.js"></script>
+		<link href="<?php echo CSS_DIR.CSS_FILE?>" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="<?php echo JS_DIR.JS_JQ?>"></script>
+		<script type="text/javascript" src="<?php echo JS_DIR.JS_CLCK?>"></script>
 	</head>
 	<body>
 		<div id="main">
 <?php if($loginflag==1){ ?>
 			<div id="main_left">
-				<div id='logo'>运维sys</div>
+				<div id="logo">ops_sys</div>
 				<div id="menu_sub"></div>
 			</div>
 			<div id="main_right">
@@ -30,6 +30,8 @@ class genIndex{
 			</div>
 <?php }else{?>
 			<div id="main_login">
+				<form action="login.php" method='post'><table>
+				</table></form>
 			</div>
 <?php }?>
 		</div>

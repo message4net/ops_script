@@ -9,10 +9,14 @@
 	define(INC_DIR,'inc/');
 	define(INC_IDX,'idx.inc.php');
 	define(CSS_DIR,'css/');
+	define(CSS_FILE,'default.css');
 	define(JS_DIR,'js/');
 	define(JS_JQ,'jquery-1.11.3.min.js');
 	define(JS_CLCK,'click.js');
+	defined(MDL_DIR,'mdl/');
+	defined(MDL_WEB,'web.php');
+	defined(MDL_lOGIN,'login.php');
+	defined(MDL_MAIN,'main.php');
 //加载页面
 	require_once(BASE_DIR.CFG_DIR.CFG_SLF);
-	require_once(BASE_DIR.INC_DIR.INC_IDX);
 ?>
