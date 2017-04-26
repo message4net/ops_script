@@ -8,7 +8,12 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #menu_nav {width:824px;height:50px}
 #menu_func {width:824px;height:50px}
 #content {width:200px;height:618px}
+#main_login {position:absolute;width:400px;height:300x;margin-left:-200px;margin-top:-150px;left:50%;top:50%;}
+#table_login table,td,tr,form {text-align:right;color:white}
 /*
+#main_login div {position:absolute;width:400px;height:300x;margin-left:-500px;margin-top:-400px;left:50%;top:50%;margin:0 auto;}
+#table_login table,td,tr,form,div {clear:both;position:absolute;width:400px;height:300px;text-align:right;margin-left:-500px;margin-top:-400px;left:50%;top:50%;}
+
 #container {width:1024px;height:768px;margin:0px auto;background:#84C1FF;}
 #login div {width:400px;height:300px;}
 #login table,td,tr,form {text-align:left;margin:auto;margin-top:50px;color:white;}

@@ -7,16 +7,20 @@
 	define(CFG_DIR,'cfg/');
 	define(CFG_SLF,'self.cfg.php');
 	define(INC_DIR,'inc/');
-	define(INC_IDX,'idx.inc.php');
+	define(INC_DB,'db.inc.php');
 	define(CSS_DIR,'css/');
 	define(CSS_FILE,'default.css');
 	define(JS_DIR,'js/');
 	define(JS_JQ,'jquery-1.11.3.min.js');
-	define(JS_CLCK,'click.js');
-	defined(MDL_DIR,'mdl/');
-	defined(MDL_WEB,'web.php');
-	defined(MDL_lOGIN,'login.php');
-	defined(MDL_MAIN,'main.php');
+	define(JS_FUNC,'func.js');
+	define(JS_LOGIN,'login.js');
+	define(MDL_DIR,'mdl/');
+	define(MDL_WEB,'web.mdl.php');
+	define(MDL_LOGIN_VIEW,'login_view.mdl.php');
+	define(MDL_LOGIN_VRF,'login_vrf.mdl.php');
+	define(MDL_MAIN_VIEW,'main_view.mdl.php');
+	define(MDL_HEAD,'head.mdl.php');
+	define(MDL_FOOT,'foot.mdl.php');
 //加载页面
-	require_once(BASE_DIR.CFG_DIR.CFG_SLF);
+	require_once BASE_DIR.CFG_DIR.CFG_SLF;
 ?>
