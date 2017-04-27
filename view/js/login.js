@@ -1,11 +1,9 @@
 $.extend({
 	login:function(){
 		$(document).ready(function(){
-			tmpurl=$('#form_login').attr('action');
-//			alert(tmpurl);
-			tmpdata='1';
-			$('button').click(function(){
-//				alert(tmpurl);
+			$('#table_login').on('click','button',function(){
+				tmpurl=$('#form_login').attr('action');
+				tmpdata='username='+$('#username').val()+'&userpassword='+$('#userpassword').val();
 				$.ajx(tmpurl,tmpdata);
 			});
 		});
