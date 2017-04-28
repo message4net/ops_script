@@ -8,7 +8,7 @@ private $CONN="";//定义数据库连接变量
 	*功能:构造函数，连接数据库
 	*/
 	public function __construct(){
-	 $this->usedb(DBHost,DBUser,DBPassword,DBName);
+	 $this->usedb(DB_HOST,DB_USER,DB_PASSWD,DB_NAME);
 	}
 /**
  * 功能:选择数据库

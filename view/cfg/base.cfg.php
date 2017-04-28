@@ -21,6 +21,10 @@
 	define(MDL_MAIN_VIEW,'main_view.mdl.php');
 	define(MDL_HEAD,'head.mdl.php');
 	define(MDL_FOOT,'foot.mdl.php');
+	define(DB_NAME,ops_script);
+	define(DB_HOST,'127.0.0.1');
+	define(DB_USER,'opsuser');
+	define(DB_PASSWD,'proapp_@liujin.1243.com');
 //加载页面
 	require_once BASE_DIR.CFG_DIR.CFG_SLF;
 ?>
