@@ -11,6 +11,18 @@ $.extend({
 });
 
 $.extend({
+	loginout:function(){
+		$(document).ready(function(){
+			$('#loginout').on('click','a',function(){
+				tmpurl=$('#loginout').attr('linkurl');
+				tmpdata='';
+				$.ajx(tmpurl,tmpdata);
+			});
+		});
+	}
+});
+
+$.extend({
 	menuload:function(){
 		$(document).ready(function(){
 			var tmpurl='mdl/menu.mdl.php';
@@ -47,7 +59,7 @@ $.extend({
 								})
 							break;
 							default:
-								alert(htmlContent);
+								alert(data);
 							break;
 						}
 					});
