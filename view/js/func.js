@@ -11,36 +11,49 @@ $.extend({
 });
 
 $.extend({
-    ajx:function(url,data){
-	$(document).ready(function(){
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: data,
-			success: function(msg){
-				var data=eval('('+msg+')');
-				$.each(data,function(htmlFlag,htmlArr){
-					switch(htmlFlag){
-					case('hide'):
-							$.each(htmlArr,function(htmlID,htmlContent){
-								$('#'+htmlID).hide();
-							})
-						break;
-						case('show'):
-							$.each(htmlArr,function(htmlID,htmlContent){
-								$('#'+htmlID).show();
-							})
-						break;
-						case('content'):
-							$.each(htmlArr,function(htmlID,htmlContent){
-								$('#'+htmlID).html(htmlContent);
-							})
-						break;
-					}
-				});
-			}
-			
+	menuload:function(){
+		$(document).ready(function(){
+			var tmpurl='mdl/menu.mdl.php';
+			var tmpdata='';
+			$.ajx(tmpurl,tmpdata);
 		});
-	});
+	}
+});
+
+$.extend({
+    ajx:function(url,data){
+		$(document).ready(function(){
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: data,
+				success: function(msg){
+					var data=eval('('+msg+')');
+					$.each(data,function(htmlFlag,htmlArr){
+						switch(htmlFlag){
+							case('hide'):
+									$.each(htmlArr,function(htmlID,htmlContent){
+										$('#'+htmlContent).hide();
+									})
+							break;
+							case('show'):
+								$.each(htmlArr,function(htmlID,htmlContent){
+									$('#'+htmlContent).show();
+								})
+							break;
+							case('content'):
+								$.each(htmlArr,function(htmlID,htmlContent){
+									$('#'+htmlID).html(htmlContent);
+								})
+							break;
+							default:
+								alert(htmlContent);
+							break;
+						}
+					});
+				}
+				
+			});
+		});
     }
 });

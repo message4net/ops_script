@@ -16,8 +16,8 @@
 	define(JS_LOGIN,'login.js');
 	define(MDL_DIR,'mdl/');
 	define(MDL_WEB,'web.mdl.php');
-	define(MDL_LOGIN_VIEW,'login_view.mdl.php');
-	define(MDL_LOGIN_VRF,'login_vrf.mdl.php');
+	define(MDL_LOGIN,'login.mdl.php');
+	define(MDL_MENU,'menu.mdl.php');
 	define(MDL_MAIN_VIEW,'main_view.mdl.php');
 	define(MDL_HEAD,'head.mdl.php');
 	define(MDL_FOOT,'foot.mdl.php');
