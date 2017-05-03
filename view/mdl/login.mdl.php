@@ -6,9 +6,10 @@ $tmpusername=$_POST[username];
 $tmpuserpassword=$_POST[userpassword];
 //$tmpusername='fanyd';
 //$tmpuserpassword='fanyd12';
-$tmploginsql='select * from user where name=\''.$tmpusername.'\' and password=\''.$tmpuserpassword.'\';';
+$tmploginsql='select role_id,name,password from user where name=\''.$tmpusername.'\' and password=\''.$tmpuserpassword.'\';';
 $result_login=$db_login->select($tmploginsql);
 if (!empty($result_login)) {
+	$_SESSION[loginid]=$result_login[0][role_id];
 	$_SESSION[loginname]=$result_login[0][name];
 	$_SESSION[loginpasswd]=$result_login[0][password];
 	$_SESSION[loginduration]=time()+86400;
@@ -22,4 +23,10 @@ if (!empty($result_login)) {
 	);
 	echo json_encode($returnarr);
 }
+unset($db_login);
+unset($tmploginsql);
+unset($tmpusername);
+unset($tmpuserpassword);
+unset($result_login);
+unset($returnarr);
 ?>

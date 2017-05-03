@@ -11,10 +11,10 @@ $.extend({
 });
 
 $.extend({
-	loginout:function(){
+	logout:function(){
 		$(document).ready(function(){
-			$('#loginout').on('click','a',function(){
-				tmpurl=$('#loginout').attr('linkurl');
+			$('#info').on('click','a',function(){
+				tmpurl='mdl/logout.mdl.php';
 				tmpdata='';
 				$.ajx(tmpurl,tmpdata);
 			});
