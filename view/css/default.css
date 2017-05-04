@@ -10,6 +10,11 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #content {width:200px;height:618px}
 #main_login {position:absolute;width:400px;height:300x;margin-left:-200px;margin-top:-150px;left:50%;top:50%;}
 #table_login table,td,tr,form {text-align:right;color:white}
+#menu_nav ul li {float:left;padding:5px;list-style-type:none}
+#menu_nav ul li a {text-decoration:none;color:white}
+#menu_nav ul li a:hover {text-decoration:none;color:white}
+#menu_nav ul li a:visited {text-decoration:none;color:white}
+#menu_sub ul li {text-align:left;display:block;padding:5px}
 /*
 #main_login div {position:absolute;width:400px;height:300x;margin-left:-500px;margin-top:-400px;left:50%;top:50%;margin:0 auto;}
 #table_login table,td,tr,form,div {clear:both;position:absolute;width:400px;height:300px;text-align:right;margin-left:-500px;margin-top:-400px;left:50%;top:50%;}
@@ -20,10 +25,6 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #infobar {float:left;width:1024px;height:30px;background:#84C1FF;margin-top:10px;}
 #infobar .lft {float:left;text-align:left;width:324px;height:20px;}
 #infobar .rt {float:right;text-align:right;width:200px;height:20px;}
-#navbar ul li {float:left;padding:5px;list-style-type:none}
-#navbar ul li a {text-decoration:none;color:white}
-#navbar ul li a:hover {text-decoration:none;color:white}
-#navbar ul li a:visited {text-decoration:none;color:white}
 .content {width:600px;height:10px;text-align:left;color:black;padding-top:10px;padding-bottom:10px;}
 #main {float:left;width:1024px;height:800px;}
 #main .lft {float:left;text-align:left;width:150px;height:800px;}

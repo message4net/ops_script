@@ -19,7 +19,7 @@ if (!empty($result_login)) {
 	$returnarr=array(
 			'content'=>array(
 					'tips_login'=>'<span style="float:left;font-size:12px;color:green"><b><i>用户名或密码有误，请重新输入</b></i></span>'
-			)
+			),
 	);
 	echo json_encode($returnarr);
 }

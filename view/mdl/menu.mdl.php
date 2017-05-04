@@ -19,11 +19,15 @@ if ($_SESSION [loginflag] == 1 && $_SESSION[loginduration]>time()) {
 					'main_login'
 			),
 			'content'=>array(
-					'span_info'=>$_SESSION[loginname]
+					'span_info'=>$_SESSION[loginname],
+					'menu_nav'=>$returnhtml
 			)
 	);
 	unset($db_menu);
 	unset($tmpmenusql);
+	unset($returnhtml);
+	unset($result_menu);
+	unset($val);
 } else {
 	$returnarr = array(
 			'hide' => array(

@@ -40,9 +40,7 @@ require_once BASE_DIR.MDL_DIR.MDL_HEAD;
 	<div id='tips_login'></div>
 </div>
 <script type="text/javascript">
-$.menuload();
-$.login();
-$.logout();
+$.firstinit();
 </script>
 <?php 
 require_once BASE_DIR.MDL_DIR.MDL_FOOT;

@@ -1,33 +1,45 @@
 $.extend({
-	firstinit:function(){
+	login:function(){
 		$(document).ready(function(){
-			tmpurl='mdl/menu.mdl.php';
-			tmpdata='';
-			$.ajx(tmpurl,tmpdata);
-			tmpeid='form_login';
-			tmpectxt='button';
-			tmpurl=$('#'+tmpeid).attr('action');
-			tmpdata='\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()';
-			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
-			tmpeid='menu_nav';
-			tmpectxt='a';
-			tmpurl='mdl/menu_sub.mdl.php';
-			tmpdata='\'id=\'+$(this).attr(\'id\')';
-			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
-			tmpeid='info';
-			tmpectxt='a';
-			tmpurl='mdl/logout.mdl.php';
-			tmpdata='';
-			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
+			$('#table_login').on('click','button',function(){
+				tmpurl=$('#form_login').attr('action');
+				tmpdata='username='+$('#username').val()+'&userpassword='+$('#userpassword').val();
+				$.ajx(tmpurl,tmpdata);
+			});
 		});
 	}
 });
 
 $.extend({
-	click:function(eid,ectxt,url,data){
-		$('#'+eid).on('click',ectxt,function(){
-			tmpdata=eval(data);
-			$.ajx(url,tmpdata);
+	menu_sub:function(){
+		$(document).ready(function(){
+			$('#menu_nav').on('click','a',function(){
+				tmpurl='mdl/menu_sub.mdl.php';
+				tmpdata='id='+$(this).attr('id');
+				$.ajx(tmpurl,tmpdata);
+			});
+		});
+	}
+});
+
+$.extend({
+	logout:function(){
+		$(document).ready(function(){
+			$('#info').on('click','a',function(){
+				tmpurl='mdl/logout.mdl.php';
+				tmpdata='';
+				$.ajx(tmpurl,tmpdata);
+			});
+		});
+	}
+});
+
+$.extend({
+	menuload:function(){
+		$(document).ready(function(){
+			var tmpurl='mdl/menu.mdl.php';
+			var tmpdata='';
+			$.ajx(tmpurl,tmpdata);
 		});
 	}
 });
