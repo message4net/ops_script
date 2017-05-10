@@ -6,7 +6,7 @@ require_once BASE_DIR.MDL_DIR.MDL_HEAD;
 	<div id="menu_sub"></div>
 </div>
 <div id="main_right">
-	<div id="info">hi,<span id="span_info"></span><a id='logout' href="javascript:void(0);">点此注销</a></div>
+	<div id="info">hi,<span id="span_info"></span><a id='logout' href="javascript:void(0);"><span style="font-size:14px"><i>注销</i></span></a></div>
 	<div id="menu_nav"></div>
 	<div id="menu_func"></div>
 	<div id="content"></div>

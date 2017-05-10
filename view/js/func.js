@@ -19,6 +19,11 @@ $.extend({
 			tmpurl='mdl/logout.mdl.php';
 			tmpdata='';
 			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
+			tmpeid='menu_sub';
+			tmpectxt='a';
+			tmpurl='mdl/main.mdl.php';
+			tmpdata='\'id=\'+$(this).attr(\'id\')';
+			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
 		});
 	}
 });
@@ -27,6 +32,7 @@ $.extend({
 	click:function(eid,ectxt,url,data){
 		$('#'+eid).on('click',ectxt,function(){
 			tmpdata=eval(data);
+alert(data);
 			$.ajx(url,tmpdata);
 		});
 	}
@@ -64,7 +70,6 @@ $.extend({
 						}
 					});
 				}
-				
 			});
 		});
     }
