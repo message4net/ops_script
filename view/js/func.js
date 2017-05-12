@@ -1,6 +1,13 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
+			var z=[['a','b','c'],['1','2','3']];
+			var tmpstr='';
+			for(var i=0;i<z.length;i++){
+				for(var j=0;j<z[i].length;j++){
+					tmpstr=tmpstr+z[i][j];}
+				};
+			alert(tmpstr);
 			tmpurl='mdl/menu.mdl.php';
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
@@ -32,7 +39,7 @@ $.extend({
 	click:function(eid,ectxt,url,data){
 		$('#'+eid).on('click',ectxt,function(){
 			tmpdata=eval(data);
-alert(data);
+//alert(data);
 			$.ajx(url,tmpdata);
 		});
 	}

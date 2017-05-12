@@ -84,13 +84,13 @@ CREATE TABLE `wordbook` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` int(11) NOT NULL,
   `flag` int(11) NOT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `colnameid` varchar(50) DEFAULT NULL,
-  `tablename` varchar(50) DEFAULT NULL,
+  `name` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `colnameid` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `tablename` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
   `seq` int(11) DEFAULT NULL,
   `menu_sub_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `wordbook` */
 

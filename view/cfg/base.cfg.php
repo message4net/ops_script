@@ -1,4 +1,5 @@
 <?php
+//请自建self.cfg.php 定义BASE_URL
 //定义根路径
 	$basedir=str_replace('\\','/',dirname(dirname(__FILE__))).'/';
 	define(BASE_DIR,$basedir);
@@ -26,7 +27,6 @@
 	define(DB_HOST,'127.0.0.1');
 	define(DB_USER,'opsuser');
 	define(DB_PASSWD,'opsuser_@liujin.1243.com');
-//请自建self.cfg.php 定义BASE_URL
 //加载页面
 	require_once BASE_DIR.CFG_DIR.CFG_SLF;
 ?>
