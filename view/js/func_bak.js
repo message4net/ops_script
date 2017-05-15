@@ -1,36 +1,18 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			var z=[{'paras':[{'name':'a','url':'b','data':'c'},{'name':'1','url':'2','data':'3'}]}];
+			var z={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'}]};
 			var tmpstr='';
-			for(var i=0;i<z.length;i++){
-				for(var j=0;j<z[i].length;j++){
-					tmpstr=tmpstr+z[i][j];}
-				};
-			alert(tmpstr);
 			tmpurl='mdl/menu.mdl.php';
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
-			tmpeid='form_login';
-			tmpectxt='button';
-			tmpurl=$('#'+tmpeid).attr('action');
-			tmpdata='\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()';
-			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
-			tmpeid='menu_nav';
-			tmpectxt='a';
-			tmpurl='mdl/menu_sub.mdl.php';
-			tmpdata='\'id=\'+$(this).attr(\'id\')';
-			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
-			tmpeid='info';
-			tmpectxt='a';
-			tmpurl='mdl/logout.mdl.php';
-			tmpdata='';
-			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
-			tmpeid='menu_sub';
-			tmpectxt='a';
-			tmpurl='mdl/main.mdl.php';
-			tmpdata='\'id=\'+$(this).attr(\'id\')';
-			$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
+			for(var i=0;i<z.paras.length;i++){
+				tmpeid=z.paras[i].eid;
+				tmpectxt=z.paras[i].txt;
+				tmpurl=z.paras[i].url;
+				tmpdata=z.paras[i].data;
+				$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
+			}
 		});
 	}
 });
@@ -39,7 +21,6 @@ $.extend({
 	click:function(eid,ectxt,url,data){
 		$('#'+eid).on('click',ectxt,function(){
 			tmpdata=eval(data);
-alert(data);
 			$.ajx(url,tmpdata);
 		});
 	}

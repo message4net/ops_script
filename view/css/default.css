@@ -15,6 +15,44 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #menu_nav ul li a:hover {text-decoration:none;color:white}
 #menu_nav ul li a:visited {text-decoration:none;color:white}
 #menu_sub ul li {text-align:left;display:block;padding:5px}
+#content_table table {
+        font-family: verdana,arial,sans-serif;
+        font-size:11px;
+        color:black;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+}
+#content_table table th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        color:black;
+}
+#content_table table td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        color:black;
+}
+#content_func table {
+        font-family: verdana,arial,sans-serif;
+        font-size:8px;
+        color:black;
+        border-width: 0px;
+        border-color: #666666;
+        border-collapse: collapse;
+}
+#content_func table td {
+        border-width: 0px;
+        padding: 0px;
+        border-style: solid;
+        border-color: #666666;
+        color:black;
+}
+#content_func a {color:blue;}
 /*
 #main_login div {position:absolute;width:400px;height:300x;margin-left:-500px;margin-top:-400px;left:50%;top:50%;margin:0 auto;}
 #table_login table,td,tr,form,div {clear:both;position:absolute;width:400px;height:300px;text-align:right;margin-left:-500px;margin-top:-400px;left:50%;top:50%;}
