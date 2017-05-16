@@ -7,11 +7,11 @@ $tableheadsql='select * from wordbook where menu_sub_id='.$_POST[id].' order by 
 $tablenameresult=$db_main->select($tablenamesql);
 $tableheadresult=$db_main->select($tableheadsql);
 $tablebodysql_query='';
-$tableheadhtml='<table id="content_table">';
+$tableheadhtml='<table id="content_table" name="'.$_POST[id].'">';
 foreach ($tableheadresult as $val) {
 	$tablebodysql_query.=$val[colnameid].',';
 	if ($val[colnameid]=='id'){
-		$tableheadhtml.='<tr><th>序号</th><th style="text-align:center">操作</th>';
+		$tableheadhtml.='<th></th><th>序号</th><th style="text-align:center">操作</th>';
 	}else{
 		$tableheadhtml.='<th>'.$val[name].'</th>';
 	}
@@ -26,7 +26,7 @@ foreach ($tablebodyresult as $key=>$val) {
 	foreach ($val as $key1=>$val1){
 		if ($key1=='id') {
 			$tmprowid=$val1;
-			$tablebodyhtml.='<td>'.$count.'</td><td><table id="content_func"><td><a href="javascript:void(0);">编辑</a></td><td><a href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">删除</a></td></table></td>';
+			$tablebodyhtml.='<td><button>设置</button></td><td><input type="checkbox" value="'.$val1.'"/>'.$count.'</td><td><table mid="'.$_POST[id].'" rid="'.$val1.'"><td><a href="javascript:void(0);">编<br/>辑</a></td><td><a href="javascript:void(0);" mid=".$_POST[id]." rid="'.$val1.'" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">删<br/>除</a></td></table></td>';
 		}else{			
 			$tablebodyhtml.='<td>'.$val1.'</td>';
 		}
