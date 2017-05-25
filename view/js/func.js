@@ -6,20 +6,16 @@ $.extend({
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
 			$.main(datajson.paras);
-			//tmpeid='content_table';
-			//tmpeid='table_func';
-			//tmpectxt='a';
-			//tmpurl='mdl/modify.mdl.php';
-			//tmpdata='';
-			//$.click(tmpeid,tmpectxt,tmpurl,tmpdata);
-			//$('#content').on('click','a',function(){
-			//	alert($(this).attr('rid'));
-			//});
-			$('#content').on('click','button',function(){
-				$.ajx('mdl/privilege.mdl.php','aaa')
-			});
-			$('#content').on('click','input#pri_sbmt',function(){
-				$.ajx('mdl/privilege_do.mdl.php','aaa')
+			$('#content').on('click','input[name="contentall"]',function(){
+					if($('input[name="contentall"]').prop('checked')){
+						$('input[name="contentlist"]').each(function(){
+							$(this).prop('checked',true);
+						})
+					}else{
+						$('input[name="contentlist"]').each(function(){
+							$(this).prop('checked',false);
+						})
+					}
 			});
 		});
 	}
@@ -75,17 +71,19 @@ $.extend({
 							break;
 							case('apd'):
 								$.each(htmlArr,function(htmlID,htmlContent){
-									$.each(htmlContent,function(){
-										$('#'+htmlID).remove('#'+htmlContent[0]);
-										$('#'+htmlID).append('<div id="'+htmlContent[0]+'"></div>');
-										$('#'+htmlContent[0]).empty();
-										$('#'+htmlContent[0]).append(htmlContent[1]);
+									$.each(htmlContent,function(htmlIDsub,htmlContentsub){
+										if($('#'+htmlIDsub).length==0){
+											//$('#'+htmlID).remove('#'+htmlIDsub);
+											$('#'+htmlID).append('<div id="'+htmlIDsub+'" style="z-index:10001;width:800px;height:600px;margin-top:-30px;opacity:1;"></div>');
+										}
+										$('#'+htmlIDsub).empty();
+										$('#'+htmlIDsub).append(htmlContentsub+'aaaaaaaaaa<br/>aaaaaa<br/>aaaaaaa<br/>aaaaa<br/>aaaaaaaaaaaaaaaaaaa');
 									})
 								})
 							break;
 							case('rmv'):
 								$.each(htmlArr,function(htmlID,htmlContent){
-									$.each(htmlContent,function(){
+									$.each(htmlContent,function(htmlIDsub,htmlContentsub){
 //										$('#'+htmlID).remove('#'+htmlContent);
 										$('#'+htmlContent).remove();
 										//alert(htmlID+htmlContent);
@@ -94,6 +92,7 @@ $.extend({
 							break;
 							default:
 								alert(data);
+								alert(htmlArr);
 							break;
 						}
 					});

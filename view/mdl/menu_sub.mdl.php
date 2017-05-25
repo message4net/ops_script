@@ -14,10 +14,9 @@ $returnarr=array(
 				'menu_sub'=>$returnhtml
 		)
 );
-echo json_encode($returnarr);
 unset($db_menu_sub);
-unset($returnarr);
 unset($returnhtml);
 unset($tmpsql);
 unset($val);
+require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>

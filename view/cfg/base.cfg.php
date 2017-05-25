@@ -20,13 +20,17 @@
 	define(MDL_LOGIN,'login.mdl.php');
 	define(MDL_LOGOUT,'loginout.mdl.php');
 	define(MDL_MENU,'menu.mdl.php');
-	define(MDL_MAIN_VIEW,'main_view.mdl.php');
+	define(MDL_CONTENT,'content.mdl.php');
+	define(MDL_PAGE,'page.mdl.php');
+	define(MDL_MAIN,'main.mdl.php');
+	define(MDL_RETURN,'return.mdl.php');
 	define(MDL_HEAD,'head.mdl.php');
 	define(MDL_FOOT,'foot.mdl.php');
-	define(DB_NAME,ops_manager);
+	define(DB_NAME,zops_manager);
 	define(DB_HOST,'127.0.0.1');
 	define(DB_USER,'opsuser');
 	define(DB_PASSWD,'opsuser_@liujin.1243.com');
+	define(PERPAGENO,'5');
 //加载页面
 	require_once BASE_DIR.CFG_DIR.CFG_SLF;
 ?>

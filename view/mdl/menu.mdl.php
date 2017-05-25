@@ -13,7 +13,8 @@ if ($_SESSION [loginflag] == 1 && $_SESSION[loginduration]>time()) {
 	$returnarr = array(
 			'show' => array(
 					'main_left',
-					'main_right'
+					'main_right',
+					'info'
 			),
 			'hide' => array(	
 					'main_login'
@@ -46,6 +47,5 @@ if ($_SESSION [loginflag] == 1 && $_SESSION[loginduration]>time()) {
 	$_SESSION=array();
 	session_destroy();
 }
-echo json_encode($returnarr);
-unset($returnarr);
+require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>

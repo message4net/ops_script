@@ -21,12 +21,11 @@ if (!empty($result_login)) {
 					'tips_login'=>'<span style="float:left;font-size:12px;color:green"><b><i>用户名或密码有误，请重新输入</b></i></span>'
 			),
 	);
-	echo json_encode($returnarr);
 }
 unset($db_login);
 unset($tmploginsql);
 unset($tmpusername);
 unset($tmpuserpassword);
 unset($result_login);
-unset($returnarr);
+require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>

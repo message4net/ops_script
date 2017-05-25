@@ -6,8 +6,10 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #menu_sub {width:200px;height:618px}
 #info {width:824px;height:50px}
 #menu_nav {width:824px;height:50px}
-#menu_func {width:824px;height:50px}
-#content {width:200px;height:618px}
+#menu_func {width:824px;height:50px;text-align:left}
+#content {position:absolute;width:824px;height:518px;float:left}
+#content th {font-size:13px}
+#content td {font-size:13px}
 #main_login {position:absolute;width:400px;height:300x;margin-left:-200px;margin-top:-150px;left:50%;top:50%;}
 #table_login table,td,tr,form {text-align:right;color:white}
 #menu_nav ul li {float:left;padding:5px;list-style-type:none}
@@ -15,44 +17,12 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #menu_nav ul li a:hover {text-decoration:none;color:white}
 #menu_nav ul li a:visited {text-decoration:none;color:white}
 #menu_sub ul li {text-align:left;display:block;padding:5px}
-#content_table table {
-        font-family: verdana,arial,sans-serif;
-        font-size:11px;
-        color:black;
-        border-width: 1px;
-        border-color: #666666;
-        border-collapse: collapse;
-}
-#content_table table th {
-        border-width: 1px;
-        padding: 8px;
-        border-style: solid;
-        border-color: #666666;
-        color:black;
-}
-#content_table table td {
-        border-width: 1px;
-        padding: 8px;
-        border-style: solid;
-        border-color: #666666;
-        color:black;
-}
-#content_func table {
-        font-family: verdana,arial,sans-serif;
-        font-size:8px;
-        color:black;
-        border-width: 0px;
-        border-color: #666666;
-        border-collapse: collapse;
-}
-#content_func table td {
-        border-width: 0px;
-        padding: 0px;
-        border-style: solid;
-        border-color: #666666;
-        color:black;
-}
-#content_func a {color:blue;}
+#menu_sub a {color:yellow}
+#content_func a {font-size:11px;padding:1px;color:yellow}
+#page_bar {position:absolute;width:824px;height:100px;bottom:0;text-align:left;color:black;font-size:11px}
+/*
+#content_func a:link {color:yellow}
+*/
 /*
 #main_login div {position:absolute;width:400px;height:300x;margin-left:-500px;margin-top:-400px;left:50%;top:50%;margin:0 auto;}
 #table_login table,td,tr,form,div {clear:both;position:absolute;width:400px;height:300px;text-align:right;margin-left:-500px;margin-top:-400px;left:50%;top:50%;}

@@ -5,5 +5,5 @@ $db_main=new DBSql();
 $returnarr=array(
 	$_POST[recid]
 );
-echo json_encode($returnarr);
-unset($returnarr);?>
+require_once BASE_DIR.MDL_DIR.MDL_RETURN;
+?>

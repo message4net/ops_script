@@ -11,4 +11,5 @@ $returnarr = array (
 		) 
 );
 echo json_encode($returnarr);
+unset($returnarr);
 ?>

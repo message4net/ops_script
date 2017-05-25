@@ -24,12 +24,13 @@ CREATE TABLE `menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) DEFAULT NULL,
   `parent_id` int(11) NOT NULL,
+  `tablename` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `menu` */
 
-insert  into `menu`(`id`,`name`,`parent_id`) values (1,'系统管理',0),(2,'服务管理',0),(3,'服务器管理',0),(4,'权限管理',1),(5,'用户管理',1);
+insert  into `menu`(`id`,`name`,`parent_id`,`tablename`) values (1,'系统管理',0,NULL),(2,'服务管理',0,NULL),(3,'服务器管理',0,NULL),(4,'权限管理',1,'role'),(5,'用户管理',1,'user');
 
 /*Table structure for table `menu_role` */
 
@@ -53,11 +54,11 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`) values (1,'全部权限');
+insert  into `role`(`id`,`name`) values (1,'全部权限'),(2,'测试权限');
 
 /*Table structure for table `user` */
 
@@ -84,15 +85,17 @@ CREATE TABLE `wordbook` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` int(11) NOT NULL,
   `flag` int(11) NOT NULL,
-  `name` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
-  `colnameid` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
-  `tablename` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `colnameid` varchar(50) DEFAULT NULL,
+  `tablename` varchar(50) DEFAULT NULL,
   `seq` int(11) DEFAULT NULL,
   `menu_sub_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `wordbook` */
+
+insert  into `wordbook`(`id`,`type`,`flag`,`name`,`colnameid`,`tablename`,`seq`,`menu_sub_id`) values (1,0,0,'编号ID','id',NULL,1,4),(2,0,0,'权限名称','name',NULL,2,4);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -33,27 +33,35 @@
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript"> 
-$(function(){ 
- var position=$("#xx").offset(); 
- $("#div1").offset({ 
-  top:position.top+22,
-  left:position.left
- }); 
- $("#xx").click(function(){ 
-  $("#NG").toggleClass("open"); 
- });
- $("#div1 input[name=ng]").click(function(){ 
-  var arr=new Array(); 
-  $("input[name=ng]:checked").each(function(key,value){
-   arr[key]=$(value).val();
-  }); 
-  $("#xx").val(arr.join(",")); 
- }) 
-}) 
+<script type="text/javascript">
+$(document).ready(function(){
+	//$('#a').click(function(){
+	$('#ck').on('click','input',function(){
+		alert($('#a').prop('checked'));
+	});
+});
+//$(function(){ 
+// var position=$("#xx").offset(); 
+// $("#div1").offset({ 
+//  top:position.top+22,
+//  left:position.left
+// }); 
+// $("#xx").click(function(){ 
+//  $("#NG").toggleClass("open"); 
+// });
+// $("#div1 input[name=ng]").click(function(){ 
+//  var arr=new Array(); 
+//  $("input[name=ng]:checked").each(function(key,value){
+//   arr[key]=$(value).val();
+//  }); 
+//  $("#xx").val(arr.join(",")); 
+// }) 
+//}) 
+
 </script>
 </head>
 <body>
+<div id="ck"><input id="a" type="checkbox"/>zz</div>
 <div id="div">
  <div align="center" id="div2" >
   <form id="form1">
