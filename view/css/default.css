@@ -6,7 +6,8 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #menu_sub {width:200px;height:618px}
 #info {width:824px;height:50px}
 #menu_nav {width:824px;height:50px}
-#menu_func {width:824px;height:50px;text-align:left}
+#menu_func {width:824px;height:50px;text-align:left;color:black;font-size:11px}
+#menu_func a {color:yellow}
 #content {position:absolute;width:824px;height:518px;float:left}
 #content th {font-size:13px}
 #content td {font-size:13px}

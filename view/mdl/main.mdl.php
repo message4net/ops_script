@@ -16,9 +16,8 @@ if($recordstartnum>=$recordcountresult[0][ct]) $recordstartnum=$recordcountresul
 $recordcountresult[0][ct]==0?$totalpagenum=1:$totalpagenum=ceil($recordcountresult[0][ct]/PERPAGENO);
 
 
-
+$returnarr[content][menu_func]='<div style="float:left"><a href="javascript:void(0)">新增</a>|<a href="javascript:void(0)">批删除</a></div><div style="float:right;padding-right:200px"><input type="text"/><button>搜索</button></div>';
 require_once BASE_DIR.MDL_DIR.MDL_CONTENT;
 require_once BASE_DIR.MDL_DIR.MDL_PAGE;
-$returnarr[content][menu_func]='<div style="float:left"><a href="javascript:void(0)">新增</a>|<a href="javascript:void(0)">批删除</a></div><div style="float:right;padding-right:200px"><input type="text"/><button>搜索</button></div>';
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
