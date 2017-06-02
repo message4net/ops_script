@@ -1,5 +1,10 @@
 <?php
-//请自建self.cfg.php 定义BASE_URL
+//请自建self.cfg.php 定义BASE_URL,DB_*
+//define(BASE_URL,'http://127.0.0.1/http/ops_script/view/');
+//define(DB_NAME,zops_manager);
+//define(DB_HOST,'127.0.0.1:3311');
+//define(DB_USER,'opsuser');
+//define(DB_PASSWD,'opsuser');
 //定义根路径
 	$basedir=str_replace('\\','/',dirname(dirname(__FILE__))).'/';
 	define(BASE_DIR,$basedir);
@@ -26,10 +31,6 @@
 	define(MDL_RETURN,'return.mdl.php');
 	define(MDL_HEAD,'head.mdl.php');
 	define(MDL_FOOT,'foot.mdl.php');
-	define(DB_NAME,zops_manager);
-	define(DB_HOST,'127.0.0.1');
-	define(DB_USER,'opsuser');
-	define(DB_PASSWD,'opsuser_@liujin.1243.com');
 	define(PERPAGENO,'5');
 //加载页面
 	require_once BASE_DIR.CFG_DIR.CFG_SLF;
