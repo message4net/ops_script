@@ -17,6 +17,7 @@ $.extend({
 						})
 					}
 			});
+	$.click('page_bar','a','mdl/main.mdl.php','\'page=\'+$(this).attr(\'id\')');
 		});
 	}
 });
