@@ -36,8 +36,12 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	//$('#a').click(function(){
-	$('#ck').on('click','input',function(){
-		alert($('#a').prop('checked'));
+//	$('#ck').on('click','input',function(){
+//		alert($('#a').prop('checked'));
+//	});
+alert('123');
+	$('#t').on('click','button',function(){
+		alert($('#tst').val());
 	});
 });
 //$(function(){ 
@@ -61,6 +65,9 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div id='t'>
+<input id='tst' /><button>dianji</button>
+</div>
 <div id="ck"><input id="a" type="checkbox"/>zz</div>
 <div id="div">
  <div align="center" id="div2" >
