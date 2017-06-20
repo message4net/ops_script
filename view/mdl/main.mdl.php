@@ -8,6 +8,12 @@ $db_main=new DBSql();
 
 $tablenamesql='select tablename from menu where id='.$_SESSION[menu_sub_id];
 $tableheadsql='select * from wordbook where type=1 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+$table1msql='select * from wordbook where type=2 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+$tablefunclsql='select * from wordbook where type=3 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+$tablefuncrsql='select * from wordbook where type=4 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+$tablefunclresult=$db_main->select($tablefunclsql);
+$tablefuncrresult=$db_main->select($tablefuncrsql);
+$table1mresult=$db_main->select($table1msql);
 $tablenameresult=$db_main->select($tablenamesql);
 $tableheadresult=$db_main->select($tableheadsql);
 $recordcountsql='select count(*) ct from '.$tablenameresult[0][tablename].';';
@@ -28,7 +34,24 @@ if($_POST[page]==''){
 }
 $recordstartnum=(($_SESSION[page]-1)*PERPAGENO);
 
-$returnarr[content][menu_func]='<div style="float:left"><a href="javascript:void(0)">新增</a>|<a href="javascript:void(0)">批删除</a></div><div style="float:right;padding-right:200px"><input type="text"/><button>搜索</button></div>';
+$funchtml='';
+if ($tablefunclresult) {
+	$funchtml.='<div style="float:left">';
+	foreach ($tablefunclresult as $val){
+		$funchtml.='<a href="javascript:void(0)">'.$val[name].'</a>&nbsp|&nbsp';
+	}
+	$funchtml.='</div>';
+}
+if ($tablefuncrresult) {
+	$funchtml.='<div style="float:right;padding-right:200px">';
+	foreach ($tablefuncrresult as $val){
+		$funchtml.='<input type="text"/><button>'.$val[name].'</button>';
+	}
+	$funchtml.='</div>';
+}
+if ($funchtml!='') {
+	$returnarr[content][menu_func]=$funchtml;
+}
 
 $tablebodysql_query='';
 $tableheadhtml='<table id="content_table" name="'.$_SESSION[menu_sub_id].'">';
@@ -38,30 +61,71 @@ foreach ($tableheadresult as $val) {
 		$tableheadhtml.='<th><input type="checkbox" id="0" name="contentall"/></th><th>序号</th><th style="text-align:center">操作</th>';
 	}else{
 		$tableheadhtml.='<th>'.$val[name].'</th>';
+		if ($table1mresult) {
+			foreach ($table1mresult as $val1){
+				$tableheadhtml.='<th>'.$val1[name].'</th>';
+			}
+		}
 	}
 }
+
+
+
 $tablebodysql_query=substr($tablebodysql_query,0,strlen($tablebodysql_query)-1).' ';
 $tableheadhtml.='</tr>';
 $tablebodysql='select '.$tablebodysql_query.' from '.$tablenameresult[0][tablename].' limit '.$recordstartnum.','.PERPAGENO.';';
 $tablebodyresult=$db_main->select($tablebodysql);
+$sql_statment2='';
+foreach ($tablebodyresult as $val){
+	$sql_statment2.=$val[id].',';
+}
+$sql_statment2=substr($sql_statment2,0,strlen($sql_statment2)-1);
+foreach ($table1mresult as $val){
+	if ($val[sqlstr_body]=='') {
+		$sql_tmp_content_statment2=$val[sqlstr_head].$sql_statment2.$val[sqlstr_foot];
+	}else{
+		$sql_tmp_content_statment2=$val[sqlstr_head].$sql_statment2.$val[sqlstr_body].$sql_statment2.$val[sqlstr_foot];
+	}
+	$result_statment2=$db_main->select($sql_tmp_content_statment2);
+	foreach ($result_statment2 as $val1) {
+		$content_statment2[$val1[mainid]][$val1[subid]]=$val1[name];
+	}
+}
+
+
 $tablebodyhtml='';
 $count=1;
 foreach ($tablebodyresult as $key=>$val) {
 	$tablebodyhtml.='<tr>';
+	$tablebodyhtml_foot='';
 	foreach ($val as $key1=>$val1){
 		if ($key1=='id') {
-//			$tmprowid=$val1;
+			$tmpid=$val1;
 			$tablebodyhtml.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'"><a href="javascript:void(0);">编辑</a>|<a href="javascript:void(0);" mid=".$_POST[id]." rid="'.$val1.'" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">删除</a></td>';
 		}else{
 			$tablebodyhtml.='<td>'.$val1.'</td>';
 		}
+		if ($key1=='id'&&$content_statment2[$val1]) {
+			$content2='';
+			foreach ($content_statment2[$val1] as $val2){
+				$content2.=$val2.',';
+			}
+			$tablebodyhtml_foot.='<td>'.$content2.'</td>';
+		}
 	}
-	$tablebodyhtml.='</tr>';
+	$tablebodyhtml.=$tablebodyhtml_foot.'</tr>';
 	$count++;
 }
 $tablebodyhtml.='</tr></table>';
 $returnhtml=$tableheadhtml.$tablebodyhtml;
 $returnarr[content][content]=$returnhtml;
+
+//foreach ($content_statment2 as $val){
+//	foreach ($val as $val1)
+//	$zz.=$val1;
+//}
+//$returnarr[abc]=array($content2);
+
 
 $pageinfobar='<div style="margin-top:5px"><b>当前页数/总页数:'.$_SESSION[page].'/'.$totalpagenum.'</b>&nbsp;&nbsp;';
 if($_SESSION[page]==1){

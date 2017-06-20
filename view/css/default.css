@@ -19,7 +19,7 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #menu_nav ul li a:visited {text-decoration:none;color:white}
 #menu_sub ul li {text-align:left;display:block;padding:5px}
 #menu_sub a {color:yellow}
-#content_func a {font-size:11px;padding:1px;color:yellow}
+#content_func a {font-size:12px;padding:1px;color:yellow}
 #page_bar {position:absolute;width:824px;height:100px;bottom:0;text-align:left;color:black;font-size:11px}
 /*
 #content_func a:link {color:yellow}
