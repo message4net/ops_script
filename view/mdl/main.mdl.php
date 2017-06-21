@@ -11,6 +11,8 @@ $tableheadsql='select * from wordbook where type=1 and menu_sub_id='.$_SESSION[m
 $table1msql='select * from wordbook where type=2 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $tablefunclsql='select * from wordbook where type=3 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $tablefuncrsql='select * from wordbook where type=4 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+$sql_content_func='select * from wordbook where type=5 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+$result_content_func=$db_main->select($sql_content_func);
 $tablefunclresult=$db_main->select($tablefunclsql);
 $tablefuncrresult=$db_main->select($tablefuncrsql);
 $table1mresult=$db_main->select($table1msql);
@@ -30,7 +32,6 @@ if($_POST[page]==''){
 		$_POST[page]=$totalpagenum;
 	}
 	$_SESSION[page]=$_POST[page];
-	
 }
 $recordstartnum=(($_SESSION[page]-1)*PERPAGENO);
 
@@ -38,7 +39,7 @@ $funchtml='';
 if ($tablefunclresult) {
 	$funchtml.='<div style="float:left">';
 	foreach ($tablefunclresult as $val){
-		$funchtml.='<a href="javascript:void(0)">'.$val[name].'</a>&nbsp|&nbsp';
+		$funchtml.='<a id="'.$val[colnameid].'" href="javascript:void(0)">'.$val[name].'</a>&nbsp|&nbsp';
 	}
 	$funchtml.='</div>';
 }
@@ -69,8 +70,6 @@ foreach ($tableheadresult as $val) {
 	}
 }
 
-
-
 $tablebodysql_query=substr($tablebodysql_query,0,strlen($tablebodysql_query)-1).' ';
 $tableheadhtml.='</tr>';
 $tablebodysql='select '.$tablebodysql_query.' from '.$tablenameresult[0][tablename].' limit '.$recordstartnum.','.PERPAGENO.';';
@@ -92,7 +91,6 @@ foreach ($table1mresult as $val){
 	}
 }
 
-
 $tablebodyhtml='';
 $count=1;
 foreach ($tablebodyresult as $key=>$val) {
@@ -101,16 +99,28 @@ foreach ($tablebodyresult as $key=>$val) {
 	foreach ($val as $key1=>$val1){
 		if ($key1=='id') {
 			$tmpid=$val1;
-			$tablebodyhtml.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'"><a href="javascript:void(0);">编辑</a>|<a href="javascript:void(0);" mid=".$_POST[id]." rid="'.$val1.'" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">删除</a></td>';
+			$tablebodyhtml.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
+			foreach ($result_content_func as $val2){
+				if ($val2[flag]==1) {
+					$tablebodyhtml.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
+				}else{
+					$tablebodyhtml.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
+				}
+			}		
+			$tablebodyhtml.='</td>';
 		}else{
 			$tablebodyhtml.='<td>'.$val1.'</td>';
 		}
-		if ($key1=='id'&&$content_statment2[$val1]) {
+		if ($key1=='id') {
 			$content2='';
-			foreach ($content_statment2[$val1] as $val2){
-				$content2.=$val2.',';
+			if ($content_statment2[$val1]) {
+				foreach ($content_statment2[$val1] as $val2){
+					$content2.=$val2.',';
+				}
+			}else{
+				$content2.='';
 			}
-			$tablebodyhtml_foot.='<td>'.$content2.'</td>';
+			$tablebodyhtml_foot.='<td style="font-size:10px;word-break:break-all">'.$content2.'</td>';
 		}
 	}
 	$tablebodyhtml.=$tablebodyhtml_foot.'</tr>';
@@ -119,13 +129,6 @@ foreach ($tablebodyresult as $key=>$val) {
 $tablebodyhtml.='</tr></table>';
 $returnhtml=$tableheadhtml.$tablebodyhtml;
 $returnarr[content][content]=$returnhtml;
-
-//foreach ($content_statment2 as $val){
-//	foreach ($val as $val1)
-//	$zz.=$val1;
-//}
-//$returnarr[abc]=array($content2);
-
 
 $pageinfobar='<div style="margin-top:5px"><b>当前页数/总页数:'.$_SESSION[page].'/'.$totalpagenum.'</b>&nbsp;&nbsp;';
 if($_SESSION[page]==1){
@@ -138,6 +141,8 @@ if($_SESSION[page]==1){
 $pageinfobar.='跳转至<input id="pageinput" type="text" style="width:25px;"/>页';
 $pageinfobar.='<button id="pagebutton" type="button"><span style="width:50px;font-size:9px">点击跳转</span></button></div>';
 $returnarr[content][page_bar]=$pageinfobar;
+
+unset($sql_content_func,$result_content_func,$funchtml,$recordstartnum,$tablebodysql,$tablebodysql_query,$pageinfobar,$totalpagenum,$returnhtml,$tableheadhtml,$tablebodyhtml,$tablebodyhtml_foot,$count,$content2,$tablenameresult,$tableheadresult,$recordcountsql,$db_main,$recordcountresult,$db_main,$tablenamesql,$tableheadsql,$table1msql,$tablefuncrsql,$tablefunclsql,$tablefunclresult,$tablefuncrresult,$table1mresult,$tablenameresult,$tableheadresult,$recordcountsql,$sql_tmp_content_statment2,$val2,$key1,$val1,$val,$key,$tablebodyresult);
 
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
