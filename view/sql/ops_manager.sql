@@ -87,15 +87,17 @@ CREATE TABLE `wordbook` (
   `flag` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `colnameid` varchar(50) DEFAULT NULL,
-  `tablename` varchar(50) DEFAULT NULL,
-  `seq` int(11) DEFAULT NULL,
+  `seq` int(11) NOT NULL DEFAULT '0',
   `menu_sub_id` int(11) DEFAULT NULL,
+  `sqlstr_head` varchar(1000) DEFAULT NULL,
+  `sqlstr_body` varchar(1000) DEFAULT NULL,
+  `sqlstr_foot` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `wordbook` */
 
-insert  into `wordbook`(`id`,`type`,`flag`,`name`,`colnameid`,`tablename`,`seq`,`menu_sub_id`) values (1,0,0,'编号ID','id',NULL,1,4),(2,0,0,'权限名称','name',NULL,2,4);
+insert  into `wordbook`(`id`,`type`,`flag`,`name`,`colnameid`,`seq`,`menu_sub_id`,`sqlstr_head`,`sqlstr_body`,`sqlstr_foot`) values (1,1,0,'编号ID','id',1,4,NULL,NULL,NULL),(2,1,0,'权限名称','name',2,4,NULL,NULL,NULL),(3,2,0,'权限明细',NULL,3,4,'select role_id mainid,a.id subid,name from menu a,menu_role b where b.menu_id=a.id and role_id in (',NULL,') ;'),(4,3,0,'新增',NULL,1,4,NULL,NULL,NULL),(5,3,0,'批删除',NULL,2,4,NULL,NULL,NULL),(6,4,0,'搜索',NULL,0,4,NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
