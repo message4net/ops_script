@@ -19,6 +19,9 @@ $.extend({
 			});
 //$('#content').on('click','[id^="func_mod_"]');
 //,{'eid':'content','txt':'a','url':'mdl/modify.mdl.php','data':'\'id=\'+$(this).closest(\'td\').attr(\'mid\')+\'&recid=\'+$(this).closest(\'td\').attr(\'rid\')'}
+$('#menu_func').on('click','#func_add',function(){
+	$.ajx('mdl/modify_view.mdl.php','');
+})
 		});
 	}
 });

@@ -142,7 +142,7 @@ $pageinfobar.='跳转至<input id="pageinput" type="text" style="width:25px;"/>�
 $pageinfobar.='<button id="pagebutton" type="button"><span style="width:50px;font-size:9px">点击跳转</span></button></div>';
 $returnarr[content][page_bar]=$pageinfobar;
 
-unset($sql_content_func,$result_content_func,$funchtml,$recordstartnum,$tablebodysql,$tablebodysql_query,$pageinfobar,$totalpagenum,$returnhtml,$tableheadhtml,$tablebodyhtml,$tablebodyhtml_foot,$count,$content2,$tablenameresult,$tableheadresult,$recordcountsql,$db_main,$recordcountresult,$db_main,$tablenamesql,$tableheadsql,$table1msql,$tablefuncrsql,$tablefunclsql,$tablefunclresult,$tablefuncrresult,$table1mresult,$tablenameresult,$tableheadresult,$recordcountsql,$sql_tmp_content_statment2,$val2,$key1,$val1,$val,$key,$tablebodyresult);
+unset($sql_content_func,$result_content_func,$funchtml,$recordstartnum,$tablebodysql,$tablebodysql_query,$pageinfobar,$totalpagenum,$returnhtml,$tableheadhtml,$tablebodyhtml,$tablebodyhtml_foot,$count,$content2,$tablenameresult,$tableheadresult,$recordcountsql,$recordcountresult,$db_main,$tablenamesql,$tableheadsql,$table1msql,$tablefuncrsql,$tablefunclsql,$tablefunclresult,$tablefuncrresult,$table1mresult,$tablenameresult,$tableheadresult,$recordcountsql,$sql_tmp_content_statment2,$val2,$key1,$val1,$val,$key,$tablebodyresult);
 
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
