@@ -30,10 +30,19 @@ foreach ($tableheadresult as $val) {
 	}
 }
 
+foreach ($table1mresult as $val) {
+	$addhtml.='<tr>';
+	$tmpresult=$db_modify_view->select($val[sqlstr_head]);
+	$addhtml.='<td>'.$val1[name].':</td><td>';
+	foreach ($tmpresult as $val1){
+		$addhtml.='<input id="'.$val1[colnameid].'" type="checkbox" /><br />';
+	}
+	$addhtml.='</td></tr>';
+}
+
 //$returnarr[abc]=array('abcd');
 $returnarr[content][content]=$addhtml;
 
-
-unset($db_modify_view,$tableheadsql,$tableheadresult,$tablebodysql_query,$addhtml,$val,$tablenamesql);
+unset($db_modify_view,$tableheadsql,$tableheadresult,$tablebodysql_query,$addhtml,$val,$tablenamesql,$addhtml,$tmpresult);
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
