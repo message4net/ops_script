@@ -33,9 +33,9 @@ foreach ($tableheadresult as $val) {
 foreach ($table1mresult as $val) {
 	$addhtml.='<tr>';
 	$tmpresult=$db_modify_view->select($val[sqlstr_head]);
-	$addhtml.='<td>'.$val1[name].':</td><td>';
+	$addhtml.='<td>'.$val[name].':</td><td>';
 	foreach ($tmpresult as $val1){
-		$addhtml.='<input id="'.$val1[colnameid].'" type="checkbox" /><br />';
+		$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
 	}
 	$addhtml.='</td></tr>';
 }
