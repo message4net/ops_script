@@ -40,6 +40,8 @@ foreach ($table1mresult as $val) {
 	$addhtml.='</td></tr>';
 }
 
+$addhtml.='<tr><td colspan="2"><button id="m_v_s">保存</button><button id="m_v_b">返回</button></td></tr></table>';
+
 //$returnarr[abc]=array('abcd');
 $returnarr[content][content]=$addhtml;
 
