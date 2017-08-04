@@ -14,6 +14,7 @@
 	define(CFG_SLF,'self.cfg.php');
 	define(INC_DIR,'inc/');
 	define(INC_DB,'db.inc.php');
+	define(FNC_TIP,'tips_gen.fnc.php');
 	define(CSS_DIR,'css/');
 	define(CSS_FILE,'default.css');
 	define(JS_DIR,'js/');

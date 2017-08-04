@@ -4,10 +4,12 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #main_right {float:right;width:824px;height:768px;}
 #logo {width:200px;height:150px}
 #menu_sub {width:200px;height:618px}
-#info {width:824px;height:50px}
-#menu_nav {width:824px;height:50px}
-#menu_func {width:824px;height:50px;text-align:left;color:black;font-size:11px}
+#info {width:824px;height:40px}
+#menu_nav {width:824px;height:40px}
+#menu_func {width:824px;height:40px;text-align:left;color:black;font-size:11px}
 #menu_func a {color:yellow}
+#tips_nav {tex-align:left;font-size:15px;width:824px;height:30px;color:white}
+#tips {tex-align:left;font-size:20px;width:824px;height:30px}
 #content {position:absolute;width:824px;height:518px;float:left}
 #content table {border-collapse:collapse}
 #content th {font-size:11px;color:white;boder-width:0px;border-style:solid;border-color:#0080c0;text-align:center;padding:5px}
@@ -23,6 +25,8 @@ body {text-align:center;margin:0px;padding:0px;color:black}
 #menu_sub a {color:yellow}
 #content_func a {font-size:12px;padding:1px;color:yellow}
 #page_bar {position:absolute;width:824px;height:100px;bottom:0;text-align:left;color:black;font-size:11px}
+
+.clear {clear:both}
 /*
 #content_func a:link {color:yellow}
 */

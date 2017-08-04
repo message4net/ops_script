@@ -1,12 +1,13 @@
 <?php session_start();
 require_once dirname(dirname(__FILE__)).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
+require_once BASE_DIR.INC_DIR.FNC_TIP;
 if ($_POST[id]!='') {
 	$_SESSION[menu_sub_id]=$_POST[id];
 }
 $db_main=new DBSql();
 
-$tablenamesql='select tablename from menu where id='.$_SESSION[menu_sub_id];
+$tablenamesql='select * from menu where id='.$_SESSION[menu_sub_id];
 $tableheadsql='select * from wordbook where type=1 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $table1msql='select * from wordbook where type=2 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $tablefunclsql='select * from wordbook where type=3 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
@@ -22,6 +23,7 @@ $recordcountsql='select count(*) ct from '.$tablenameresult[0][tablename].';';
 $recordcountresult=$db_main->select($recordcountsql);
 if($recordstartnum>=$recordcountresult[0][ct]) $recordstartnum=$recordcountresult[0][ct]-$recordcountresult[0][ct]%PERPAGENO;
 $recordcountresult[0][ct]==0?$totalpagenum=1:$totalpagenum=ceil($recordcountresult[0][ct]/PERPAGENO);
+
 
 if($_POST[page]==''){
 	if($_SESSION[page]==''){
@@ -141,6 +143,11 @@ if($_SESSION[page]==1){
 $pageinfobar.='跳转至<input id="pageinput" type="text" style="width:25px;"/>页';
 $pageinfobar.='<button id="pagebutton" type="button"><span style="width:50px;font-size:9px">点击跳转</span></button></div>';
 $returnarr[content][page_bar]=$pageinfobar;
+
+$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name],'');
+$returnarr[content][tips_nav]=$tips_navhtml;
+//$returnarr[0]=array($tips_navhtml);
+
 
 unset($sql_content_func,$result_content_func,$funchtml,$recordstartnum,$tablebodysql,$tablebodysql_query,$pageinfobar,$totalpagenum,$returnhtml,$tableheadhtml,$tablebodyhtml,$tablebodyhtml_foot,$count,$content2,$tablenameresult,$tableheadresult,$recordcountsql,$recordcountresult,$db_main,$tablenamesql,$tableheadsql,$table1msql,$tablefuncrsql,$tablefunclsql,$tablefunclresult,$tablefuncrresult,$table1mresult,$tablenameresult,$tableheadresult,$recordcountsql,$sql_tmp_content_statment2,$val2,$key1,$val1,$val,$key,$tablebodyresult);
 
