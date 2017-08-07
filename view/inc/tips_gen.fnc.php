@@ -25,7 +25,7 @@ function genTips($menuArr,$tailName,$strTips){
 		return genTips($dataTmpR,$tailName,$tmpstrTips);
 		
 	}else{
-		$strTips='<div style="float:left"><b><i>当前位置:'.$strTips.$tailName.'</i></b></div>';
+		$strTips='<div style="float:left"><b>当前位置:<i>'.$strTips.$tailName.'</i></b></div>';
 		return $strTips;
 	}
 }

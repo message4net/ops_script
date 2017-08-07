@@ -1,7 +1,7 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'}]};
+			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'},{'eid':'menu_func','txt':'#func_add','url':'mdl/modify_view.mdl.php','data':''}]};
 			tmpurl='mdl/menu.mdl.php';
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
@@ -17,11 +17,26 @@ $.extend({
 						})
 					}
 			});
-//$('#content').on('click','[id^="func_mod_"]');
-//,{'eid':'content','txt':'a','url':'mdl/modify.mdl.php','data':'\'id=\'+$(this).closest(\'td\').attr(\'mid\')+\'&recid=\'+$(this).closest(\'td\').attr(\'rid\')'}
-$('#menu_func').on('click','#func_add',function(){
-	$.ajx('mdl/modify_view.mdl.php','');
-})
+////$('#content').on('click','[id^="func_mod_"]');
+////,{'eid':'content','txt':'a','url':'mdl/modify.mdl.php','data':'\'id=\'+$(this).closest(\'td\').attr(\'mid\')+\'&recid=\'+$(this).closest(\'td\').attr(\'rid\')'}
+			$('#content').on('click','button#m_v_s',function(){
+				if($('#name').val()==''){
+					alert('名称不能为空');
+					$('#name').focus();
+				}else{
+					if($(':checkbox').is(':checked')){
+						tmpstrchecked='';
+						$(':checkbox:checked').each(function(){
+							tmpstrchecked+=$(this).attr('id')+',';
+						});
+						tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
+						alert(tmpstrchecked);
+					}else{
+						alert('复选框至少要选择其中1项');
+					}
+				}
+				'mdl/modify.mdl.php'
+			})
 		});
 	}
 });

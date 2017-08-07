@@ -146,10 +146,8 @@ $returnarr[content][page_bar]=$pageinfobar;
 
 $tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name],'');
 $returnarr[content][tips_nav]=$tips_navhtml;
-//$returnarr[0]=array($tips_navhtml);
 
-
-unset($sql_content_func,$result_content_func,$funchtml,$recordstartnum,$tablebodysql,$tablebodysql_query,$pageinfobar,$totalpagenum,$returnhtml,$tableheadhtml,$tablebodyhtml,$tablebodyhtml_foot,$count,$content2,$tablenameresult,$tableheadresult,$recordcountsql,$recordcountresult,$db_main,$tablenamesql,$tableheadsql,$table1msql,$tablefuncrsql,$tablefunclsql,$tablefunclresult,$tablefuncrresult,$table1mresult,$tablenameresult,$tableheadresult,$recordcountsql,$sql_tmp_content_statment2,$val2,$key1,$val1,$val,$key,$tablebodyresult);
+unset($tips_navhtml,$sql_content_func,$result_content_func,$funchtml,$recordstartnum,$tablebodysql,$tablebodysql_query,$pageinfobar,$totalpagenum,$returnhtml,$tableheadhtml,$tablebodyhtml,$tablebodyhtml_foot,$count,$content2,$tablenameresult,$tableheadresult,$recordcountsql,$recordcountresult,$db_main,$tablenamesql,$tableheadsql,$table1msql,$tablefuncrsql,$tablefunclsql,$tablefunclresult,$tablefuncrresult,$table1mresult,$tablenameresult,$tableheadresult,$recordcountsql,$sql_tmp_content_statment2,$val2,$key1,$val1,$val,$key,$tablebodyresult);
 
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
