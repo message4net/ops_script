@@ -24,13 +24,15 @@ $.extend({
 					alert('名称不能为空');
 					$('#name').focus();
 				}else{
+					tmpname=$('#name').val();
+					alert(tmpname+'aaa');
 					if($(':checkbox').is(':checked')){
 						tmpstrchecked='';
 						$(':checkbox:checked').each(function(){
 							tmpstrchecked+=$(this).attr('id')+',';
 						});
 						tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
-						alert(tmpstrchecked);
+						$.ajx('mdl/modify.mdl.php','name='+tmpname+'&tmpstr='+tmpstrchecked);
 					}else{
 						alert('复选框至少要选择其中1项');
 					}
