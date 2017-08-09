@@ -39,7 +39,7 @@ foreach ($table1mresult as $val) {
 	$addhtml.='</td></tr>';
 }
 
-$addhtml.='<tr><td colspan="2"><button id="m_v_s">保存</button></td></tr></table>';
+$addhtml.='<tr><td colspan="2"><button id="m_v_s_add">保存</button></td></tr></table>';
 
 $returnarr[content][content]=$addhtml;
 
