@@ -15,8 +15,8 @@ if($_POST[fnc]==''){
 }
 
 $db_modify=new DBSql();
-switch ($_SESSION[menu_sub_id]) {
-	case 4:
+switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
+	case m_v_s_add4:
 		$tmpsql='select count(*) ct from role where name=\''.$_POST[name].'\';';
 		$tmpresult=$db_modify->select($tmpsql);
 		if($tmpresult[0][ct]==0){
@@ -25,9 +25,11 @@ switch ($_SESSION[menu_sub_id]) {
 			$tmpsql1='insert into role (name) values (\''.$tmpname.'\';';
 			$tmpsql2='';
 			foreach ($tmpstrarr as $val1){
-				
+				$tmpsql2.='insert into menu_role select \''.$val1.'\',id from role where name=\''.$tmpname.'\';';
 			}
-			exit;
+			$db_modify->insert($tmpsql1);
+			$db_modify->insert($tmpsql2);
+			
 		}else{
 			$returnarr[0]=array('权限名称重复，请重新输入');
 			$returnarr[fcs]=array('name');
@@ -35,16 +37,6 @@ switch ($_SESSION[menu_sub_id]) {
 			exit;
 		}
 		break;
-	;;
-	default:
-		$returnarr[0]=array('参数有误，请确认');
-		require_once BASE_DIR.MDL_DIR.MDL_RETURN;
-		exit;
-}
-
-switch ($_POST[fnc]) {
-	case 'm_v_s_add':
-		
 	;;
 	default:
 		$returnarr[0]=array('参数有误，请确认');
