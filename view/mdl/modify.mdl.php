@@ -29,7 +29,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			}
 			$db_modify->insert($tmpsql1);
 			$db_modify->insert($tmpsql2);
-			
+			$returnarr[0]=array('已成功创建角色');
 		}else{
 			$returnarr[0]=array('权限名称重复，请重新输入');
 			$returnarr[fcs]=array('name');
