@@ -33,6 +33,6 @@
 	define(MDL_HEAD,'head.mdl.php');
 	define(MDL_FOOT,'foot.mdl.php');
 	define(PERPAGENO,'5');
-//加载页面
+//加载变量配置
 	require_once BASE_DIR.CFG_DIR.CFG_SLF;
 ?>

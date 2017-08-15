@@ -19,26 +19,26 @@ $.extend({
 			});
 ////$('#content').on('click','[id^="func_mod_"]');
 ////,{'eid':'content','txt':'a','url':'mdl/modify.mdl.php','data':'\'id=\'+$(this).closest(\'td\').attr(\'mid\')+\'&recid=\'+$(this).closest(\'td\').attr(\'rid\')'}
-			$('#content').on('click','button#m_v_s_add',function(){
-				if($('#name').val()==''){
-					alert('名称不能为空');
-					$('#name').focus();
-				}else{
-					tmpname=$('#name').val();
-					tmpfnc=$(this).attr('id');
-					if($(':checkbox').is(':checked')){
-						tmpstrchecked='';
-						$(':checkbox:checked').each(function(){
-							tmpstrchecked+=$(this).attr('id')+',';
-						});
-						tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
-						$.ajx('mdl/modify.mdl.php','fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked);
-					}else{
-						alert('复选框至少要选择其中1项');
-					}
-				}
-				'mdl/modify.mdl.php'
-			})
+//			$('#content').on('click','button#m_v_s_add',function(){
+//				if($('#name').val()==''){
+//					alert('名称不能为空');
+//					$('#name').focus();
+//				}else{
+//					tmpname=$('#name').val();
+//					tmpfnc=$(this).attr('id');
+//					if($(':checkbox').is(':checked')){
+//						tmpstrchecked='';
+//						$(':checkbox:checked').each(function(){
+//							tmpstrchecked+=$(this).attr('id')+',';
+//						});
+//						tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
+//						$.ajx('mdl/modify.mdl.php','fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked);
+//					}else{
+//						alert('复选框至少要选择其中1项');
+//					}
+//				}
+////				'mdl/modify.mdl.php'
+//			})
 		});
 	}
 });

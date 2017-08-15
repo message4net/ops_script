@@ -27,5 +27,8 @@ unset($tmploginsql);
 unset($tmpusername);
 unset($tmpuserpassword);
 unset($result_login);
+
+$returnarr[0]=array('aaaaaaa');
+
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
