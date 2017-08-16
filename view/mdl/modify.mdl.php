@@ -1,5 +1,5 @@
 <?php session_start();
-require_once dirname(dirname(__FILE__)).'/cfg/base.cfg.php';
+require_once str_replace('\\','/',dirname(dirname(__FILE__))).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
 
 if($_SESSION[menu_sub_id]==''){
@@ -22,26 +22,23 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		if($tmpresult[0][ct]==0){
 			$tmpstrarr=explode(',',$_POST[tmpstr]);
 			$tmpname=$_POST[name];
-			$tmpsql1='insert into role (name) values (\''.$tmpname.'\';';
+			$tmpsql1='insert into role (name) values (\''.$tmpname.'\');';
 			$tmpsql2='';
 			foreach ($tmpstrarr as $val1){
 				$tmpsql2.='insert into menu_role select \''.$val1.'\',id from role where name=\''.$tmpname.'\';';
 			}
 			$db_modify->insert($tmpsql1);
 			$db_modify->insert($tmpsql2);
-			$returnarr[0]=array('已成功创建角色');
+			$returnarr[0]=array($tmpsql2);
+			$returnarr[content][tips]='<div style="float:left">已成功创建角色</div>';
 		}else{
-			$returnarr[0]=array('权限名称重复，请重新输入');
+			$returnarr[content][tips]='<div style="float:left">权限名称重复，请重新输入</div>';
 			$returnarr[fcs]=array('name');
-			require_once BASE_DIR.MDL_DIR.MDL_RETURN;
-			exit;
 		}
 		break;
 	;;
 	default:
-		$returnarr[0]=array('参数有误，请确认');
-		require_once BASE_DIR.MDL_DIR.MDL_RETURN;
-		exit;
+		$returnarr[content][tips]='<div style="float:left">参数有误，请确认</div>';
 }
 
 unset($tmpstrarr,$tmpname,$tmpresult,$tmpsql,$val,$tmpsql1,$tmpsql2,$val1);
