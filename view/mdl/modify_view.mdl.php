@@ -45,6 +45,8 @@ $returnarr[content][content]=$addhtml;
 
 $tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->新增','');
 $returnarr[content][tips_nav]=$tips_navhtml;
+$returnarr[content][tips]='';
+$returnarr[content][page_bar]='';
 
 unset($tips_navhtml,$db_modify_view,$tableheadsql,$tableheadresult,$tablebodysql_query,$addhtml,$val,$tablenamesql,$addhtml,$tmpresult);
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;

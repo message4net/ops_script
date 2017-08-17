@@ -41,6 +41,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		$returnarr[content][tips]='<div style="float:left">参数有误，请确认</div>';
 }
 
+$returnarr[content][page_bar]='';
 unset($tmpstrarr,$tmpname,$tmpresult,$tmpsql,$val,$tmpsql1,$tmpsql2,$val1);
 
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;

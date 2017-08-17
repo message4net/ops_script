@@ -131,6 +131,7 @@ foreach ($tablebodyresult as $key=>$val) {
 $tablebodyhtml.='</tr></table>';
 $returnhtml=$tableheadhtml.$tablebodyhtml;
 $returnarr[content][content]=$returnhtml;
+$returnarr[content][tips]='';
 
 $pageinfobar='<div style="margin-top:5px"><b>当前页数/总页数:'.$_SESSION[page].'/'.$totalpagenum.'</b>&nbsp;&nbsp;';
 if($_SESSION[page]==1){
