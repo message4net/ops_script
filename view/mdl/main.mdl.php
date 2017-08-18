@@ -117,7 +117,7 @@ foreach ($tablebodyresult as $key=>$val) {
 			$content2='';
 			if ($content_statment2[$val1]) {
 				foreach ($content_statment2[$val1] as $val2){
-					$content2.=$val2.',';
+					$content2.='@'.$val2;
 				}
 			}else{
 				$content2.='';

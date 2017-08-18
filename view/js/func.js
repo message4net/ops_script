@@ -27,7 +27,9 @@ $.extend({
 			
 			
 $('#content').on('click','[id^="func_mod_"]',function(){
-	alert($(this).attr('id').substring(9));
+	tmpid=$(this).attr('id').substring(9);
+	tmpfnc=$(this).attr('id').substring(0,9);
+	$.ajx('mdl/modify_view.mdl.php','fnc='+tmpfnc+'&recid='+tmpid);
 });
 ////,{'eid':'content','txt':'a','url':'mdl/modify.mdl.php','data':'\'id=\'+$(this).closest(\'td\').attr(\'mid\')+\'&recid=\'+$(this).closest(\'td\').attr(\'rid\')'}
 			$('#content').on('click','button#m_v_s_add',function(){
