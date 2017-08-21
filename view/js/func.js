@@ -1,8 +1,9 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'},{'eid':'menu_func','txt':'#func_add','url':'mdl/modify_view.mdl.php','data':''}]};
-//			var datajson={'paras':[{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'},{'eid':'menu_func','txt':'#func_add','url':'mdl/modify_view.mdl.php','data':''}]};
+			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'}]};
+//			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'},{'eid':'menu_func','txt':'#func_add','url':'mdl/modify_view.mdl.php','data':''}]};
+////			var datajson={'paras':[{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'},{'eid':'menu_func','txt':'#func_add','url':'mdl/modify_view.mdl.php','data':''}]};
 			tmpurl='mdl/menu.mdl.php';
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
@@ -19,33 +20,41 @@ $.extend({
 					}
 			});
 
-//$('#form_login').on('click','button',function(){
-//	alert('username='+$('#username').val()+'&userpassword='+$('#userpassword').val());
-////	$.ajx($('#form_login').attr('action'),'username='+$('#username').val()+'&userpassword='+$('#userpassword').val());
-//	$.ajx('mdl/login1.mdl.php','username='+$('#username').val()+'&userpassword='+$('#userpassword').val());
-//});
+$('#menu_func').on('click','#func_add',function(){
+	$.ajx('mdl/modify_view.mdl.php','');
+})			
 			
-			
-$('#content').on('click','[id^="func_mod_"]',function(){
+//$('#content').on('click','[id^="func_mod_"]',function(){
+$('#content').on('click','[id^=func_mod_]',function(){
 	tmpid=$(this).attr('id').substring(9);
 	tmpfnc=$(this).attr('id').substring(0,9);
+	alert('m:'+tmpfnc);
 	$.ajx('mdl/modify_view.mdl.php','fnc='+tmpfnc+'&recid='+tmpid);
 });
-////,{'eid':'content','txt':'a','url':'mdl/modify.mdl.php','data':'\'id=\'+$(this).closest(\'td\').attr(\'mid\')+\'&recid=\'+$(this).closest(\'td\').attr(\'rid\')'}
-			$('#content').on('click','button#m_v_s_add',function(){
+
+//			$('#content').on('click','button#m_v_s_add',function(){
+			$('#content').on('click','[id^=m_v_s_]',function(){
 				if($('#name').val()==''){
 					alert('名称不能为空');
 					$('#name').focus();
 				}else{
 					tmpname=$('#name').val();
-					tmpfnc=$(this).attr('id');
+					tmpfnc=$(this).attr('id').substring(0,9);
+					tmpjsfnc=$(this).attr('id').substring(6,9);
+					tmprecid=$(this).attr('id').substring(9);
+					alert('mv:'+tmprecid);
 					if($(':checkbox').is(':checked')){
 						tmpstrchecked='';
 						$(':checkbox:checked').each(function(){
 							tmpstrchecked+=$(this).attr('id')+',';
 						});
 						tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
-						$.ajx('mdl/modify.mdl.php','fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked);
+						if(tmpjsfnc=="mod"){
+							tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
+						}else{
+							tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked;
+						}
+						$.ajx('mdl/modify.mdl.php',tmpdata);
 					}else{
 						alert('复选框至少要选择其中1项');
 					}

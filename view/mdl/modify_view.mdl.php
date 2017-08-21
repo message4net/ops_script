@@ -21,7 +21,7 @@ $table1mresult=$db_modify_view->select($table1msql);
 if($_POST[recid]!=''){
 	switch ($_SESSION[menu_sub_id]) {
 		case 4:
-			$reccontentsql='select * from '.$tablenameresult[0][tablename];
+			$reccontentsql='select * from '.$tablenameresult[0][tablename].' where id='.$_POST[recid];
 			$rec1msql='select * from menu_role where role_id='.$_POST[recid];
 			$reccontentresult=$db_modify_view->select($reccontentsql);
 			$rec1mresult=$db_modify_view->select($rec1msql);
@@ -31,7 +31,7 @@ if($_POST[recid]!=''){
 				$tmpcount++;
 			}
 			break;
-		;;
+			;;
 		default:
 			$returnarr[content][tips]='修改记录唯一id或菜单有误，请确认:post_id:'.$_POST[recid];
 			require_once BASE_DIR.MDL_DIR.MDL_RETURN;
@@ -55,24 +55,28 @@ foreach ($table1mresult as $val) {
 	$tmpresult=$db_modify_view->select($val[sqlstr_head]);
 	$addhtml.='<td>'.$val[name].':</td><td>';
 	foreach ($tmpresult as $val1){
-		if(in_array($val1[id], $rec1marr)){
-			$addhtml.='<input id="'.$val1[id].'" type="checkbox" checked="checked"/>'.$val1[name].'<br />';
-		}else{
+		if($rec1marr){
+			if(in_array($val1[id], $rec1marr)){
+				$addhtml.='<input id="'.$val1[id].'" type="checkbox" checked="checked"/>'.$val1[name].'<br />';
+			}else{
+				$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
+			}
+		}else {
 			$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
 		}
 	}
 	$addhtml.='</td></tr>';
 }
 
-$addhtml.='<tr><td colspan="2"><button id="m_v_s_add">保存</button></td></tr></table>';
-
-$returnarr[content][content]=$addhtml;
-
 if($_POST[recid]==''){
 	$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->新增','');
+	$addhtml.='<tr><td colspan="2"><button id="m_v_s_add">保存</button></td></tr></table>';
 }else{
 	$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->修改','');
+	$addhtml.='<tr><td colspan="2"><button id="m_v_s_mod_'.$_POST[recid].'">保存</button></td></tr></table>';
 }
+
+$returnarr[content][content]=$addhtml;
 $returnarr[content][tips_nav]=$tips_navhtml;
 $returnarr[content][tips]='';
 $returnarr[content][page_bar]='';

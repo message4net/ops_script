@@ -37,6 +37,10 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		}
 		break;
 	;;
+	case m_v_s_mod4:
+		
+		break;
+	;;
 	default:
 		$returnarr[content][tips]='<div style="float:left">参数有误，请确认</div>';
 }
