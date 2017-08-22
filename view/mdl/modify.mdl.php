@@ -38,7 +38,32 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		break;
 	;;
 	case m_v_s_mod4:
-		
+		$tmpstrarr=explode(',',$_POST[tmpstr]);
+		$tmprecid=$_POST[recid];
+		$tmpname=$_POST[name];
+		$tmpsql='select count(*) ct from role where name=\''.$tmpname.'\' and id='.$tmprecid.';';
+		$tmpsql1='select menu_id from menu_role where role_id='.$tmprecid.';';
+		$tmproleoriginmenuresult=$db_modify->select($tmpsql1);
+		$tmpresult=$db_modify->select($tmpsql);
+		$tmpinsertarr=array_diff($tmpstrarr,$tmproleoriginmenuresult);
+		$tmpdelarr=array_diff($tmproleoriginmenuresult,$tmpstrarr);
+		if($tmpresult[0][ct]==0){
+			$tmpupdatesql='update role set name=\''.$tmpname.'\' where id='.$tmprecid.';';
+			$db_modify->update($tmpupdatesql);
+		}
+		$tmpinsdelsql='';
+		$tmpinssql='insert into menu_role values ';
+		$tmpdelsql='delete from menu_role where role_id='.$tmprecid.' and menu_id in (';
+		foreach($tmpinsertarr as $val) {
+			$tmpinssql.=$tmpinssql.'('.$val.','.$tmprecid.'),';
+		}
+		$tmpinssql=substr($tmpinssql,0,strlen($tmpinssql)-1).';';
+		foreach ($tmpdelarr as $val) {
+			$tmpdelsql.=$val.',';
+		}
+		$tmpdelsql=substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
+		$tmpinsdelsql=$tmpdelsql.$tmpinssql;
+		$db_modify->insert($tmpinsdelsql);
 		break;
 	;;
 	default:
@@ -46,7 +71,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 }
 
 $returnarr[content][page_bar]='';
-unset($tmpstrarr,$tmpname,$tmpresult,$tmpsql,$val,$tmpsql1,$tmpsql2,$val1);
+unset($tmpstrarr,$tmpname,$tmpresult,$tmpsql,$val,$tmpsql1,$tmpsql2,$val1,$db_modify);
 
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
