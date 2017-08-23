@@ -20,19 +20,37 @@ $.extend({
 					}
 			});
 
-$('#menu_func').on('click','#func_add',function(){
-	$.ajx('mdl/modify_view.mdl.php','');
+			$('#menu_func').on('click','#func_add',function(){
+				$.ajx('mdl/modify_view.mdl.php','');
+			})			
+						
+			$('#content').on('click','[id^=func_mod_]',function(){
+				tmpid=$(this).attr('id').substring(9);
+				tmpfnc=$(this).attr('id').substring(0,9);
+				$.ajx('mdl/modify_view.mdl.php','fnc='+tmpfnc+'&recid='+tmpid);
+			});
+			
+			$('#content').on('click','[id^=func_del_]',function(){
+				tmpid=$(this).attr('id').substring(9);
+				tmpfnc=$(this).attr('id').substring(0,8);
+				$.ajx('mdl/modify.mdl.php','fnc='+tmpfnc+'&recid='+tmpid);
+			});
+
+$('#menu_func').on('click','#func_delall',function(){
+	if($(':checkbox').is(':checked')){
+		tmpstrchecked='';
+		$('[name=contentlist]:checkbox:checked').each(function(){
+			tmpstrchecked+=$(this).attr('id')+',';
+		});
+		tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
+	}else{
+		alert('请选择需要删除的权限后，再点击批删除');
+	}
+	tmpfnc=$(this).attr('id');
+	tmpdata='fnc='+tmpfnc+'&tmpstr='+tmpstrchecked;
+	$.ajx('mdl/modify.mdl.php',tmpdata);
 })			
 			
-//$('#content').on('click','[id^="func_mod_"]',function(){
-$('#content').on('click','[id^=func_mod_]',function(){
-	tmpid=$(this).attr('id').substring(9);
-	tmpfnc=$(this).attr('id').substring(0,9);
-	alert('m:'+tmpfnc);
-	$.ajx('mdl/modify_view.mdl.php','fnc='+tmpfnc+'&recid='+tmpid);
-});
-
-//			$('#content').on('click','button#m_v_s_add',function(){
 			$('#content').on('click','[id^=m_v_s_]',function(){
 				if($('#name').val()==''){
 					alert('名称不能为空');
@@ -41,25 +59,23 @@ $('#content').on('click','[id^=func_mod_]',function(){
 					tmpname=$('#name').val();
 					tmpfnc=$(this).attr('id').substring(0,9);
 					tmpjsfnc=$(this).attr('id').substring(6,9);
-					tmprecid=$(this).attr('id').substring(9);
-					alert('mv:'+tmprecid);
+					tmprecid=$(this).attr('id').substring(10);
 					if($(':checkbox').is(':checked')){
 						tmpstrchecked='';
 						$(':checkbox:checked').each(function(){
 							tmpstrchecked+=$(this).attr('id')+',';
 						});
 						tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
-						if(tmpjsfnc=="mod"){
-							tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
-						}else{
-							tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked;
-						}
-						$.ajx('mdl/modify.mdl.php',tmpdata);
 					}else{
-						alert('复选框至少要选择其中1项');
+						tmpstrchecked='ZZZ';
 					}
+					if(tmpjsfnc=="mod"){
+						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
+					}else{
+						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked;
+					}
+					$.ajx('mdl/modify.mdl.php',tmpdata);
 				}
-//				'mdl/modify.mdl.php'
 			})
 		});
 	}

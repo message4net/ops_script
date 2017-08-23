@@ -44,7 +44,7 @@ CREATE TABLE `menu_role` (
 
 /*Data for the table `menu_role` */
 
-insert  into `menu_role`(`menu_id`,`role_id`) values (4,1),(4,3),(5,1);
+insert  into `menu_role`(`menu_id`,`role_id`) values (4,1),(4,9),(4,12),(4,13),(5,1),(5,9),(5,11),(5,12);
 
 /*Table structure for table `role` */
 
@@ -54,11 +54,11 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`) values (1,'全部权限'),(2,'测试权限'),(3,'test');
+insert  into `role`(`id`,`name`) values (1,'默认权限'),(2,'测试权限'),(11,'test2'),(13,'test1'),(12,'testa'),(9,'全部权限'),(10,'空权限'),(14,'test3');
 
 /*Table structure for table `user` */
 

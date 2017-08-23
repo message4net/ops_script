@@ -74,7 +74,7 @@ foreach ($tableheadresult as $val) {
 
 $tablebodysql_query=substr($tablebodysql_query,0,strlen($tablebodysql_query)-1).' ';
 $tableheadhtml.='</tr>';
-$tablebodysql='select '.$tablebodysql_query.' from '.$tablenameresult[0][tablename].' limit '.$recordstartnum.','.PERPAGENO.';';
+$tablebodysql='select '.$tablebodysql_query.' from '.$tablenameresult[0][tablename].' order by id desc limit '.$recordstartnum.','.PERPAGENO.';';
 $tablebodyresult=$db_main->select($tablebodysql);
 $sql_statment2='';
 foreach ($tablebodyresult as $val){
