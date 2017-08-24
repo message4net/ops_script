@@ -46,11 +46,11 @@ if ($tablefunclresult) {
 	$funchtml.='</div>';
 }
 if ($tablefuncrresult) {
-	$funchtml.='<div style="float:right;padding-right:200px">';
+	$funchtml.='<div style="float:right;padding-right:200px"><select id="search_bar">';
 	foreach ($tablefuncrresult as $val){
-		$funchtml.='<input type="text"/><button>'.$val[name].'</button>';
+		$funchtml.='<option id="$val[colnameid]">'.$val[name].'</option>';
 	}
-	$funchtml.='</div>';
+	$funchtml.='</select><input type="text"/><button>搜索</button></div>';
 }
 if ($funchtml!='') {
 	$returnarr[content][menu_func]=$funchtml;

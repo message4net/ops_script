@@ -104,8 +104,6 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		if($_POST[recid]==1){
 			$returnarr[content][tips]='默认权限无法修改，请联系管理员';
 			break;
-		}else{
-			$tmprecid=$_POST[recid];
 		}
 		$tmpsql='delete from role where id='.$_POST[recid].';';
 		$tmpsql1='delete from menu_role where role_id='.$_POST[recid].';';
@@ -136,7 +134,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 
 $returnarr[content][page_bar]='';
 $returnarr[content][tips]='<div style="float:left">'.$tmptips.'</div>';
-unset($tmpstrarr,$tmpname,$tmpresult,$tmpsql,$val,$tmpsql1,$tmpsql2,$val1,$db_modify);
+unset($tmprecid,$tmproleoriginmenuresult,$tmproleoriginmenuarr,$tmpinsertarr,$tmpstrarr,$tmpname,$tmpresult,$tmpsql,$val,$tmpsql1,$tmpsql2,$val1,$db_modify,$tmptips,$tmpdelarr,$tmpinssql,$tmpinssql1);
 
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>

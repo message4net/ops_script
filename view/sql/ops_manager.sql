@@ -97,7 +97,7 @@ CREATE TABLE `wordbook` (
 
 /*Data for the table `wordbook` */
 
-insert  into `wordbook`(`id`,`type`,`flag`,`name`,`colnameid`,`seq`,`menu_sub_id`,`sqlstr_head`,`sqlstr_body`,`sqlstr_foot`) values (1,1,0,'编号ID','id',1,4,NULL,NULL,NULL),(2,1,0,'权限名称','name',2,4,NULL,NULL,NULL),(3,2,0,'权限明细',NULL,3,4,'select role_id mainid,a.id subid,name from menu a,menu_role b where b.menu_id=a.id and role_id in (',NULL,') ;'),(4,3,0,'新增','func_add',1,4,NULL,NULL,NULL),(5,3,0,'批删除','func_delall',2,4,NULL,NULL,NULL),(6,4,0,'搜索',NULL,0,4,NULL,NULL,NULL),(7,5,0,'编辑','func_mod_',1,4,NULL,NULL,NULL),(8,5,1,'删除','func_del_',2,4,NULL,NULL,NULL),(9,6,0,'权限明细','detail',1,4,'select id,name from menu where parent_id>0 group by id;',NULL,NULL);
+insert  into `wordbook`(`id`,`type`,`flag`,`name`,`colnameid`,`seq`,`menu_sub_id`,`sqlstr_head`,`sqlstr_body`,`sqlstr_foot`) values (1,1,0,'编号ID','id',1,4,NULL,NULL,NULL),(2,1,0,'权限名称','name',2,4,NULL,NULL,NULL),(3,2,0,'权限明细',NULL,3,4,'select role_id mainid,a.id subid,name from menu a,menu_role b where b.menu_id=a.id and role_id in (',NULL,') ;'),(4,3,0,'新增','func_add',1,4,NULL,NULL,NULL),(5,3,0,'批删除','func_delall',2,4,NULL,NULL,NULL),(6,4,0,'权限名称','name',0,4,NULL,NULL,NULL),(7,5,0,'编辑','func_mod_',1,4,NULL,NULL,NULL),(8,5,1,'删除','func_del_',2,4,NULL,NULL,NULL),(9,6,0,'权限明细','detail',1,4,'select id,name from menu where parent_id>0 group by id;',NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

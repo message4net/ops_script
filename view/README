@@ -1,4 +1,12 @@
 1.常数参数由大写字母与下划线组合而成，如:BASE_DIR
+2.wordbook表 type含义
+	a.type=1 对应表(如role)已存在的字段  相应的元素, 通过modify.mdl.php 展示
+	b.type=2 存储 对应1对多关系模式(如role的具体权限) 相应的元素,通过modify.mdl.php 展示
+	c.type=3 存储html id=content_func 中 的删除、修改功能 相应的元素，通过main.mdl.php展示
+	d.type=4 存储html id=content_func 中 的搜索功能 相应的元素，通过main.mdl.php展示
+	f.type=5 存储html id=content 中 的记录 相应的元素,通过main.mdl.php展示
+	g.type=6 存储html id=content 中 的记录 相应的元素,通过modify_view.mdl.php展示
+
 aaaaaaaaaa
 
 ############
