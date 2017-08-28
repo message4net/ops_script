@@ -20,17 +20,22 @@
 	define(JS_DIR,'js/');
 	define(JS_JQ,'jquery-1.11.3.min.js');
 	define(JS_FUNC,'func.js');
-	define(JS_LOGIN,'login.js');
+	//define(JS_LOGIN,'login.js');
 	define(MDL_DIR,'mdl/');
+	//index.php 引用
 	define(MDL_WEB,'web.mdl.php');
+	//web.mdl.php 引用
 	define(MDL_LOGIN,'login.mdl.php');
-	define(MDL_LOGOUT,'loginout.mdl.php');
+	//define(MDL_LOGOUT,'loginout.mdl.php');
+	//login.mdl.php 引用
 	define(MDL_MENU,'menu.mdl.php');
 	//define(MDL_CONTENT,'content.mdl.php');
 	//define(MDL_PAGE,'page.mdl.php');
-	define(MDL_MAIN,'main.mdl.php');
+	//define(CTR_MAIN,'main.ctr.php');
 	define(MDL_RETURN,'return.mdl.php');
+	//web.mdl.php 引用
 	define(MDL_HEAD,'head.mdl.php');
+	//web.mdl.php 引用
 	define(MDL_FOOT,'foot.mdl.php');
 	define(PERPAGENO,'5');
 //加载变量配置

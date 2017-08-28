@@ -7,7 +7,7 @@ if ($_POST[id]!='') {
 }
 $db_main=new DBSql();
 
-$tablenamesql='select * from menu where id='.$_SESSION[menu_sub_id];
+//$tablenamesql='select * from menu where id='.$_SESSION[menu_sub_id];
 $tableheadsql='select * from wordbook where type=1 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $table1msql='select * from wordbook where type=2 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $tablefunclsql='select * from wordbook where type=3 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
@@ -17,6 +17,7 @@ $result_content_func=$db_main->select($sql_content_func);
 $tablefunclresult=$db_main->select($tablefunclsql);
 $tablefuncrresult=$db_main->select($tablefuncrsql);
 $table1mresult=$db_main->select($table1msql);
+//
 $tablenameresult=$db_main->select($tablenamesql);
 $tableheadresult=$db_main->select($tableheadsql);
 $recordcountsql='select count(*) ct from '.$tablenameresult[0][tablename].';';
@@ -107,7 +108,7 @@ foreach ($tablebodyresult as $key=>$val) {
 				}else{
 					$tablebodyhtml.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
 				}
-			}		
+			}
 			$tablebodyhtml.='</td>';
 		}else{
 			$tablebodyhtml.='<td>'.$val1.'</td>';
