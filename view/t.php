@@ -5,9 +5,13 @@
 //$c=array_diff($a,$b);
 //$a=array(1,2,3,4);
 //$b=array(1,3,5,7);
-$a=array();
-$b=array();
-$c=array_diff($a,$b);
+//$a=array();
+//$b=array();
+//$c=array_diff($a,$b);
+$a[0][0]=1;
+$c=$a;
+$b[0][1]=2;
+$c=$b;
 var_dump($c);
 //$d=$c==''?'Yes,NULL':'No,not NULL';
 //var_dump($d);

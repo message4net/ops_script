@@ -8,7 +8,7 @@ if ($_POST[id]!='') {
 $db_main=new DBSql();
 
 //$tablenamesql='select * from menu where id='.$_SESSION[menu_sub_id];
-$tableheadsql='select * from wordbook where type=1 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+//$tableheadsql='select * from wordbook where type=1 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $table1msql='select * from wordbook where type=2 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $tablefunclsql='select * from wordbook where type=3 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $tablefuncrsql='select * from wordbook where type=4 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
@@ -18,8 +18,8 @@ $tablefunclresult=$db_main->select($tablefunclsql);
 $tablefuncrresult=$db_main->select($tablefuncrsql);
 $table1mresult=$db_main->select($table1msql);
 //
-$tablenameresult=$db_main->select($tablenamesql);
-$tableheadresult=$db_main->select($tableheadsql);
+//$tablenameresult=$db_main->select($tablenamesql);
+//$tableheadresult=$db_main->select($tableheadsql);
 $recordcountsql='select count(*) ct from '.$tablenameresult[0][tablename].';';
 $recordcountresult=$db_main->select($recordcountsql);
 if($recordstartnum>=$recordcountresult[0][ct]) $recordstartnum=$recordcountresult[0][ct]-$recordcountresult[0][ct]%PERPAGENO;
