@@ -3,28 +3,30 @@ require_once dirname(dirname(__FILE__)).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
 
 class View extends DBSql {
-
+private $rec_tablename,$menu_sub_id;
 /**
 	 *功能:构造函数，使用父类__construct，连接数据库
 	 */
-	public function __construct(){
+	public function __construct($menu_sub_id){
 		parent::__construct();
+		$this->menu_sub_id=$menu_sub_id;
+		$this->rec_tablename=$this->init_tablename($this->menu_sub_id);
 	}
 
 /**
  *初始化数据 
  */
-	public function initdbdata($menu_sub_id){
-		$rec_tablename_sql='select * from menu where id='.$menu_sub_id;
-		$rec_tablename_result=parent::select($rec_tablename_sql);
-		$rec_tablename=$rec_tablename_result[0][tablename];
-		return $rec_tablename;
+	public function init_tablename(){
+		$this->rec_tablename_sql='select * from menu where id='.$this->menu_sub_id;
+		$this->rec_tablename_result=parent::select($this->rec_tablename_sql);
+		$this->rec_tablename=$this->rec_tablename_result[0][tablename];
+		return $this->rec_tablename;
 	}
 /**
 	 *生成page_bar div 内的 html 内容
 	 */
-	public function gen_pagebar_html($rec_tablename,$pagenum_post_tmp,$pagenum_session_tmp,$pagenum_per){
-		$rec_count_sql='select count(*) ct from '.$rec_tablename.';';
+	public function gen_pagebar_html($pagenum_post_tmp,$pagenum_session_tmp,$pagenum_per){
+		$rec_count_sql='select count(*) ct from '.$this->rec_tablename.';';
 		$rec_count_result=parent::select($rec_count_sql);
 		$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$pagenum_per);
 		if($pagenum_post_tmp==0){
@@ -74,8 +76,8 @@ class View extends DBSql {
 	
 	public function gen_func_html(){
 		$func_html='';
-		$func_left_sql='select * from wordbook where type=3 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
-		$func_right_sql='select * from wordbook where type=4 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+		$func_left_sql='select * from wordbook where type=3 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+		$func_right_sql='select * from wordbook where type=4 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 		$func_left_result=parent::select($func_left_sql);
 		$func_right_result=parent::select($func_right_sql);
 		if ($func_left_result) {
@@ -100,17 +102,17 @@ class View extends DBSql {
 	
 	public function gen_view_content_html(){
 		//$rec_pagenum_start $pagenum_per
-		$rec_head_sql='select * from wordbook where type=1 and menu_sub_id='.$menu_sub_id.' order by seq';
+		$rec_head_sql='select * from wordbook where type=1 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 		$rec_head_result=parent::select($rec_head_sql);
 		
-		$func_content_sql='select * from wordbook where type=5 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+		$func_content_sql='select * from wordbook where type=5 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 		$func_content_result=parent::select($func_content_sql);
 		
-		$rec_body_1m_sql='select * from wordbook where type=2 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+		$rec_body_1m_sql='select * from wordbook where type=2 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 		$rec_body_1m_result=parent::select($rec_body_1m_sql);
 		
 		$rec_body_column_sql_part='';
-		$rec_head_html='<table id="content_table" name="'.$menu_sub_id.'">';
+		$rec_head_html='<table id="content_table" name="'.$this->menu_sub_id.'">';
 		foreach ($rec_head_result as $val) {
 			$rec_body_column_sql_part.=$val[colnameid].',';
 			if ($val[colnameid]=='id'){
@@ -126,71 +128,68 @@ class View extends DBSql {
 		}
 		$rec_body_column_sql_part=substr($rec_body_column_sql_part,0,strlen($rec_body_column_sql_part)-1).' ';
 		$rec_head_html.='</tr>';
-		$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$rec_tablename.' order by id desc limit '.$rec_pagenum_start.','.$pagenum_per.';';
+		$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_tablename.' order by id desc limit '.$rec_pagenum_start.','.$pagenum_per.';';
+return $rec_body_column_sql;
+//		$rec_body_column_result=parent::select($rec_body_column_sql);
+//		$rec_body_1m_colname_sql='';
+//		foreach ($rec_body_column_result as $val){
+//			$rec_body_1m_colname_sql.=$val[id].',';
+//		}
+//		$rec_body_1m_colname_sql=substr($rec_body_1m_colname_sql,0,strlen($rec_body_1m_colname_sql)-1);
+//		foreach ($rec_body_1m_result as $val){
+//			if ($val[sqlstr_body]=='') {
+//				$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+//			}else{
+//				$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+//			}
+//			$rec_body_1m_str_result=parent::select($rec_body_1m_str_sql);
+//			foreach ($rec_body_1m_str_result as $val1) {
+//				$rec_body_1m_str_arr[$val1[mainid]][$val1[subid]]=$val1[name];
+//			}
+//		}
+//		
+//		
+//		$rec_body_html='';
+//		$count=1;
+//		foreach ($rec_body_column_result as $key=>$val) {
+//			$rec_body_html.='<tr>';
+//			$rec_body_1m_html='';
+//			foreach ($val as $key1=>$val1){
+//				if ($key1=='id') {
+//					$tmpid=$val1;
+//					$rec_body_html.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
+//					foreach ($func_content_result as $val2){
+//						if ($val2[flag]==1) {
+//							$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
+//						}else{
+//							$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
+//						}
+//					}
+//					$rec_body_html.='</td>';
+//				}else{
+//					$rec_body_html.='<td>'.$val1.'</td>';
+//				}
+//				if ($key1=='id') {
+//					$rec_body_1m_html_str='';
+//					if ($rec_body_1m_str_arr[$val1]) {
+//						foreach ($rec_body_1m_str_arr[$val1] as $val2){
+//							$rec_body_1m_html_str.='@'.$val2;
+//						}
+//					}else{
+//						$rec_body_1m_html_str.='';
+//					}
+//					$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
+//				}
+//			}
+//			$rec_body_html.=$rec_body_1m_html.'</tr>';
+//			$count++;
+//		}
+//		$rec_body_html.='</tr></table>';
+//		$rec_html=$rec_head_html.$rec_body_html;
+////		$returnarr[content][content]=$rec_html;
+////		$returnarr[content][tips]='';
+		
+	}
 
-		$rec_body_column_result=parent::select($rec_body_column_sql);
-		$rec_body_1m_name_sql='';
-		foreach ($rec_body_column_result as $val){
-			$rec_body_1m_name_sql.=$val[id].',';
-		}
-		$rec_body_1m_name_sql=substr($rec_body_1m_name_sql,0,strlen($rec_body_1m_name_sql)-1);
-		foreach ($rec_body_1m_result as $val){
-			if ($val[sqlstr_body]=='') {
-				$sql_tmp_content_statment2=$val[sqlstr_head].$rec_body_1m_name_sql.$val[sqlstr_foot];
-			}else{
-				$sql_tmp_content_statment2=$val[sqlstr_head].$rec_body_1m_name_sql.$val[sqlstr_body].$rec_body_1m_name_sql.$val[sqlstr_foot];
-			}
-			$result_statment2=$db_main->select($sql_tmp_content_statment2);
-			foreach ($result_statment2 as $val1) {
-				$content_statment2[$val1[mainid]][$val1[subid]]=$val1[name];
-			}
-		}
-		
-		
-		$tablebodyhtml='';
-		$count=1;
-		foreach ($rec_body_column_result as $key=>$val) {
-			$tablebodyhtml.='<tr>';
-			$tablebodyhtml_foot='';
-			foreach ($val as $key1=>$val1){
-				if ($key1=='id') {
-					$tmpid=$val1;
-					$tablebodyhtml.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
-					foreach ($func_content_result as $val2){
-						if ($val2[flag]==1) {
-							$tablebodyhtml.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
-						}else{
-							$tablebodyhtml.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
-						}
-					}
-					$tablebodyhtml.='</td>';
-				}else{
-					$tablebodyhtml.='<td>'.$val1.'</td>';
-				}
-				if ($key1=='id') {
-					$content2='';
-					if ($content_statment2[$val1]) {
-						foreach ($content_statment2[$val1] as $val2){
-							$content2.='@'.$val2;
-						}
-					}else{
-						$content2.='';
-					}
-					$tablebodyhtml_foot.='<td style="font-size:10px;word-break:break-all">'.$content2.'</td>';
-				}
-			}
-			$tablebodyhtml.=$tablebodyhtml_foot.'</tr>';
-			$count++;
-		}
-		$tablebodyhtml.='</tr></table>';
-		$returnhtml=$rec_head_html.$tablebodyhtml;
-		$returnarr[content][content]=$returnhtml;
-		$returnarr[content][tips]='';
-		
-	}
-	
-	public function tmp(){
-		unset($tips_navhtml,$func_content_sql,$func_content_result,$func_html,$rec_pagenum_start,$tablebodysql,$tablebodysql_query,$pagebar_html,$rec_pagenum_total,$returnhtml,$tableheadhtml,$tablebodyhtml,$tablebodyhtml_foot,$count,$content2,$tablenameresult,$tableheadresult,$rec_count_sql,$rec_count_result,$db_main,$tablenamesql,$tableheadsql,$rec_body_1m_sql,$func_right_sql,$func_left_sql,$func_left_result,$func_right_result,$rec_body_1m_result,$tablenameresult,$tableheadresult,$rec_count_sql,$sql_tmp_content_statment2,$val2,$key1,$val1,$val,$key,$rec_body_column_result);
-	}
 }
 ?>

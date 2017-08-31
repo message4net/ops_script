@@ -14,6 +14,7 @@
 	define(CFG_SLF,'self.cfg.php');
 	define(INC_DIR,'inc/');
 	define(INC_DB,'db.inc.php');
+	define(INC_VIEW,'view.inc.php');
 	define(FNC_TIP,'tips_gen.fnc.php');
 	define(CSS_DIR,'css/');
 	define(CSS_FILE,'default.css');
@@ -37,6 +38,7 @@
 	define(MDL_HEAD,'head.mdl.php');
 	//web.mdl.php 引用
 	define(MDL_FOOT,'foot.mdl.php');
+	//
 	define(PERPAGENO,'5');
 //加载变量配置
 	require_once BASE_DIR.CFG_DIR.CFG_SLF;
