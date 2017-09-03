@@ -3,46 +3,76 @@ require_once dirname(dirname(__FILE__)).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
 
 class View extends DBSql {
-private $rec_tablename,$menu_sub_id;
+private $rec_init_arr=array();
 /**
 	 *功能:构造函数，使用父类__construct，连接数据库
 	 */
-	public function __construct($menu_sub_id){
+	public function __construct($menu_sub_id,$pagenum_post_tmp,$pagenum_session_tmp,$pagenum_per){
 		parent::__construct();
 		$this->menu_sub_id=$menu_sub_id;
-		$this->rec_tablename=$this->init_tablename($this->menu_sub_id);
+		$this->rec_init_arr=$this->init_recarr();
 	}
 
 /**
  *初始化数据 
  */
-	public function init_tablename(){
-		$this->rec_tablename_sql='select * from menu where id='.$this->menu_sub_id;
-		$this->rec_tablename_result=parent::select($this->rec_tablename_sql);
-		$this->rec_tablename=$this->rec_tablename_result[0][tablename];
+	public function init_recarr(){
+//		$this->rec_tablename_sql='select * from menu where id='.$this->menu_sub_id;
+//		$this->rec_tablename_result=parent::select($this->rec_tablename_sql);
+//		$this->rec_tablename=$this->rec_tablename_result[0][tablename];
+//		
+//		$rec_count_sql='select count(*) ct from '.$this->rec_tablename.';';
+//		$rec_count_result=parent::select($rec_count_sql);
+//		$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$pagenum_per);
+//		if($pagenum_post_tmp==0){
+//			if($pagenum_session_tmp==0){
+//				$pagenum_session_tmp=1;
+//			}
+//		}else{
+//			if ($pagenum_post_tmp>$rec_pagenum_total) {
+//				$pagenum_post_tmp=$rec_pagenum_total;
+//			}
+//			$pagenum_session_tmp=$pagenum_post_tmp;
+//		}
+//		
+//		$rec_pagenum_start=(($pagenum_session_tmp-1)*$pagenum_per);
+//		
+//		if($rec_pagenum_start>=$rec_count_result[0][ct]) $rec_pagenum_start=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$pagenum_per;
+
+		
+		
+		
+	$rec_tablename_sql='select * from menu where id='.$this->menu_sub_id;
+	$rec_tablename_result=parent::select(rec_tablename_sql);
+	$rec_init_arr[rec_tablename]=$rec_tablename_result[0][tablename];
+
+	$rec_count_sql='select count(*) ct from '.$rec_init_arr[rec_tablename].';';
+	$rec_count_result=parent::select($rec_count_sql);
+	$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$pagenum_per);
+	if($pagenum_post_tmp==0){
+		if($pagenum_session_tmp==0){
+			$pagenum_session_tmp=1;
+		}
+	}else{
+		if ($pagenum_post_tmp>$rec_pagenum_total) {
+			$pagenum_post_tmp=$rec_pagenum_total;
+		}
+		$pagenum_session_tmp=$pagenum_post_tmp;
+	}
+
+	$rec_pagenum_start=(($pagenum_session_tmp-1)*$pagenum_per);
+
+	if($rec_pagenum_start>=$rec_count_result[0][ct]) $rec_pagenum_start=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$pagenum_per;
+		
 		return $this->rec_tablename;
 	}
 /**
+ * 初始化页数相关数据 $pagenum
+ */
+/**
 	 *生成page_bar div 内的 html 内容
 	 */
-	public function gen_pagebar_html($pagenum_post_tmp,$pagenum_session_tmp,$pagenum_per){
-		$rec_count_sql='select count(*) ct from '.$this->rec_tablename.';';
-		$rec_count_result=parent::select($rec_count_sql);
-		$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$pagenum_per);
-		if($pagenum_post_tmp==0){
-			if($pagenum_session_tmp==0){
-				$pagenum_session_tmp=1;
-			}
-		}else{
-			if ($pagenum_post_tmp>$rec_pagenum_total) {
-				$pagenum_post_tmp=$rec_pagenum_total;
-			}
-			$pagenum_session_tmp=$pagenum_post_tmp;
-		}
-		
-		$rec_pagenum_start=(($pagenum_session_tmp-1)*$pagenum_per);
-
-		if($rec_pagenum_start>=$rec_count_result[0][ct]) $rec_pagenum_start=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$pagenum_per;
+	public function gen_pagebar_html(){
 
 		$pagebar_html='<div style="margin-top:5px"><b>当前页数/总页数:'.$pagenum_session_tmp.'/'.$rec_pagenum_total.'</b>&nbsp;&nbsp;';
 		if($pagenum_session_tmp==1){
