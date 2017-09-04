@@ -7,10 +7,11 @@ private $rec_init_arr=array();
 /**
 	 *功能:构造函数，使用父类__construct，连接数据库
 	 */
-	public function __construct($menu_sub_id,$pagenum_post_tmp,$pagenum_session_tmp,$pagenum_per){
+	public function __construct($menu_sub_id,$pagenum_post_tmp,$pagenum_session_tmp){
 		parent::__construct();
 		$this->menu_sub_id=$menu_sub_id;
-		$this->rec_init_arr=$this->init_recarr();
+		$this->pagenum_per=PERPAGENO;
+		$this->rec_init_arr=$this->init_recarr($pagenum_post_tmp,$pagenum_session_tmp);
 	}
 
 /**
@@ -48,7 +49,7 @@ private $rec_init_arr=array();
 
 	$rec_count_sql='select count(*) ct from '.$rec_init_arr[rec_tablename].';';
 	$rec_count_result=parent::select($rec_count_sql);
-	$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$pagenum_per);
+	$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$this->pagenum_per);
 	if($pagenum_post_tmp==0){
 		if($pagenum_session_tmp==0){
 			$pagenum_session_tmp=1;
@@ -60,9 +61,9 @@ private $rec_init_arr=array();
 		$pagenum_session_tmp=$pagenum_post_tmp;
 	}
 
-	$rec_pagenum_start=(($pagenum_session_tmp-1)*$pagenum_per);
+	$rec_pagenum_start=(($pagenum_session_tmp-1)*$this->pagenum_per);
 
-	if($rec_pagenum_start>=$rec_count_result[0][ct]) $rec_pagenum_start=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$pagenum_per;
+	if($rec_pagenum_start>=$rec_count_result[0][ct]) $rec_pagenum_start=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$this->pagenum_per;
 		
 		return $this->rec_tablename;
 	}
@@ -158,7 +159,7 @@ private $rec_init_arr=array();
 		}
 		$rec_body_column_sql_part=substr($rec_body_column_sql_part,0,strlen($rec_body_column_sql_part)-1).' ';
 		$rec_head_html.='</tr>';
-		$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_tablename.' order by id desc limit '.$rec_pagenum_start.','.$pagenum_per.';';
+		$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_tablename.' order by id desc limit '.$rec_pagenum_start.','.$this->pagenum_per.';';
 return $rec_body_column_sql;
 //		$rec_body_column_result=parent::select($rec_body_column_sql);
 //		$rec_body_1m_colname_sql='';
