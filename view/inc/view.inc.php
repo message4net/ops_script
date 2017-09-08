@@ -7,81 +7,73 @@ private $rec_init_arr=array();
 /**
 	 *功能:构造函数，使用父类__construct，连接数据库
 	 */
-	public function __construct($menu_sub_id,$pagenum_post_tmp,$pagenum_session_tmp){
+	public function __construct($menu_sub_id,$rec_pagenum_post_tmp='',$rec_pagenum_session_tmp=''){
 		parent::__construct();
 		$this->menu_sub_id=$menu_sub_id;
+		$this->rec_pagenum_post_tmp=$rec_pagenum_post_tmp;
+		$this->rec_pagenum_session_tmp=$rec_pagenum_session_tmp;
 		$this->pagenum_per=PERPAGENO;
-		$this->rec_init_arr=$this->init_recarr($pagenum_post_tmp,$pagenum_session_tmp);
+		$this->rec_init_arr=$this->init_recarr();
 	}
-
+/**
+ * temp
+ */
+	public function gen_session_pagenum(){
+		if(is_numeric($this->rec_pagenum_post_tmp)){
+			if($this->rec_pagenum_post_tmp==0){
+				if($this->rec_pagenum_session_tmp==0){
+					$this->rec_pagenum_session_tmp=1;
+				}
+			}else{
+				if ($this->rec_pagenum_post_tmp>$rec_pagenum_total) {
+					$this->rec_pagenum_post_tmp=$rec_pagenum_total;
+				}
+				$rec_pagenum_session=$this->rec_pagenum_post_tmp;
+			}
+		}elseif(!is_numeric($this->rec_pagenum_session_tmp) || $this->rec_pagenum_session_tmp==0){
+			$rec_pagenum_session=1;
+		}
+		
+		return $rec_pagenum_session;
+	}
+/**
+ * 生成$rec_pagenum_total
+ */	
+	public function gen_rec_pagenum_total(){
+		$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].';';
+		$rec_count_result=parent::select($rec_count_sql);
+		$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$this->pagenum_per);
+		return $rec_pagenum_total;
+	}
+	
 /**
  *初始化数据 
  */
 	public function init_recarr(){
-//		$this->rec_tablename_sql='select * from menu where id='.$this->menu_sub_id;
-//		$this->rec_tablename_result=parent::select($this->rec_tablename_sql);
-//		$this->rec_tablename=$this->rec_tablename_result[0][tablename];
-//		
-//		$rec_count_sql='select count(*) ct from '.$this->rec_tablename.';';
-//		$rec_count_result=parent::select($rec_count_sql);
-//		$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$pagenum_per);
-//		if($pagenum_post_tmp==0){
-//			if($pagenum_session_tmp==0){
-//				$pagenum_session_tmp=1;
-//			}
-//		}else{
-//			if ($pagenum_post_tmp>$rec_pagenum_total) {
-//				$pagenum_post_tmp=$rec_pagenum_total;
-//			}
-//			$pagenum_session_tmp=$pagenum_post_tmp;
-//		}
-//		
-//		$rec_pagenum_start=(($pagenum_session_tmp-1)*$pagenum_per);
-//		
-//		if($rec_pagenum_start>=$rec_count_result[0][ct]) $rec_pagenum_start=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$pagenum_per;
-
-		
-		
-		
-	$rec_tablename_sql='select * from menu where id='.$this->menu_sub_id;
-	$rec_tablename_result=parent::select(rec_tablename_sql);
-	$rec_init_arr[rec_tablename]=$rec_tablename_result[0][tablename];
-
-	$rec_count_sql='select count(*) ct from '.$rec_init_arr[rec_tablename].';';
-	$rec_count_result=parent::select($rec_count_sql);
-	$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$this->pagenum_per);
-	if($pagenum_post_tmp==0){
-		if($pagenum_session_tmp==0){
-			$pagenum_session_tmp=1;
-		}
-	}else{
-		if ($pagenum_post_tmp>$rec_pagenum_total) {
-			$pagenum_post_tmp=$rec_pagenum_total;
-		}
-		$pagenum_session_tmp=$pagenum_post_tmp;
+		$rec_tablename_sql='select * from menu where id='.$this->menu_sub_id;
+		$rec_tablename_result=parent::select($rec_tablename_sql);
+		$this->rec_init_arr[rec_tablename]=$rec_tablename_result[0][tablename];
+		$this->rec_init_arr[menusub_parent_id]=$rec_tablename_result[0][parent_id];
+		$this->rec_init_arr[rec_pagenum_total]=$this->gen_rec_pagenum_total();
+		$this->rec_init_arr[rec_pagenum_session]=$this->gen_session_pagenum();
+		$this->rec_init_arr[rec_pagenum_start]=(($this->rec_init_arr[rec_pagenum_session]-1)*$this->pagenum_per);
+		if($this->rec_init_arr[rec_pagenum_start]>=$rec_count_result[0][ct]) $this->rec_init_arr[rec_pagenum_start]=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$this->pagenum_per;
+			
+		return $this->rec_init_arr;
 	}
 
-	$rec_pagenum_start=(($pagenum_session_tmp-1)*$this->pagenum_per);
-
-	if($rec_pagenum_start>=$rec_count_result[0][ct]) $rec_pagenum_start=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$this->pagenum_per;
-		
-		return $this->rec_tablename;
-	}
-/**
- * 初始化页数相关数据 $pagenum
- */
 /**
 	 *生成page_bar div 内的 html 内容
 	 */
 	public function gen_pagebar_html(){
 
-		$pagebar_html='<div style="margin-top:5px"><b>当前页数/总页数:'.$pagenum_session_tmp.'/'.$rec_pagenum_total.'</b>&nbsp;&nbsp;';
-		if($pagenum_session_tmp==1){
-			if($pagenum_session_tmp<>$rec_pagenum_total)
-				$pagebar_html.='首页&nbsp;&nbsp;上一页&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($pagenum_session_tmp+1).'">下一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.$rec_pagenum_total.'">尾页</a>&nbsp;&nbsp;';
+		$pagebar_html='<div style="margin-top:5px"><b>当前页数/总页数:'.$rec_pagenum_session_tmp.'/'.$rec_pagenum_total.'</b>&nbsp;&nbsp;';
+		if($rec_pagenum_session_tmp==1){
+			if($rec_pagenum_session_tmp<>$rec_pagenum_total)
+				$pagebar_html.='首页&nbsp;&nbsp;上一页&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($rec_pagenum_session_tmp+1).'">下一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.$rec_pagenum_total.'">尾页</a>&nbsp;&nbsp;';
 		}else{
-			if($pagenum_session_tmp<>$rec_pagenum_total) $pagebar_html.='<a href="javascript:void(0);" id="1">首页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($pagenum_session_tmp-1).'">上一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($pagenum_session_tmp+1).'">下一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.$rec_pagenum_total.'">尾页</a>&nbsp;&nbsp;';
-			else $pagebar_html.='<a href="javascript:void(0);" id="1">首页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($pagenum_session_tmp-1).'">上一页</a>&nbsp;&nbsp;下一页&nbsp;&nbsp;尾页&nbsp;&nbsp;';
+			if($rec_pagenum_session_tmp<>$rec_pagenum_total) $pagebar_html.='<a href="javascript:void(0);" id="1">首页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($rec_pagenum_session_tmp-1).'">上一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($rec_pagenum_session_tmp+1).'">下一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.$rec_pagenum_total.'">尾页</a>&nbsp;&nbsp;';
+			else $pagebar_html.='<a href="javascript:void(0);" id="1">首页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($rec_pagenum_session_tmp-1).'">上一页</a>&nbsp;&nbsp;下一页&nbsp;&nbsp;尾页&nbsp;&nbsp;';
 		}
 		$pagebar_html.='跳转至<input id="pageinput" type="text" style="width:25px;"/>页';
 		$pagebar_html.='<button id="pagebutton" type="button"><span style="width:50px;font-size:9px">点击跳转</span></button></div>';
@@ -93,9 +85,10 @@ private $rec_init_arr=array();
 	}
 
 	public function gen_navpos_html($menusub_parent_id,$tailname,$strtips){
+		if($menusub_parent_id==-1) $menusub_parent_id=$this->menu_sub_id;
 		if($menusub_parent_id!=0){
 			$navpos_result_tmp=parent::select("select * from menu where id=".$menusub_parent_id);
-			$strtips_tmp=$navpos_result_tmp[0][name].'->'.$strtips;
+			$strtips_tmp.=$navpos_result_tmp[0][name].'->'.$strtips;
 			return $this->gen_navpos_html($navpos_result_tmp[0][parent_id],$tailname,$strtips_tmp);
 		}else{
 			$strtips='<div style="float:left"><b>当前位置:<i>'.$strtips.$tailname.'</i></b></div>';
@@ -159,66 +152,64 @@ private $rec_init_arr=array();
 		}
 		$rec_body_column_sql_part=substr($rec_body_column_sql_part,0,strlen($rec_body_column_sql_part)-1).' ';
 		$rec_head_html.='</tr>';
-		$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_tablename.' order by id desc limit '.$rec_pagenum_start.','.$this->pagenum_per.';';
-return $rec_body_column_sql;
-//		$rec_body_column_result=parent::select($rec_body_column_sql);
-//		$rec_body_1m_colname_sql='';
-//		foreach ($rec_body_column_result as $val){
-//			$rec_body_1m_colname_sql.=$val[id].',';
-//		}
-//		$rec_body_1m_colname_sql=substr($rec_body_1m_colname_sql,0,strlen($rec_body_1m_colname_sql)-1);
-//		foreach ($rec_body_1m_result as $val){
-//			if ($val[sqlstr_body]=='') {
-//				$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-//			}else{
-//				$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-//			}
-//			$rec_body_1m_str_result=parent::select($rec_body_1m_str_sql);
-//			foreach ($rec_body_1m_str_result as $val1) {
-//				$rec_body_1m_str_arr[$val1[mainid]][$val1[subid]]=$val1[name];
-//			}
-//		}
-//		
-//		
-//		$rec_body_html='';
-//		$count=1;
-//		foreach ($rec_body_column_result as $key=>$val) {
-//			$rec_body_html.='<tr>';
-//			$rec_body_1m_html='';
-//			foreach ($val as $key1=>$val1){
-//				if ($key1=='id') {
-//					$tmpid=$val1;
-//					$rec_body_html.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
-//					foreach ($func_content_result as $val2){
-//						if ($val2[flag]==1) {
-//							$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
-//						}else{
-//							$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
-//						}
-//					}
-//					$rec_body_html.='</td>';
-//				}else{
-//					$rec_body_html.='<td>'.$val1.'</td>';
-//				}
-//				if ($key1=='id') {
-//					$rec_body_1m_html_str='';
-//					if ($rec_body_1m_str_arr[$val1]) {
-//						foreach ($rec_body_1m_str_arr[$val1] as $val2){
-//							$rec_body_1m_html_str.='@'.$val2;
-//						}
-//					}else{
-//						$rec_body_1m_html_str.='';
-//					}
-//					$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
-//				}
-//			}
-//			$rec_body_html.=$rec_body_1m_html.'</tr>';
-//			$count++;
-//		}
-//		$rec_body_html.='</tr></table>';
-//		$rec_html=$rec_head_html.$rec_body_html;
-////		$returnarr[content][content]=$rec_html;
-////		$returnarr[content][tips]='';
+		$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' order by id desc limit '.$this->rec_init_arr[rec_pagenum_start].','.$this->pagenum_per.';';
+		$rec_body_column_result=parent::select($rec_body_column_sql);
+		$rec_body_1m_colname_sql='';
+		foreach ($rec_body_column_result as $val){
+			$rec_body_1m_colname_sql.=$val[id].',';
+		}
+		$rec_body_1m_colname_sql=substr($rec_body_1m_colname_sql,0,strlen($rec_body_1m_colname_sql)-1);
+		foreach ($rec_body_1m_result as $val){
+			if ($val[sqlstr_body]=='') {
+				$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+			}else{
+				$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+			}
+			$rec_body_1m_str_result=parent::select($rec_body_1m_str_sql);
+			foreach ($rec_body_1m_str_result as $val1) {
+				$rec_body_1m_str_arr[$val1[mainid]][$val1[subid]]=$val1[name];
+			}
+		}
+		
+		$rec_body_html='';
+		$count=1;
+		foreach ($rec_body_column_result as $key=>$val) {
+			$rec_body_html.='<tr>';
+			$rec_body_1m_html='';
+			foreach ($val as $key1=>$val1){
+				if ($key1=='id') {
+					$tmpid=$val1;
+					$rec_body_html.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
+					foreach ($func_content_result as $val2){
+						if ($val2[flag]==1) {
+							$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
+						}else{
+							$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
+						}
+					}
+					$rec_body_html.='</td>';
+				}else{
+					$rec_body_html.='<td>'.$val1.'</td>';
+				}
+				if ($key1=='id') {
+					$rec_body_1m_html_str='';
+					if ($rec_body_1m_str_arr[$val1]) {
+						foreach ($rec_body_1m_str_arr[$val1] as $val2){
+							$rec_body_1m_html_str.='@'.$val2;
+						}
+					}else{
+						$rec_body_1m_html_str.='';
+					}
+					$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
+				}
+			}
+			$rec_body_html.=$rec_body_1m_html.'</tr>';
+			$count++;
+		}
+		$rec_body_html.='</tr></table>';
+		$rec_html=$rec_head_html.$rec_body_html;
+//		$returnarr[content][content]=$rec_html;
+//		$returnarr[content][tips]='';
 		
 	}
 
