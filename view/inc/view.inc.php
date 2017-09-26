@@ -10,31 +10,30 @@ private $rec_init_arr=array();
 	public function __construct($menu_sub_id,$rec_pagenum_post_tmp='',$rec_pagenum_session_tmp=''){
 		parent::__construct();
 		$this->menu_sub_id=$menu_sub_id;
-		$this->rec_pagenum_post_tmp=$rec_pagenum_post_tmp;
-		$this->rec_pagenum_session_tmp=$rec_pagenum_session_tmp;
 		$this->pagenum_per=PERPAGENO;
 		$this->rec_init_arr=$this->init_recarr();
+		$this->rec_pagenum_post=$this->gen_rec_pagenum_post($rec_pagenum_post_tmp);
 	}
 /**
- * temp
+ * 功能:生成当前pagenum
  */
-	public function gen_session_pagenum(){
-		if(is_numeric($this->rec_pagenum_post_tmp)){
-			if($this->rec_pagenum_post_tmp==0){
-				if($this->rec_pagenum_session_tmp==0){
-					$this->rec_pagenum_session_tmp=1;
-				}
+	public function gen_rec_pagenum_post($rec_pagenum_post_tmp){
+		if(is_numeric($rec_pagenum_post_tmp)){
+			if($rec_pagenum_post_tmp==0){
+				$rec_pagenum_post_tmp=1;
 			}else{
-				if ($this->rec_pagenum_post_tmp>$rec_pagenum_total) {
-					$this->rec_pagenum_post_tmp=$rec_pagenum_total;
+				if ($rec_pagenum_post_tmp>$rec_pagenum_total) {
+					$rec_pagenum_post_tmp=$rec_pagenum_total;
 				}
-				$rec_pagenum_session=$this->rec_pagenum_post_tmp;
 			}
-		}elseif(!is_numeric($this->rec_pagenum_session_tmp) || $this->rec_pagenum_session_tmp==0){
-			$rec_pagenum_session=1;
+		}else{
+			$rec_pagenum_post_tmp=1;
 		}
+
+		$rec_pagenum_post=$rec_pagenum_post_tmp;
+
+		return $rec_pagenum_post;
 		
-		return $rec_pagenum_session;
 	}
 /**
  * 生成$rec_pagenum_total
@@ -49,13 +48,13 @@ private $rec_init_arr=array();
 /**
  *初始化数据 
  */
-	public function init_recarr(){
+	public function init_recarr($rec_pagenum_post_tmp=''){
 		$rec_tablename_sql='select * from menu where id='.$this->menu_sub_id;
 		$rec_tablename_result=parent::select($rec_tablename_sql);
 		$this->rec_init_arr[rec_tablename]=$rec_tablename_result[0][tablename];
 		$this->rec_init_arr[menusub_parent_id]=$rec_tablename_result[0][parent_id];
 		$this->rec_init_arr[rec_pagenum_total]=$this->gen_rec_pagenum_total();
-		$this->rec_init_arr[rec_pagenum_session]=$this->gen_session_pagenum();
+		$this->rec_init_arr[rec_pagenum_post]=$this->gen_rec_pagenum_post($rec_pagenum_post_tmp);
 		$this->rec_init_arr[rec_pagenum_start]=(($this->rec_init_arr[rec_pagenum_session]-1)*$this->pagenum_per);
 		if($this->rec_init_arr[rec_pagenum_start]>=$rec_count_result[0][ct]) $this->rec_init_arr[rec_pagenum_start]=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$this->pagenum_per;
 			
