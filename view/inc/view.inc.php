@@ -1,48 +1,51 @@
 <?php 
-require_once dirname(dirname(__FILE__)).'/cfg/base.cfg.php';
-require_once BASE_DIR.INC_DIR.INC_DB;
+//require_once dirname(dirname(__FILE__)).'/cfg/base.cfg.php';
+//require_once BASE_DIR.INC_DIR.INC_DB;
 
-class View extends DBSql {
+class ViewMain extends DBSql {
 private $rec_init_arr=array();
 /**
 	 *功能:构造函数，使用父类__construct，连接数据库
 	 */
-	public function __construct($menu_sub_id,$rec_pagenum_post_tmp='',$rec_pagenum_session_tmp=''){
+	public function __construct($menu_sub_id,$rec_pagenum_post_tmp=''){
 		parent::__construct();
 		$this->menu_sub_id=$menu_sub_id;
 		$this->pagenum_per=PERPAGENO;
-		$this->rec_init_arr=$this->init_recarr();
-		$this->rec_pagenum_post=$this->gen_rec_pagenum_post($rec_pagenum_post_tmp);
+		$this->rec_pagenum_post_tmp=$rec_pagenum_post_tmp;
+		$this->rec_init_arr=$this->init_recarr($this->rec_pagenum_post_tmp);
 	}
 /**
  * 功能:生成当前pagenum
  */
-	public function gen_rec_pagenum_post($rec_pagenum_post_tmp){
-		if(is_numeric($rec_pagenum_post_tmp)){
-			if($rec_pagenum_post_tmp==0){
-				$rec_pagenum_post_tmp=1;
+	public function gen_rec_pagenum_post(){
+		if(is_numeric($this->rec_pagenum_post_tmp)){
+			if($this->rec_pagenum_post_tmp==0){
+				$this->rec_pagenum_post_tmp=1;
 			}else{
-				if ($rec_pagenum_post_tmp>$rec_pagenum_total) {
-					$rec_pagenum_post_tmp=$rec_pagenum_total;
+				if ($this->rec_pagenum_post_tmp>$this->rec_init_arr[rec_pagenum_total]) {
+					$this->rec_pagenum_post_tmp=$this->rec_init_arr[rec_pagenum_total];
 				}
 			}
 		}else{
 			$rec_pagenum_post_tmp=1;
 		}
 
-		$rec_pagenum_post=$rec_pagenum_post_tmp;
+		$rec_pagenum_post=$this->rec_pagenum_post_tmp;
 
 		return $rec_pagenum_post;
 		
 	}
 /**
- * 生成$rec_pagenum_total
+ * 生成$this->rec_init_arr[rec_pagenum_total]
  */	
 	public function gen_rec_pagenum_total(){
 		$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].';';
 		$rec_count_result=parent::select($rec_count_sql);
 		$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$this->pagenum_per);
-		return $rec_pagenum_total;
+		$rec[count]=$rec_count_result[0][ct];
+		$rec[pagenum_total]=$rec_pagenum_total;
+		//return $rec_pagenum_total;
+		return $rec;
 	}
 	
 /**
@@ -53,10 +56,12 @@ private $rec_init_arr=array();
 		$rec_tablename_result=parent::select($rec_tablename_sql);
 		$this->rec_init_arr[rec_tablename]=$rec_tablename_result[0][tablename];
 		$this->rec_init_arr[menusub_parent_id]=$rec_tablename_result[0][parent_id];
-		$this->rec_init_arr[rec_pagenum_total]=$this->gen_rec_pagenum_total();
+		$rec=$this->gen_rec_pagenum_total();
+		$this->rec_init_arr[rec_pagenum_total]=$rec[pagenum_total];
+		$this->rec_init_arr[rec_count]=$rec[count];
 		$this->rec_init_arr[rec_pagenum_post]=$this->gen_rec_pagenum_post($rec_pagenum_post_tmp);
-		$this->rec_init_arr[rec_pagenum_start]=(($this->rec_init_arr[rec_pagenum_session]-1)*$this->pagenum_per);
-		if($this->rec_init_arr[rec_pagenum_start]>=$rec_count_result[0][ct]) $this->rec_init_arr[rec_pagenum_start]=$rec_count_result[0][ct]-$rec_count_result[0][ct]%$this->pagenum_per;
+		$this->rec_init_arr[rec_pagenum_start]=(($this->rec_init_arr[rec_pagenum_post]-1)*$this->pagenum_per);
+		if($this->rec_init_arr[rec_pagenum_start]>=$this->rec_init_arr[rec_pagenum_total]) $this->rec_init_arr[rec_pagenum_start]=$this->rec_init_arr[rec_count]-$this->rec_init_arr[rec_count]%$this->pagenum_per;
 			
 		return $this->rec_init_arr;
 	}
@@ -66,13 +71,13 @@ private $rec_init_arr=array();
 	 */
 	public function gen_pagebar_html(){
 
-		$pagebar_html='<div style="margin-top:5px"><b>当前页数/总页数:'.$rec_pagenum_session_tmp.'/'.$rec_pagenum_total.'</b>&nbsp;&nbsp;';
-		if($rec_pagenum_session_tmp==1){
-			if($rec_pagenum_session_tmp<>$rec_pagenum_total)
-				$pagebar_html.='首页&nbsp;&nbsp;上一页&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($rec_pagenum_session_tmp+1).'">下一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.$rec_pagenum_total.'">尾页</a>&nbsp;&nbsp;';
+		$pagebar_html='<div style="margin-top:5px"><b>当前页数/总页数:'.$this->rec_init_arr[rec_pagenum_post].'/'.$this->rec_init_arr[rec_pagenum_total].'</b>&nbsp;&nbsp;';
+		if($this->rec_init_arr[rec_pagenum_post]==1){
+			if($this->rec_init_arr[rec_pagenum_post]<>$this->rec_init_arr[rec_pagenum_total])
+				$pagebar_html.='首页&nbsp;&nbsp;上一页&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($this->rec_init_arr[rec_pagenum_post]+1).'">下一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.$this->rec_init_arr[rec_pagenum_total].'">尾页</a>&nbsp;&nbsp;';
 		}else{
-			if($rec_pagenum_session_tmp<>$rec_pagenum_total) $pagebar_html.='<a href="javascript:void(0);" id="1">首页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($rec_pagenum_session_tmp-1).'">上一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($rec_pagenum_session_tmp+1).'">下一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.$rec_pagenum_total.'">尾页</a>&nbsp;&nbsp;';
-			else $pagebar_html.='<a href="javascript:void(0);" id="1">首页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($rec_pagenum_session_tmp-1).'">上一页</a>&nbsp;&nbsp;下一页&nbsp;&nbsp;尾页&nbsp;&nbsp;';
+			if($this->rec_init_arr[rec_pagenum_post]<>$this->rec_init_arr[rec_pagenum_total]) $pagebar_html.='<a href="javascript:void(0);" id="1">首页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($this->rec_init_arr[rec_pagenum_post]-1).'">上一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($this->rec_init_arr[rec_pagenum_post]+1).'">下一页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.$this->rec_init_arr[rec_pagenum_total].'">尾页</a>&nbsp;&nbsp;';
+			else $pagebar_html.='<a href="javascript:void(0);" id="1">首页</a>&nbsp;&nbsp;<a href="javascript:void(0);" id="'.($this->rec_init_arr[rec_pagenum_post]-1).'">上一页</a>&nbsp;&nbsp;下一页&nbsp;&nbsp;尾页&nbsp;&nbsp;';
 		}
 		$pagebar_html.='跳转至<input id="pageinput" type="text" style="width:25px;"/>页';
 		$pagebar_html.='<button id="pagebutton" type="button"><span style="width:50px;font-size:9px">点击跳转</span></button></div>';
@@ -207,6 +212,7 @@ private $rec_init_arr=array();
 		}
 		$rec_body_html.='</tr></table>';
 		$rec_html=$rec_head_html.$rec_body_html;
+		return $rec_html;
 //		$returnarr[content][content]=$rec_html;
 //		$returnarr[content][tips]='';
 		
