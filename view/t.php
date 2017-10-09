@@ -5,43 +5,51 @@ require_once BASE_DIR.INC_DIR.INC_DB;
 require_once BASE_DIR.INC_DIR.INC_VIEW;
 
 $tmpid=4;
+$_POST[page]='a';
 
-$view_tmp=new View($tmpid,1);
-
-echo "###post###<br/>";
-$a=$view_tmp->gen_rec_pagenum_post();
-var_dump($a);
-echo "<br/>###<br/>";
-
-echo "###total###<br/>";
-$a=$view_tmp->gen_rec_pagenum_total();
-var_dump($a);
-echo "<br/>###<br/>";
+$view_tmp=new ViewMain($tmpid,$_POST[page]);
 
 echo "###init###<br/>";
-$a=$view_tmp->init_recarr(4,2);
+$a=$view_tmp->init_recarr();
 var_dump($a);
 echo "<br/>###<br/>";
 
-echo "###bar###<br/>";
-$a=$view_tmp->gen_pagebar_html();
-var_dump($a);
-echo "<br/>###<br/>";
+//echo "###post###<br/>";
+//$a=$view_tmp->gen_rec_pagenum_post();
+//var_dump($a);
+//echo "<br/>###<br/>";
+//
+//echo "###total###<br/>";
+//$a=$view_tmp->gen_rec_pagenum_total();
+//var_dump($a);
+//echo "<br/>###<br/>";
+//
+//echo "###init###<br/>";
+//$a=$view_tmp->init_recarr(4,2);
+//var_dump($a);
+//echo "<br/>###<br/>";
+//
+//echo "###bar###<br/>";
+//$a=$view_tmp->gen_pagebar_html();
+//var_dump($a);
+//echo "<br/>###<br/>";
+//
+//echo "###nav###<br/>";
+//$a=$view_tmp->gen_navpos_html(-1,'修改','');
+////$a=$view_tmp->gen_navpos_html();
+//var_dump($a);
+//echo "<br/>###<br/>";
+//
+//echo "###func###<br/>";
+//$a=$view_tmp->gen_func_html();
+//var_dump($a);
+//echo "<br/>###<br/>";
+//
+//echo "###content###<br/>";
+//$a=$view_tmp->gen_view_content_html();
+//var_dump($a);
+//echo "<br/>###<br/>";
 
-echo "###nav###<br/>";
-$a=$view_tmp->gen_navpos_html(-1,'修改','');
-var_dump($a);
-echo "<br/>###<br/>";
-
-echo "###func###<br/>";
-$a=$view_tmp->gen_func_html();
-var_dump($a);
-echo "<br/>###<br/>";
-
-echo "###content###<br/>";
-$a=$view_tmp->gen_view_content_html();
-var_dump($a);
-echo "<br/>###<br/>";
 
 //var_dump($_SESSION);
 //$a=array(array(1,1),array(1,2),array(1,4),array(1,5));

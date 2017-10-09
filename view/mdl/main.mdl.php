@@ -8,8 +8,6 @@ if ($_POST[id]!='') {
 }
 
 $view=new ViewMain($_SESSION[menu_sub_id],$_POST[page]);
-//$returnarr[0][0]='qqq';
-//$returnarr[0][0]=BASE_DIR.INC_DIR.INC_VIEW;
 //echo json_encode($returnarr);
 //unset($returnarr);
 

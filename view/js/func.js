@@ -1,7 +1,7 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.ctr.php','data':'\'page=\'+$(\'#pageinput\').val()'}]};
+			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'}]};
 
 //			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.ctr.php','data':'\'page=\'+$(\'#pageinput\').val()'}]};
 //			,{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'}			
@@ -15,7 +15,19 @@ $.extend({
 //	alert('aaa');
 //	$.ajx('mdl/main.mdl.php','');
 //});
-
+			
+			
+$('#menu_func').on('click','#word_search',function(){
+	if($('#search_word').val()!=''){
+		//str_tmp=' and '+$('#search_bar').attr('id')+' like \'%'+$('#search_word').val()+'%\' ';
+		//str_tmp=' and '+$('#search_bar option[selected]').attr('id')+' like \'%'+$('#search_word').val()+'%\' ';
+		str_tmp=' and '+$('#search_bar').val()+' like \'%'+$('#search_word').val()+'%\' ';
+	}
+	
+	//str_tmp=$('#search_word').val();
+	//$.ajx('mdl/main.mdl.php','');
+	alert(str_tmp);
+})	
 			
 			$('#content').on('click','input[name="contentall"]',function(){
 					if($('input[name="contentall"]').prop('checked')){
