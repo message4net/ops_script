@@ -1,18 +1,19 @@
 <?php session_start();
+echo '<table><tr><td><tr></table>';
 
-require_once dirname(__FILE__).'/cfg/base.cfg.php';
-require_once BASE_DIR.INC_DIR.INC_DB;
-require_once BASE_DIR.INC_DIR.INC_VIEW;
-
-$tmpid=4;
-$_POST[page]='a';
-
-$view_tmp=new ViewMain($tmpid,$_POST[page]);
-
-echo "###init###<br/>";
-$a=$view_tmp->init_recarr();
-var_dump($a);
-echo "<br/>###<br/>";
+//require_once dirname(__FILE__).'/cfg/base.cfg.php';
+//require_once BASE_DIR.INC_DIR.INC_DB;
+//require_once BASE_DIR.INC_DIR.INC_VIEW;
+//
+//$tmpid=4;
+//$_POST[page]='1';
+//
+//$view_tmp=new ViewMain($tmpid,$_POST[page],'name like \'%test%\' ');
+//
+//echo "###init###<br/>";
+//$a=$view_tmp->init_recarr();
+//var_dump($a);
+//echo "<br/>###<br/>";
 
 //echo "###post###<br/>";
 //$a=$view_tmp->gen_rec_pagenum_post();

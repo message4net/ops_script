@@ -1,21 +1,33 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/page.mdl.php','data':'\'page=\'+$(this).attr(\'id\')+\'&searchword=\'+$(\'#search_bar\').val()+\' like \\\'%\'+$(\'#search_word\').val()+\'%\\\' \''},{'eid':'page_bar','txt':'button','url':'mdl/page.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()+\'&searchword=\'+$(\'#search_bar\').val()+\' like \\\'%\'+$(\'#search_word\').val()+\'%\\\' \''}]};
+			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()'}]};
+
+//			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'page=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'button','url':'mdl/main.ctr.php','data':'\'page=\'+$(\'#pageinput\').val()'}]};
+//			,{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'}			
 
 			tmpurl='mdl/menu.mdl.php';
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
 			$.main(datajson.paras);
-		
-			$('#menu_func').on('click','#word_search',function(){
-				if($('#search_word').val()!=''){
-					str_tmp=$('#search_bar').val()+' like \'%'+$('#search_word').val()+'%\' ';
-//				}else if($('#search_word').attr('value')!=''){
-//					str_tmp=$('#search_word').attr('value');
-				}
-				$.ajx('mdl/search.mdl.php','searchword='+str_tmp);
-			})	
+
+//$('#menu_sub').on('click','a',function(){
+//	alert('aaa');
+//	$.ajx('mdl/main.mdl.php','');
+//});
+			
+			
+$('#menu_func').on('click','#word_search',function(){
+	if($('#search_word').val()!=''){
+		//str_tmp=' and '+$('#search_bar').attr('id')+' like \'%'+$('#search_word').val()+'%\' ';
+		//str_tmp=' and '+$('#search_bar option[selected]').attr('id')+' like \'%'+$('#search_word').val()+'%\' ';
+		str_tmp=' and '+$('#search_bar').val()+' like \'%'+$('#search_word').val()+'%\' ';
+	}
+	
+	//str_tmp=$('#search_word').val();
+	//$.ajx('mdl/main.mdl.php','');
+	alert(str_tmp);
+})	
 			
 			$('#content').on('click','input[name="contentall"]',function(){
 					if($('input[name="contentall"]').prop('checked')){
@@ -38,33 +50,27 @@ $.extend({
 				tmpfnc=$(this).attr('id').substring(0,9);
 				$.ajx('mdl/modify_view.mdl.php','fnc='+tmpfnc+'&recid='+tmpid);
 			});
-
-			$('#content').on('click','[id^=func_set_]',function(){
-				tmpid=$(this).attr('id').substring(9);
-				tmpfnc=$(this).attr('id').substring(0,9);
-				$.ajx('mdl/set_view.mdl.php','fnc='+tmpfnc+'&recid='+tmpid);
-			});
-
+			
 			$('#content').on('click','[id^=func_del_]',function(){
 				tmpid=$(this).attr('id').substring(9);
 				tmpfnc=$(this).attr('id').substring(0,8);
 				$.ajx('mdl/modify.mdl.php','fnc='+tmpfnc+'&recid='+tmpid);
 			});
 
-			$('#menu_func').on('click','#func_delall',function(){
-				if($(':checkbox').is(':checked')){
-					tmpstrchecked='';
-					$('[name=contentlist]:checkbox:checked').each(function(){
-						tmpstrchecked+=$(this).attr('id')+',';
-					});
-					tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
-				}else{
-					alert('请选择需要删除的权限后，再点击批删除');
-				}
-				tmpfnc=$(this).attr('id');
-				tmpdata='fnc='+tmpfnc+'&tmpstr='+tmpstrchecked;
-				$.ajx('mdl/modify.mdl.php',tmpdata);
-			})			
+$('#menu_func').on('click','#func_delall',function(){
+	if($(':checkbox').is(':checked')){
+		tmpstrchecked='';
+		$('[name=contentlist]:checkbox:checked').each(function(){
+			tmpstrchecked+=$(this).attr('id')+',';
+		});
+		tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
+	}else{
+		alert('请选择需要删除的权限后，再点击批删除');
+	}
+	tmpfnc=$(this).attr('id');
+	tmpdata='fnc='+tmpfnc+'&tmpstr='+tmpstrchecked;
+	$.ajx('mdl/modify.mdl.php',tmpdata);
+})			
 			
 			$('#content').on('click','[id^=m_v_s_]',function(){
 				if($('#name').val()==''){

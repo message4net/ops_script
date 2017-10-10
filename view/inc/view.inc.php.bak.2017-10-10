@@ -41,15 +41,13 @@ private $rec_init_arr=array();
 		if($this->rec_word_search==''){
 			$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].';';
 		}else{
-			$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.';';
+			$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].' and '.$this->rec_word_search.';';
 		}
 		
 		$rec_count_result=parent::select($rec_count_sql);
 		$rec_count_result[0][ct]==0?$rec_pagenum_total=1:$rec_pagenum_total=ceil($rec_count_result[0][ct]/$this->pagenum_per);
 		$rec[count]=$rec_count_result[0][ct];
 		$rec[pagenum_total]=$rec_pagenum_total;
-		
-		$rec[sql_tmp]=$rec_count_sql;
 
 		return $rec;
 	}
@@ -69,8 +67,6 @@ private $rec_init_arr=array();
 		$this->rec_init_arr[rec_num_start]=(($this->rec_init_arr[rec_pagenum_post]-1)*$this->pagenum_per);
 		if($this->rec_init_arr[rec_num_start]>=$this->rec_init_arr[rec_count]) $this->rec_init_arr[rec_num_start]=$this->rec_init_arr[rec_count]-$this->rec_init_arr[rec_count]%$this->pagenum_per;
 
-		$this->rec_init_arr[sql_tmp]=$rec[sql_tmp];
-		
 		return $this->rec_init_arr;
 	}
 

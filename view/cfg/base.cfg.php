@@ -39,7 +39,7 @@
 	//web.mdl.php 引用
 	define(MDL_FOOT,'foot.mdl.php');
 	//
-	define(PERPAGENO,'5');
+	define(PERPAGENO,'3');
 //加载变量配置
 	require_once BASE_DIR.CFG_DIR.CFG_SLF;
 ?>

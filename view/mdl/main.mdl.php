@@ -6,16 +6,21 @@ require_once BASE_DIR.INC_DIR.INC_VIEW;
 if ($_POST[id]!='') {
 	$_SESSION[menu_sub_id]=$_POST[id];
 }
+if ($_POST[page]!='') {
+	$_SESSION[page]=$_POST[page];
+}
+if ($_POST[searchword]!='') {
+	$_SESSION[searchword]=$_POST[searchword];
+}
 
-$view=new ViewMain($_SESSION[menu_sub_id],$_POST[page]);
-//echo json_encode($returnarr);
-//unset($returnarr);
+$returnarr[0][0]=$_SESSION[searchword];
+
+$view=new ViewMain($_SESSION[menu_sub_id],$_SESSION[page],$_SESSION[searchword]);
 
 $returnarr[content][menu_func]=$view->gen_func_html();
 $returnarr[content][content]=$view->gen_view_content_html();
 $returnarr[content][page_bar]=$view->gen_pagebar_html();
 $returnarr[content][tips_nav]=$view->gen_navpos_html();
-
 
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
