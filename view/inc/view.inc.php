@@ -5,12 +5,14 @@ private $rec_init_arr=array();
 /**
 	 *功能:构造函数，使用父类__construct，连接数据库
 	 */
-	public function __construct($menu_sub_id,$rec_pagenum_post_tmp=1,$rec_word_search=''){
+	public function __construct($menu_sub_id,$rec_pagenum_post_tmp=1,$rec_word_search='',$rec_col_search=''){
 		parent::__construct();
 		$this->menu_sub_id=$menu_sub_id;
 		$this->pagenum_per=PERPAGENO;
 		$this->rec_pagenum_post_tmp=$rec_pagenum_post_tmp;
-		$this->rec_word_search=$rec_word_search;
+		if ($rec_word_search!=''){
+			$this->rec_word_search=$rec_col_search.' like \'%'.$rec_word_search.'%\' ';
+		}
 		$this->rec_init_arr=$this->init_recarr();
 	}
 /**
@@ -131,7 +133,7 @@ private $rec_init_arr=array();
 			foreach ($func_right_result as $val){
 				$func_html.='<option value="'.$val[colnameid].'">'.$val[name].'</option>';
 			}
-			$func_html.='</select><input id="search_word" type="text"/><button id="word_search">搜索</button></div>';
+			$func_html.='</select><input id="search_word" type="text"/><button id="word_search">搜索</button><button id="word_reset">重置</button></div>';
 		}
 		if ($func_html!='') {
 			return $func_html;

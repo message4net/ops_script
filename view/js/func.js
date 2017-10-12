@@ -1,20 +1,52 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/page.mdl.php','data':'\'page=\'+$(this).attr(\'id\')+\'&searchword=\'+$(\'#search_bar\').val()+\' like \\\'%\'+$(\'#search_word\').val()+\'%\\\' \''},{'eid':'page_bar','txt':'button','url':'mdl/page.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()+\'&searchword=\'+$(\'#search_bar\').val()+\' like \\\'%\'+$(\'#search_word\').val()+\'%\\\' \''}]};
+			////var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=memu&id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/page.mdl.php','data':'\'page=\'+$(this).attr(\'id\')+\'&searchword=\'+$(\'#search_bar\').val()+\' like \\\'%\'+$(\'#search_word\').val()+\'%\\\' \''},{'eid':'page_bar','txt':'button','url':'mdl/page.mdl.php','data':'\'page=\'+$(\'#pageinput\').val()+\'&searchword=\'+$(\'#search_bar\').val()+\' like \\\'%\'+$(\'#search_word\').val()+\'%\\\' \''}]};
+			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=memu&id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
+			//var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=memu&id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchword=\'+$(\'#search_bar\').val()+\'&searchcol=\'+$(\'#search_word\').val()'}]};
+			//,{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchword=\'+$(\'#search_bar\').val()+\'&searchcol=\'+$(\'#search_word\').val()'}
 
 			tmpurl='mdl/menu.mdl.php';
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
 			$.main(datajson.paras);
-		
+
+			$('#content').on('click','input[name="modall"]',function(){
+				if($('input[name="modall"]').prop('checked')){
+					$('input[name=mod'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
+						$(this).prop('checked',true);
+					})
+				}else{
+					$('input[name=mod'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
+						$(this).prop('checked',false);
+					})
+				}
+			})
+			
+			$('#content').on('click','input[name="viewall"]',function(){
+				if($('input[name="viewall"]').prop('checked')){
+					$('input[name=view'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
+						$(this).prop('checked',true);
+					})
+				}else{
+					$('input[name=view'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
+						$(this).prop('checked',false);
+					})
+				}
+			})
+			
 			$('#menu_func').on('click','#word_search',function(){
 				if($('#search_word').val()!=''){
-					str_tmp=$('#search_bar').val()+' like \'%'+$('#search_word').val()+'%\' ';
+					//str_tmp='searchword='+$('#search_bar').val()+' like \'%'+$('#search_word').val()+'%\' ';
+					str_tmp='func=search&searchword='+$('#search_word').val()+'&searchcol='+$('#search_bar').val();
 //				}else if($('#search_word').attr('value')!=''){
 //					str_tmp=$('#search_word').attr('value');
 				}
-				$.ajx('mdl/search.mdl.php','searchword='+str_tmp);
+				$.ajx('mdl/main.mdl.php',str_tmp);
+			})	
+			
+			$('#menu_func').on('click','#word_reset',function(){
+				$.ajx('mdl/main.mdl.php','func=reset');
 			})	
 			
 			$('#content').on('click','input[name="contentall"]',function(){

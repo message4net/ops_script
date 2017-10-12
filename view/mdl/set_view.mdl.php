@@ -32,9 +32,9 @@ if($_POST[recid]!=''){
 				$html_return_content.='<tr><td rowspan="2">'.$result_pri_dtl_name[0][name].'</td><td><input type="checkbox" name="modall" id="'.$result_pri_dtl_name[0][id].'">操作</td><td>';
 				foreach ($result_pri_mod as $val1){
 					if($val1[flag_set]==0){
-						$html_return_content.='<input id="'.$val1[id].'" type="checkbox">'.$val1[name];
+						$html_return_content.='<input id="'.$val1[id].'" name="mod'.$result_pri_dtl_name[0][id].'" type="checkbox">'.$val1[name];
 					}else{
-						$html_return_content.='<input id="'.$val1[id].'" type="checkbox" disabled="disabled" checked="checked">'.$val1[name];
+						$html_return_content.='<input id="'.$val1[id].'" name="mod'.$result_pri_dtl_name[0][id].'" type="checkbox" disabled="disabled" checked="checked">'.$val1[name];
 					}
 				}
 				$html_return_content.='</td></tr><tr><td><input type="checkbox" name="viewall id="'.$result_pri_dtl_name[0][id].'">浏览</td><td>';
