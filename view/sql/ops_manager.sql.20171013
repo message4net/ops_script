@@ -26,7 +26,7 @@ CREATE TABLE `col_user` (
   `menu_sub_id` int(11) NOT NULL,
   `wordbook_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `col_user` */
 
@@ -68,37 +68,11 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`) values (1,'默认权限'),(2,'测试权限'),(11,'test2'),(13,'test1'),(12,'testa'),(9,'全部权限'),(10,'空权限'),(14,'test3'),(18,'test_op_no'),(19,'test_op_1'),(20,'test_op_2'),(21,'test_op_all');
-
-/*Table structure for table `role_func` */
-
-DROP TABLE IF EXISTS `role_func`;
-
-CREATE TABLE `role_func` (
-  `role_id` int(11) NOT NULL,
-  `menu_sub_id` int(11) NOT NULL,
-  `wordbook_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `role_func` */
-
-/*Table structure for table `role_menu` */
-
-DROP TABLE IF EXISTS `role_menu`;
-
-CREATE TABLE `role_menu` (
-  `role_id` int(11) NOT NULL,
-  `menu_sub_id` int(11) NOT NULL,
-  PRIMARY KEY (`menu_sub_id`,`role_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*Data for the table `role_menu` */
-
-insert  into `role_menu`(`role_id`,`menu_sub_id`) values (1,4),(9,4),(12,4),(13,4),(19,4),(21,4),(1,5),(9,5),(11,5),(12,5),(20,5),(21,5);
+insert  into `role`(`id`,`name`) values (1,'默认权限'),(2,'测试权限'),(11,'test2'),(13,'test1'),(12,'testa'),(9,'全部权限'),(10,'空权限'),(14,'test3');
 
 /*Table structure for table `user` */
 
@@ -138,7 +112,7 @@ CREATE TABLE `wordbook` (
 
 /*Data for the table `wordbook` */
 
-insert  into `wordbook`(`id`,`type`,`flag`,`name`,`colnameid`,`seq`,`menu_sub_id`,`flag_set`,`sqlstr_head`,`sqlstr_body`,`sqlstr_foot`) values (1,1,0,'编号ID','id',1,4,1,NULL,NULL,NULL),(2,1,0,'权限名称','name',2,4,0,NULL,NULL,NULL),(3,2,0,'权限明细',NULL,3,4,0,'select role_id mainid,a.id subid,name from menu a,role_menu b where b.menu_sub_id=a.id and role_id in (',NULL,') ;'),(4,3,0,'新增','func_add',1,4,0,NULL,NULL,NULL),(5,3,0,'批删除','func_delall',2,4,0,NULL,NULL,NULL),(6,4,0,'权限名称','name',0,4,0,NULL,NULL,NULL),(7,5,0,'编辑','func_mod_',1,4,0,NULL,NULL,NULL),(8,5,1,'删除','func_del_',3,4,0,NULL,NULL,NULL),(9,6,0,'权限明细','detail',1,4,0,'select id,name from menu where parent_id>0 group by id;',NULL,NULL),(10,3,0,'字段设置','func_colset',3,4,1,NULL,NULL,NULL),(11,5,0,'设置','func_set_',2,4,0,NULL,NULL,NULL);
+insert  into `wordbook`(`id`,`type`,`flag`,`name`,`colnameid`,`seq`,`menu_sub_id`,`flag_set`,`sqlstr_head`,`sqlstr_body`,`sqlstr_foot`) values (1,1,0,'编号ID','id',1,4,1,NULL,NULL,NULL),(2,1,0,'权限名称','name',2,4,0,NULL,NULL,NULL),(3,2,0,'权限明细',NULL,3,4,0,'select role_id mainid,a.id subid,name from menu a,menu_role b where b.menu_id=a.id and role_id in (',NULL,') ;'),(4,3,0,'新增','func_add',1,4,0,NULL,NULL,NULL),(5,3,0,'批删除','func_delall',2,4,0,NULL,NULL,NULL),(6,4,0,'权限名称','name',0,4,0,NULL,NULL,NULL),(7,5,0,'编辑','func_mod_',1,4,0,NULL,NULL,NULL),(8,5,1,'删除','func_del_',3,4,0,NULL,NULL,NULL),(9,6,0,'权限明细','detail',1,4,0,'select id,name from menu where parent_id>0 group by id;',NULL,NULL),(10,3,0,'字段设置','func_colset',3,4,1,NULL,NULL,NULL),(11,5,0,'设置','func_set_',2,4,0,NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

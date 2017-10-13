@@ -18,14 +18,14 @@ if($_POST[recid]!=''){
 	switch ($_SESSION[menu_sub_id]) {
 		case 4:
 			$sql_pri_name='select * from '.$tablenameresult[0][tablename].' where id='.$_POST[recid];
-			$sql_pri_dtl_rel='select * from menu_role where role_id='.$_POST[recid];
+			$sql_pri_dtl_rel='select * from role_menu where role_id='.$_POST[recid];
 			$result_pri_name=$db_set_view->select($sql_pri_name);
 			$result_pri_dtl_rel=$db_set_view->select($sql_pri_dtl_rel);
 			$html_return_content.='<table><tr><td colspan="2">权限名称</td><td>'.$result_pri_name[0][name].'</td></tr>';
 			foreach ($result_pri_dtl_rel as $val){
-				$sql_pri_view='select * from wordbook where type in (1,2) and menu_sub_id='.$val[menu_id].' order by type,seq';
-				$sql_pri_mod='select * from wordbook where type in (3,5) and menu_sub_id='.$val[menu_id].' order by type,seq';
-				$sql_pri_dtl_name='select * from menu where id='.$val[menu_id].';';
+				$sql_pri_view='select * from wordbook where type in (1,2) and menu_sub_id='.$val[menu_sub_id].' order by type,seq';
+				$sql_pri_mod='select * from wordbook where type in (3,5) and menu_sub_id='.$val[menu_sub_id].' order by type,seq';
+				$sql_pri_dtl_name='select * from menu where id='.$val[menu_sub_id].';';
 				$result_pri_view=$db_set_view->select($sql_pri_view);
 				$result_pri_mod=$db_set_view->select($sql_pri_mod);
 				$result_pri_dtl_name=$db_set_view->select($sql_pri_dtl_name);
@@ -37,12 +37,12 @@ if($_POST[recid]!=''){
 						$html_return_content.='<input id="'.$val1[id].'" name="mod'.$result_pri_dtl_name[0][id].'" type="checkbox" disabled="disabled" checked="checked">'.$val1[name];
 					}
 				}
-				$html_return_content.='</td></tr><tr><td><input type="checkbox" name="viewall id="'.$result_pri_dtl_name[0][id].'">浏览</td><td>';
+				$html_return_content.='</td></tr><tr><td><input type="checkbox" name="viewall" id="'.$result_pri_dtl_name[0][id].'">浏览</td><td>';
 				foreach ($result_pri_view as $val2){
 					if($val2[flag_set]==0){
-						$html_return_content.='<input id="'.$val2[id].'" type="checkbox">'.$val2[name];
+						$html_return_content.='<input id="'.$val2[id].'" name="view'.$result_pri_dtl_name[0][id].'" type="checkbox">'.$val2[name];
 					}else{
-						$html_return_content.='<input id="'.$val2[id].'" type="checkbox" disabled="disabled" checked="checked">'.$val2[name];
+						$html_return_content.='<input id="'.$val2[id].'" name="view'.$result_pri_dtl_name[0][id].'" type="checkbox" disabled="disabled" checked="checked">'.$val2[name];
 					}
 				}
 				$html_return_content.='</td></tr>';

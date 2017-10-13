@@ -16,6 +16,65 @@ if($_POST[fnc]==''){
 
 $db_modify=new DBSql();
 switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
+	case m_v_s_set4:
+		$returnarr[0][0]='恭喜，正在调试权限set功能';
+		$tmpstrarr=explode(',',$_POST[tmpstr]);
+		if($_POST[recid]==1){
+			$tmptips='默认权限无法修改，请联系管理员';
+			break;
+		}else{
+			$tmprecid=$_POST[recid];
+		}
+//		$tmpname=$_POST[name];
+		$tmptips='';
+//		$tmpsql='select count(*) ct from role where name=\''.$tmpname.'\' and id='.$tmprecid.';';
+		$tmpsql1='select wordbook_id menu_sub_id from role_func where role_id='.$tmprecid.' and menu_sub_id='.$_SESSION[menu_sub_id].';';
+		$tmproleoriginmenuresult=$db_modify->select($tmpsql1);
+		$count=0;
+		if($tmproleoriginmenuresult[0]!=''){
+			foreach ($tmproleoriginmenuresult as $val){
+				$tmproleoriginmenuarr[$count]=$val[menu_sub_id];
+				$count++;
+			}
+		}else{
+			$tmproleoriginmenuarr=array();
+		}
+//		$tmpresult=$db_modify->select($tmpsql);
+		$tmpinsertarr=array_diff($tmpstrarr,$tmproleoriginmenuarr);
+		$tmpdelarr=array_diff($tmproleoriginmenuarr,$tmpstrarr);
+//		if($tmpresult[0][ct]==0){
+//			$tmpupdatesql='update role set name=\''.$tmpname.'\' where id='.$tmprecid.';';
+//			$tmptips.='权限名称更新成功,';
+//			$db_modify->update($tmpupdatesql);
+//		}else{
+//			$tmptips.='权限名称不需改变,';
+//		}
+		if(count($tmpinsertarr)<>0){
+			$tmpinssql='';
+			foreach($tmpinsertarr as $val) {
+				$tmpinssql.='('.$tmprecid.','.$_SESSION[menu_sub_id].','.$val.'),';
+			}
+			$tmpinssql=substr($tmpinssql,0,strlen($tmpinssql)-1).';';
+			$tmpinssql1='insert into role_func values '.substr($tmpinssql,0,strlen($tmpinssql)-1).';';
+			$db_modify->insert($tmpinssql1);
+			$tmptips.='功能明细设置成功,';
+		}else{
+			$tmptips.='权限明细无需设置,';
+		}
+		if(count($tmpdelarr)<>0){
+			$tmpdelsql='';
+			foreach ($tmpdelarr as $val) {
+				$tmpdelsql.=$val.',';
+			}
+			$tmpdelsql1='delete from role_func where role_id='.$tmprecid.' and menu_sub_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
+			$db_modify->delete($tmpdelsql1);
+			$tmptips.='功能明细删除成功,';
+		}else{
+			$tmptips.='功能明细无需删除,';
+		}
+		$returnarr[content][tips]='<div style="float:left">'.substr($tmptips,0,strlen($tmptips)-1).'</div>';
+		break;
+	;;
 	case m_v_s_add4:
 		$tmpsql='select count(*) ct from role where name=\''.$_POST[name].'\';';
 		$tmpresult=$db_modify->select($tmpsql);
@@ -27,7 +86,8 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 				$tmpsql2='';
 				$tmpstrarr=explode(',',$_POST[tmpstr]);
 				foreach ($tmpstrarr as $val1){
-					$tmpsql2='insert into menu_role select \''.$val1.'\',id from role where name=\''.$tmpname.'\';';
+//					$tmpsql2='insert into menu_role select id,\''.$val1.'\' from role where name=\''.$tmpname.'\';';
+					$tmpsql2='insert into role_menu select id,\''.$val1.'\' from role where name=\''.$tmpname.'\';';
 					$db_modify->insert($tmpsql2);
 				}
 			}
@@ -53,12 +113,13 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		$tmpname=$_POST[name];
 		$tmptips='';
 		$tmpsql='select count(*) ct from role where name=\''.$tmpname.'\' and id='.$tmprecid.';';
-		$tmpsql1='select menu_id from menu_role where role_id='.$tmprecid.';';
+		//$tmpsql1='select menu_id from menu_role where role_id='.$tmprecid.';';
+		$tmpsql1='select menu_sub_id from role_menu where role_id='.$tmprecid.';';
 		$tmproleoriginmenuresult=$db_modify->select($tmpsql1);
 		$count=0;
 		if($tmproleoriginmenuresult[0]!=''){
 			foreach ($tmproleoriginmenuresult as $val){
-				$tmproleoriginmenuarr[$count]=$val[menu_id];
+				$tmproleoriginmenuarr[$count]=$val[menu_sub_id];
 				$count++;
 			}
 		}else{
@@ -77,10 +138,12 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		if(count($tmpinsertarr)<>0){
 			$tmpinssql='';
 			foreach($tmpinsertarr as $val) {
-				$tmpinssql.='('.$val.','.$tmprecid.'),';
+				$tmpinssql.='('.$tmprecid.','.$val.'),';
+				//$tmpinssql.='('.$tmprecid.','.$val.'),';
 			}
 			$tmpinssql=substr($tmpinssql,0,strlen($tmpinssql)-1).';';
-			$tmpinssql1='insert into menu_role values '.substr($tmpinssql,0,strlen($tmpinssql)-1).';';
+			//$tmpinssql1='insert into menu_role values '.substr($tmpinssql,0,strlen($tmpinssql)-1).';';
+			$tmpinssql1='insert into role_menu values '.substr($tmpinssql,0,strlen($tmpinssql)-1).';';
 			$db_modify->insert($tmpinssql1);
 			$tmptips.='权限明细新增成功,';
 		}else{
@@ -91,7 +154,8 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			foreach ($tmpdelarr as $val) {
 				$tmpdelsql.=$val.',';
 			}
-			$tmpdelsql1='delete from menu_role where role_id='.$tmprecid.' and menu_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
+			//$tmpdelsql1='delete from menu_role where role_id='.$tmprecid.' and menu_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
+			$tmpdelsql1='delete from role_menu where role_id='.$tmprecid.' and menu_sub_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
 			$db_modify->delete($tmpdelsql1);
 			$tmptips.='权限明细删除成功,';
 		}else{
@@ -106,7 +170,8 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			break;
 		}
 		$tmpsql='delete from role where id='.$_POST[recid].';';
-		$tmpsql1='delete from menu_role where role_id='.$_POST[recid].';';
+		//$tmpsql1='delete from menu_role where role_id='.$_POST[recid].';';
+		$tmpsql1='delete from role_menu where role_id='.$_POST[recid].';';
 		$tmptips='权限删除成功';
 		$db_modify->delete($tmpsql1);
 		$db_modify->delete($tmpsql);
@@ -119,7 +184,8 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			break;
 		}else{
 			foreach ($tmpstrarr as $val){
-				$tmpsql='delete from menu_role where role_id='.$val.';';
+				//$tmpsql='delete from menu_role where role_id='.$val.';';
+				$tmpsql='delete from role_menu where role_id='.$val.';';
 				$db_modify->delete($tmpsql);
 				$tmpsql1='delete from role where id='.$val.';';
 				$db_modify->delete($tmpsql1);
@@ -132,9 +198,9 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		$tmptips='<div style="float:left">参数有误，请确认</div>';
 }
 
-$returnarr[content][page_bar]='';
 $returnarr[content][tips]='<div style="float:left">'.$tmptips.'</div>';
 unset($tmprecid,$tmproleoriginmenuresult,$tmproleoriginmenuarr,$tmpinsertarr,$tmpstrarr,$tmpname,$tmpresult,$tmpsql,$val,$tmpsql1,$tmpsql2,$val1,$db_modify,$tmptips,$tmpdelarr,$tmpinssql,$tmpinssql1);
 
+require_once BASE_DIR.MDL_DIR.MDL_MAIN;
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
