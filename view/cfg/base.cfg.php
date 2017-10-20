@@ -18,6 +18,11 @@
 	define(FNC_TIP,'tips_gen.fnc.php');
 	define(CSS_DIR,'css/');
 	define(CSS_FILE,'default.css');
+	//set_view.mdl.php modify_view.mdl.php 使用
+	define(CSS_ID_TABLE_CONTENT, 'content_view');
+	define(CSS_ID_TD_STR_A,'str_a');
+	define(CSS_ID_TD_STR_B,'str_b');
+	
 	define(JS_DIR,'js/');
 	define(JS_JQ,'jquery-1.11.3.min.js');
 	define(JS_FUNC,'func.js');

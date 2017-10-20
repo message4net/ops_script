@@ -97,6 +97,8 @@ $.extend({
 				tmpdata='fnc='+tmpfnc+'&tmpstr='+tmpstrchecked;
 				$.ajx('mdl/modify.mdl.php',tmpdata);
 			})			
+
+			
 			
 			$('#content').on('click','[id^=m_v_s_]',function(){
 				if($('#name').val()==''){
@@ -108,7 +110,14 @@ $.extend({
 					tmpjsfnc=$(this).attr('id').substring(6,9);
 					tmprecid=$(this).attr('id').substring(10);
 					
-					
+					$('#content_view').find('tr').each(function(){
+						$(this).children('td').each(function(){
+							alert($(this).text());
+							//if($(this).attr('id')=='str_a');
+						})
+
+					});
+
 					
 //					if($(':checkbox').is(':checked')){
 //						tmpstrchecked='';
