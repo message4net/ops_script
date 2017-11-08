@@ -119,21 +119,21 @@ $.extend({
 					});
 
 					
-//					if($(':checkbox').is(':checked')){
-//						tmpstrchecked='';
-//						$(':checkbox:checked').each(function(){
-//							tmpstrchecked+=$(this).attr('id')+',';
-//						});
-//						tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
-//					}else{
-//						tmpstrchecked='ZZZ';
-//					}
-//					if(tmpjsfnc=="mod" || tmpjsfnc=="set"){
-//						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
-//					}else{
-//						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked;
-//					}
-//					$.ajx('mdl/modify.mdl.php',tmpdata);
+					if($(':checkbox').is(':checked')){
+						tmpstrchecked='';
+						$(':checkbox:checked').each(function(){
+							tmpstrchecked+=$(this).attr('id')+',';
+						});
+						tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
+					}else{
+						tmpstrchecked='ZZZ';
+					}
+					if(tmpjsfnc=="mod" || tmpjsfnc=="set"){
+						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
+					}else{
+						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked;
+					}
+					$.ajx('mdl/modify.mdl.php',tmpdata);
 				}
 			})
 		});

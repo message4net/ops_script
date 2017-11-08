@@ -22,12 +22,12 @@ if($_POST[recid]!=''){
 	switch ($_SESSION[menu_sub_id]) {
 		case 4:
 			$reccontentsql='select * from '.$tablenameresult[0][tablename].' where id='.$_POST[recid];
-			$rec1msql='select * from menu_role where role_id='.$_POST[recid];
+			$rec1msql='select * from role_menu where role_id='.$_POST[recid];
 			$reccontentresult=$db_modify_view->select($reccontentsql);
 			$rec1mresult=$db_modify_view->select($rec1msql);
 			$tmpcount=0;
 			foreach ($rec1mresult as $val){
-				$rec1marr[$tmpcount]=$val[menu_id];
+				$rec1marr[$tmpcount]=$val[menu_sub_id];
 				$tmpcount++;
 			}
 			break;
