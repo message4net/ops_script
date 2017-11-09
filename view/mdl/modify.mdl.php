@@ -59,7 +59,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			$db_modify->insert($tmpinssql1);
 			$tmptips.='功能明细设置成功,';
 		}else{
-			$tmptips.='权限明细无需设置,';
+			$tmptips.='功能明细无需设置,';
 		}
 		if(count($tmpdelarr)<>0){
 			$tmpdelsql='';
@@ -179,17 +179,22 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 	;;
 	case func_delall4:
 		$tmpstrarr=explode(',',$_POST[tmpstr]);
+		$returnarr[0][0]=$tmpstrarr;
 		if(in_array('1',$tmpstrarr)){
 			$tmptips='默认权限无法修改，请重新选择删除内容';
 			break;
 		}else{
-			foreach ($tmpstrarr as $val){
-				//$tmpsql='delete from menu_role where role_id='.$val.';';
-				$tmpsql='delete from role_menu where role_id='.$val.';';
-				$db_modify->delete($tmpsql);
-				$tmpsql1='delete from role where id='.$val.';';
-				$db_modify->delete($tmpsql1);
-				$tmptips='删除成功';
+			if($_POST[tmpstr]!=''){
+				foreach ($tmpstrarr as $val){
+					//$tmpsql='delete from menu_role where role_id='.$val.';';
+					$tmpsql='delete from role_menu where role_id='.$val.';';
+					$db_modify->delete($tmpsql);
+					$tmpsql1='delete from role where id='.$val.';';
+					$db_modify->delete($tmpsql1);
+					$tmptips='删除成功';
+				}
+			}else{
+				$tmptips='无需删除';
 			}
 		}
 		break;

@@ -1,7 +1,8 @@
 <?php session_start();
 require_once str_replace('\\','/',dirname(dirname(__FILE__))).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
-require_once BASE_DIR.INC_DIR.FNC_TIP;
+//require_once BASE_DIR.INC_DIR.FNC_TIP;
+require_once BASE_DIR.INC_DIR.INC_FUNC;
 
 if($_SESSION[menu_sub_id]==''){
 	$returnarr[content][tips_nav]='不可直接调用，请通过正规方式访问';
@@ -9,8 +10,10 @@ if($_SESSION[menu_sub_id]==''){
 	exit;
 }
 
-$db_set_view=new DBSql();
-
+$db_set_view=new FuncNavGen($_SESSION[menu_sub_id]);
+$navtailname='设置';
+$navmenusubid='-1';
+$funccategoryid=3;
 $tablenamesql='select * from menu where id='.$_SESSION[menu_sub_id];
 $tablenameresult=$db_set_view->select($tablenamesql);
 
@@ -56,9 +59,11 @@ if($_POST[recid]!=''){
 	}
 }
 
-
-$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->设置','');
+$tips_navhtml=$db_set_view->gen_navpos_html($navmenusubid,$navtailname,'');
+//$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->设置','');
 $html_return_content.='<tr><td colspan="3"><button id="m_v_s_set_'.$_POST[recid].'">保存</button></td></tr></table>';
+
+$returnarr[content][menu_func]=$db_set_view->gen_func_html($funccategoryid);
 
 $returnarr[content][content]=$html_return_content;
 $returnarr[content][tips_nav]=$tips_navhtml;

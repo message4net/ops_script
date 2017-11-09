@@ -1,7 +1,8 @@
 <?php session_start();
 require_once str_replace('\\','/',dirname(dirname(__FILE__))).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
-require_once BASE_DIR.INC_DIR.FNC_TIP;
+//require_once BASE_DIR.INC_DIR.FNC_TIP;
+require_once BASE_DIR.INC_DIR.INC_FUNC;
 
 if($_SESSION[menu_sub_id]==''){
 	$returnarr[content][tips_nav]='不可直接调用，请通过正规方式访问';
@@ -9,7 +10,9 @@ if($_SESSION[menu_sub_id]==''){
 	exit;
 }
 
-$db_modify_view=new DBSql();
+$db_modify_view=new FuncNavGen($_SESSION[menu_sub_id]);
+$navmenusubid='-1';
+$funccategoryid=2;
 
 $tablenamesql='select * from menu where id='.$_SESSION[menu_sub_id];
 $tableheadsql='select * from wordbook where type=1 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
@@ -69,13 +72,18 @@ foreach ($table1mresult as $val) {
 }
 
 if($_POST[recid]==''){
-	$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->新增','');
+	$navtailname='新增';
+//	$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->新增','');
 	$addhtml.='<tr><td colspan="2"><button id="m_v_s_add">保存</button></td></tr></table>';
 }else{
-	$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->修改','');
+	$navtailname='修改';
+//	$tips_navhtml=genTips($tablenameresult,$tablenameresult[0][name].'->修改','');
 	$addhtml.='<tr><td colspan="2"><button id="m_v_s_mod_'.$_POST[recid].'">保存</button></td></tr></table>';
 }
 
+$tips_navhtml=$db_modify_view->gen_navpos_html($navmenusubid,$navtailname,'');
+
+$returnarr[content][menu_func]=$db_modify_view->gen_func_html($funccategoryid);
 $returnarr[content][content]=$addhtml;
 $returnarr[content][tips_nav]=$tips_navhtml;
 $returnarr[content][tips]='';
