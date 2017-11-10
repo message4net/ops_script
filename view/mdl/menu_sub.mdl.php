@@ -14,9 +14,6 @@ $returnarr=array(
 				'menu_sub'=>$returnhtml
 		)
 );
-unset($db_menu_sub);
-unset($returnhtml);
-unset($tmpsql);
-unset($val);
+unset($val,$tmpsql,$returnhtml,$db_menu_sub);
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>

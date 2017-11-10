@@ -58,15 +58,40 @@ foreach ($table1mresult as $val) {
 	$tmpresult=$db_modify_view->select($val[sqlstr_head]);
 	$addhtml.='<td>'.$val[name].':</td><td>';
 	foreach ($tmpresult as $val1){
-		if($rec1marr){
-			if(in_array($val1[id], $rec1marr)){
-				$addhtml.='<input id="'.$val1[id].'" type="checkbox" checked="checked"/>'.$val1[name].'<br />';
-			}else{
+		if($val1[id]==7){
+			$addhtml.='<input id="'.$val1[id].'" type="checkbox" disabled="disabled" checked="checked"/>'.$val1[name].'<br />';
+		}else{
+			if($rec1marr){
+				if(in_array($val1[id], $rec1marr)){
+					$addhtml.='<input id="'.$val1[id].'" type="checkbox" checked="checked"/>'.$val1[name].'<br />';
+				}else{
+					$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
+				}
+			}else {
 				$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
 			}
-		}else {
-			$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
 		}
+//		if($rec1marr){
+//			if(in_array($val1[id], $rec1marr)){
+//				if($val1[id]==7){
+//					$addhtml.='<input id="'.$val1[id].'" type="checkbox" disabled="disabled" checked="checked"/>'.$val1[name].'<br />';
+//				}else{
+//					$addhtml.='<input id="'.$val1[id].'" type="checkbox" checked="checked"/>'.$val1[name].'<br />';
+//				}
+//			}else{
+//				if($val1[id]==7){
+//					$addhtml.='<input id="'.$val1[id].'" type="checkbox" disabled="disabled" checked="checked"/>'.$val1[name].'<br />';
+//				}else{
+//					$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
+//				}
+//			}
+//		}else {
+//			if($val1[id]==7){
+//				$addhtml.='<input id="'.$val1[id].'" type="checkbox" disabled="disabled" checked="checked"/>'.$val1[name].'<br />';
+//			}else{
+//				$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
+//			}
+//		}
 	}
 	$addhtml.='</td></tr>';
 }

@@ -95,138 +95,123 @@ private $rec_init_arr=array();
 		return $pagebar_html;
 	}
 
-	public function gen_navpos_html($menusub_parent_id=-1,$tailname='',$strtips=''){
-		if($menusub_parent_id==-1) $menusub_parent_id=$this->menu_sub_id;
-		if($menusub_parent_id!=0){
-			$navpos_result_tmp=parent::select("select * from menu where id=".$menusub_parent_id);
-			if($strtips==''){
-				$strtips_tmp.=$navpos_result_tmp[0][name];
-			}else{
-				$strtips_tmp.=$navpos_result_tmp[0][name].'->'.$strtips;
-			}
-			return $this->gen_navpos_html($navpos_result_tmp[0][parent_id],$tailname,$strtips_tmp);
-		}else{
-			if($tailname==''){
-				$strtips='<div style="float:left"><b>当前位置:<i>'.$strtips.'</i></b></div>';
-			}else{
-				$strtips='<div style="float:left"><b>当前位置:<i>'.$strtips.'->'.$tailname.'</i></b></div>';
-			}
-			return $strtips;
-		}
-	}
-	
-	public function gen_func_html(){
-		$func_html='';
-		$func_left_sql='select * from wordbook where type=3 and menu_sub_id='.$this->menu_sub_id.' order by seq';
-		$func_right_sql='select * from wordbook where type=4 and menu_sub_id='.$this->menu_sub_id.' order by seq';
-		$func_left_result=parent::select($func_left_sql);
-		$func_right_result=parent::select($func_right_sql);
-		if ($func_left_result) {
-			$func_html.='<div style="float:left">';
-			foreach ($func_left_result as $val){
-				$func_html.='<a id="'.$val[colnameid].'" href="javascript:void(0)">'.$val[name].'</a>&nbsp|&nbsp';
-			}
-			$func_html.='</div>';
-		}
-		if ($func_right_result) {
-			$func_html.='<div style="float:right;padding-right:200px"><select id="search_bar">';
-			foreach ($func_right_result as $val){
-				$func_html.='<option value="'.$val[colnameid].'">'.$val[name].'</option>';
-			}
-			$func_html.='</select><input id="search_word" type="text"/><button id="word_search">搜索</button><button id="word_reset">重置</button></div>';
-		}
-		if ($func_html!='') {
-			return $func_html;
-		}
-	}
-	
 	public function gen_view_content_html(){
 		$rec_head_sql='select * from wordbook where type=1 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 		$rec_head_result=parent::select($rec_head_sql);
 		
-		$func_content_sql='select * from wordbook where type=5 and menu_sub_id='.$this->menu_sub_id.' order by seq';
-		$func_content_result=parent::select($func_content_sql);
-		
-		$rec_body_1m_sql='select * from wordbook where type=2 and menu_sub_id='.$this->menu_sub_id.' order by seq';
-		$rec_body_1m_result=parent::select($rec_body_1m_sql);
-		
-		$rec_body_column_sql_part='';
-		$rec_head_html='<table id="content_table" name="'.$this->menu_sub_id.'">';
-		foreach ($rec_head_result as $val) {
-			$rec_body_column_sql_part.=$val[colnameid].',';
-			if ($val[colnameid]=='id'){
-				$rec_head_html.='<th><input type="checkbox" id="0" name="contentall"/></th><th>序号</th><th style="text-align:center">操作</th>';
-			}else{
-				$rec_head_html.='<th>'.$val[name].'</th>';
-				if ($rec_body_1m_result) {
-					foreach ($rec_body_1m_result as $val1){
-						$rec_head_html.='<th>'.$val1[name].'</th>';
-					}
-				}
-			}
-		}
-		$rec_body_column_sql_part=substr($rec_body_column_sql_part,0,strlen($rec_body_column_sql_part)-1).' ';
-		$rec_head_html.='</tr>';
-		if($this->rec_word_search==''){
-			$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
-		}else{
-			$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
-		}
-		$rec_body_column_result=parent::select($rec_body_column_sql);
-		$rec_body_1m_colname_sql='';
-		foreach ($rec_body_column_result as $val){
-			$rec_body_1m_colname_sql.=$val[id].',';
-		}
-		$rec_body_1m_colname_sql=substr($rec_body_1m_colname_sql,0,strlen($rec_body_1m_colname_sql)-1);
-		foreach ($rec_body_1m_result as $val){
-			if ($val[sqlstr_body]=='') {
-				$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-			}else{
-				$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-			}
-			$rec_body_1m_str_result=parent::select($rec_body_1m_str_sql);
-			foreach ($rec_body_1m_str_result as $val1) {
-				$rec_body_1m_str_arr[$val1[mainid]][$val1[subid]]=$val1[name];
-			}
-		}
-
-		$rec_body_html='';
-		$count=1;
-		foreach ($rec_body_column_result as $key=>$val) {
-			$rec_body_html.='<tr>';
-			$rec_body_1m_html='';
-			foreach ($val as $key1=>$val1){
-				if ($key1=='id') {
-					$tmpid=$val1;
-					$rec_body_html.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
-					foreach ($func_content_result as $val2){
-						if ($val2[flag]==1) {
-							$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
-						}else{
-							$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
-						}
-					}
-					$rec_body_html.='</td>';
+		if ($rec_head_result){
+			$func_content_sql='select * from wordbook where type=5 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+			$func_content_result=parent::select($func_content_sql);
+			
+			$rec_body_1m_sql='select * from wordbook where type=2 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+			$rec_body_1m_result=parent::select($rec_body_1m_sql);
+			
+			$rec_body_1s_sql='select * from wordbook where type=7 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+			$rec_body_1s_result=parent::select($rec_body_1s_sql);
+			
+			$rec_body_column_sql_part='';
+			$rec_head_html='<table id="content_table" name="'.$this->menu_sub_id.'">';
+			foreach ($rec_head_result as $val) {
+				$rec_body_column_sql_part.=$val[colnameid].',';
+				if ($val[colnameid]=='id'){
+					$rec_head_html.='<th><input type="checkbox" id="0" name="contentall"/></th><th>序号</th><th style="text-align:center">操作</th>';
 				}else{
-					$rec_body_html.='<td>'.$val1.'</td>';
-				}
-				if ($key1=='id') {
-					$rec_body_1m_html_str='';
-					if ($rec_body_1m_str_arr[$val1]) {
-						foreach ($rec_body_1m_str_arr[$val1] as $val2){
-							$rec_body_1m_html_str.='@'.$val2;
+					$rec_head_html.='<th>'.$val[name].'</th>';
+					if($rec_body_1s_result){
+						foreach ($rec_body_1s_result as $vala){
+							$rec_head_html.='<th>'.$vala[name].'</th>';
 						}
-					}else{
-						$rec_body_1m_html_str.='';
 					}
-					$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
+					if ($rec_body_1m_result) {
+						foreach ($rec_body_1m_result as $val1){
+							$rec_head_html.='<th>'.$val1[name].'</th>';
+						}
+					}
 				}
 			}
-			$rec_body_html.=$rec_body_1m_html.'</tr>';
-			$count++;
+			$rec_body_column_sql_part=substr($rec_body_column_sql_part,0,strlen($rec_body_column_sql_part)-1).' ';
+			$rec_head_html.='</tr>';
+			if($this->rec_word_search==''){
+				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+			}else{
+				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+			}
+			$rec_body_column_result=parent::select($rec_body_column_sql);
+			//确认1m,1s对应的范围
+			$rec_body_1m_colname_sql='';
+			foreach ($rec_body_column_result as $val){
+				$rec_body_1m_colname_sql.=$val[id].',';
+			}
+			$rec_body_1m_colname_sql=substr($rec_body_1m_colname_sql,0,strlen($rec_body_1m_colname_sql)-1);
+			foreach ($rec_body_1m_result as $val){
+				if ($val[sqlstr_body]=='') {
+					$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+				}else{
+					$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+				}
+				$rec_body_1m_str_result=parent::select($rec_body_1m_str_sql);
+				foreach ($rec_body_1m_str_result as $val1) {
+					$rec_body_1m_str_arr[$val[seq]][$val1[mainid]][$val1[subid]]=$val1[name];
+				}
+			}
+			foreach ($rec_body_1s_result as $val){
+				if ($val[sqlstr_body]=='') {
+					$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+				}else{
+					$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+				}
+				$rec_body_1s_str_result=parent::select($rec_body_1m_str_sql);
+				foreach ($rec_body_1s_str_result as $val1) {
+					$rec_body_1s_str_arr[$val[seq]][$val1[mainid]]=$val1[name];
+				}
+			}
+	
+			$rec_body_html='';
+			$count=1;
+			foreach ($rec_body_column_result as $key=>$val) {
+				$rec_body_html.='<tr>';
+				$rec_body_1m_html='';
+				foreach ($val as $key1=>$val1){
+					if ($key1=='id') {
+						$rec_body_html.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
+						foreach ($func_content_result as $val2){
+							if ($val2[flag]==1) {
+								$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
+							}else{
+								$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
+							}
+						}
+						$rec_body_html.='</td>';
+					}else{
+						$rec_body_html.='<td>'.$val1.'</td>';
+					}
+					//当key为id时，根据id的具体值确定1m,1s对应的显示文本
+					if ($key1=='id') {
+						$rec_body_1s_html='';
+						foreach ($rec_body_1s_str_arr as $valb){
+							$rec_body_1s_html.='<td style="font-size:10px;word-break:break-all">'.$valb[$val1].'</td>';
+						}
+						$rec_body_1m_html_str='';
+						foreach ($rec_body_1m_str_arr as $valb){
+							if ($valb[$val1]) {
+								foreach ($valb[$val1] as $val2){
+									$rec_body_1m_html_str.='@'.$val2;
+								}
+							}else{
+								$rec_body_1m_html_str.='';
+							}
+							$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
+						}
+					}
+				}
+				$rec_body_html.=$rec_body_1s_html.$rec_body_1m_html.'</tr>';
+				$count++;
+			}
+			$rec_body_html.='</tr></table>';
+			$rec_html=$rec_head_html.$rec_body_html;
+		}else{
+			$rec_html='<div style="float:left">制作中，请联系管理员</div>';
 		}
-		$rec_body_html.='</tr></table>';
-		$rec_html=$rec_head_html.$rec_body_html;
 
 		return $rec_html;
 	}

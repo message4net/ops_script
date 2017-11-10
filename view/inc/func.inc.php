@@ -47,29 +47,27 @@ class FuncNavGen extends DBSql {
 				$func_right_sql='select * from wordbook where type=4 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 				break;
 			case 3:
-				$func_left_sql='select * from wordbook where type=3 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+				$func_left_sql='select * from wordbook where type=8 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 				break;
 			
 		}
 		$func_left_result=parent::select($func_left_sql);
 		$func_right_result=parent::select($func_right_sql);
-		if ($func_left_sql) {
+		if ($func_left_result) {
 			$func_html.='<div style="float:left">';
 			foreach ($func_left_result as $val){
 				$func_html.='<a id="'.$val[colnameid].'" href="javascript:void(0)">'.$val[name].'</a>&nbsp|&nbsp';
 			}
 			$func_html.='</div>';
 		}
-		if ($func_right_sql) {
+		if ($func_right_result) {
 			$func_html.='<div style="float:right;padding-right:200px"><select id="search_bar">';
 			foreach ($func_right_result as $val){
 				$func_html.='<option value="'.$val[colnameid].'">'.$val[name].'</option>';
 			}
 			$func_html.='</select><input id="search_word" type="text"/><button id="word_search">搜索</button><button id="word_reset">重置</button></div>';
 		}
-		if ($func_html!='') {
-			return $func_html;
-		}
+		return $func_html;
 	}
 
 }

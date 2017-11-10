@@ -13,38 +13,12 @@ if ($_SESSION [loginflag] == 1 && $_SESSION[loginduration]>time()) {
 	$returnarr[show]=array('main_left','main_right','info');
 	$returnarr[hide]=array('main_login');
 	$returnarr[content]=array('span_info'=>$_SESSION[loginname],'menu_nav'=>$returnhtml);
-	//$returnarr[0][0]=$tmpmenusql;
-//	$returnarr = array(
-//			'show' => array(
-//					'main_left',
-//					'main_right',
-//					'info'
-//			),
-//			'hide' => array(	
-//					'main_login'
-//			),
-//			'content'=>array(
-//					'span_info'=>$_SESSION[loginname],
-//					'menu_nav'=>$returnhtml
-//			)
-//	);
-	unset($db_menu);
-	unset($tmpmenusql);
-	unset($returnhtml);
-	unset($result_menu);
-	unset($val);
+
+	unset($val,$result_menu,$returnhtml,$tmpmenusql,$db_menu);
 } else {
 	$returnarr[hide]=array('main_left','main_right');
 	$returnarr[show]=array('main_login');
-//	$returnarr = array(
-//			'hide' => array(
-//					'main_left',
-//					'main_right' 
-//			),
-//			'show' => array(
-//					'main_login' 
-//			) 
-//	);
+
 	if ($_SESSION[loginduration]<=time() && !is_null($_SESSION[loginduration])){
 		$returnarr[content]=array(
 				'tips_login'=>'<span style="float:left;font-size:12px;color:green"><b><i>登录超时，请重新登录</b></i></span>'

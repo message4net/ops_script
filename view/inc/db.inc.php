@@ -26,13 +26,13 @@ private $CONN="";//定义数据库连接变量
 	*返回:二维数组或FALSE
 	*/
 	public function select($sql){
-		if(empty($sql)) {$returnarr=array(1);return $returnarr;}//return false;//如果SQL语句为空，则返回FALSE
-		if(empty($this->CONN)) {$returnarr=array(2);return $returnarr;}//return false;//如果连接为空，则放回FALSE
+		if(empty($sql)) return false;//{$returnarr=array(1);return $returnarr;}////如果SQL语句为空，则返回FALSE
+		if(empty($this->CONN)) return false;//{$returnarr=array(2);return $returnarr;}////如果连接为空，则放回FALSE
 		$results=mysqli_query($this->CONN,$sql);
 		if((!$results)or(empty($results))){//如果查询结果空则释放结果并返回FALSE
 		@mysqli_free_result($results);
-		$returnarr=array(3);//return false;
-		return $returnarr;
+		return false;//$returnarr=array(3);
+		//return $returnarr;
 		}
 	$count=0;
 	$data=array();
