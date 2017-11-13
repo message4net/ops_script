@@ -1,18 +1,20 @@
 <?php session_start();
-echo '<table><tr><td><tr></table>';
-$a=1;
-switch ($a) {
-	case 1:
-	case 2:
-		echo 'a';
-	;
-	case 3:
-		echo 'b';
-	;
-	default:
-		echo $a.'c';
-	break;
-}
+echo date('Y-m-d H:i:s');
+var_dump($_SERVER); 
+//echo '<table><tr><td><tr></table>';
+//$a=1;
+//switch ($a) {
+//	case 1:
+//	case 2:
+//		echo 'a';
+//	;
+//	case 3:
+//		echo 'b';
+//	;
+//	default:
+//		echo $a.'c';
+//	break;
+//}
 
 //require_once dirname(__FILE__).'/cfg/base.cfg.php';
 //require_once BASE_DIR.INC_DIR.INC_DB;

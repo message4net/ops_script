@@ -76,20 +76,24 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		break;
 	;;
 	case m_v_s_add4:
-		$tmpsql='select count(*) ct from role where name=\''.$_POST[name].'\';';
+		$tmpsql='select count(*) ct from role where name=\''.$_POST[name].'\' and creator='.$_SESSION[loginroleid].';';
 		$tmpresult=$db_modify->select($tmpsql);
 		if($tmpresult[0][ct]==0){
 			$tmpname=$_POST[name];
-			$tmpsql1='insert into role (name) values (\''.$tmpname.'\');';
+			$tmpsql1='insert into role (name,creator) values (\''.$tmpname.'\,'.$_SESSION[loginroleid].');';
 			$db_modify->insert($tmpsql1);
+			//创建role必有插入必显示菜单语句，故此处无需插入必显示菜单
+			//$tmpsql3='insert into role_menu select a.id, b.id from role a, menu b where a.name=\''.$tmpname.'\' and b.flag_set=1 and creator='.$_SESSION[loginroleid].';';
+			//$db_modify->insert($tmpsql3);
 			if($_POST[tmpstr]!='ZZZ'){
 				$tmpsql2='';
 				$tmpstrarr=explode(',',$_POST[tmpstr]);
 				foreach ($tmpstrarr as $val1){
-//					$tmpsql2='insert into menu_role select id,\''.$val1.'\' from role where name=\''.$tmpname.'\';';
-					$tmpsql2='insert into role_menu select id,\''.$val1.'\' from role where name=\''.$tmpname.'\';';
+					$tmpsql2='insert into role_menu select id,\''.$val1.'\' from role where name=\''.$tmpname.'\' and creator='.$_SESSION[loginroleid].';';
 					$db_modify->insert($tmpsql2);
 				}
+				$tmpsql4='insert into role_func select a.id, b.menu_sub_id,b.id from role a, wordbook b,role_menu c,menu d where a.id=c.role_id and d.id=c.menu_sub_id and d.id=b.menu_sub_id and a.name=\''.$tmpname.'\' and b.flag_set=1 and d.flag_set=1 and type in (1,2,3,4,5,7) and creator='.$_SESSION[loginroleid].';';
+				$db_modify->insert($tmpsql4);
 			}
 			$tmptips='已成功创建角色';
 		}else{
@@ -113,7 +117,6 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		$tmpname=$_POST[name];
 		$tmptips='';
 		$tmpsql='select count(*) ct from role where name=\''.$tmpname.'\' and id='.$tmprecid.';';
-		//$tmpsql1='select menu_id from menu_role where role_id='.$tmprecid.';';
 		$tmpsql1='select menu_sub_id from role_menu where role_id='.$tmprecid.';';
 		$tmproleoriginmenuresult=$db_modify->select($tmpsql1);
 		$count=0;
@@ -139,12 +142,21 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			$tmpinssql='';
 			foreach($tmpinsertarr as $val) {
 				$tmpinssql.='('.$tmprecid.','.$val.'),';
-				//$tmpinssql.='('.$tmprecid.','.$val.'),';
+				$tmpfuncsql='select id from wordbook where flag_set=1 and menu_sub_id='.$val.' and role_id='.$tmprecid.';';
+				$tmpfuncresult=$db_modify->select($tmpfuncsql);
+				if($tmpfuncresult){
+					foreach ($tmpfuncresult as $vala)
+						$tmpinssqlfunc='('.$tmprecid.','.$val.','.$vala[id].'),';
+				}
 			}
 			$tmpinssql=substr($tmpinssql,0,strlen($tmpinssql)-1).';';
-			//$tmpinssql1='insert into menu_role values '.substr($tmpinssql,0,strlen($tmpinssql)-1).';';
-			$tmpinssql1='insert into role_menu values '.substr($tmpinssql,0,strlen($tmpinssql)-1).';';
+			$tmpinssql1='insert into role_menu values '.$tmpinssql.';';
 			$db_modify->insert($tmpinssql1);
+			if ($tmpinssqlfunc){
+				$tmpinssqlfunc=substr($tmpinssqlfunc,0,strlen($tmpinssqlfunc)-1).';';
+				$tmpinssqlfunc1='insert into role_menu values '.$tmpinssqlfunc.';';
+				$db_modify->insert($tmpinssqlfunc1);
+			}
 			$tmptips.='权限明细新增成功,';
 		}else{
 			$tmptips.='权限明细无需新增,';
@@ -154,9 +166,10 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			foreach ($tmpdelarr as $val) {
 				$tmpdelsql.=$val.',';
 			}
-			//$tmpdelsql1='delete from menu_role where role_id='.$tmprecid.' and menu_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
 			$tmpdelsql1='delete from role_menu where role_id='.$tmprecid.' and menu_sub_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
+			$tmpdelsqlfunc1='delete from role_func where role_id='.$tmprecid.' and menu_sub_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
 			$db_modify->delete($tmpdelsql1);
+			$db_modify->delete($tmpdelsqlfunc1);
 			$tmptips.='权限明细删除成功,';
 		}else{
 			$tmptips.='权限明细无需删除,';

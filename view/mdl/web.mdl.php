@@ -1,5 +1,12 @@
 <?php
 require_once BASE_DIR.MDL_DIR.MDL_HEAD;
+
+require_once BASE_DIR.INC_DIR.INC_LOG;
+
+$log=new LogHandle();
+//$loginfo='IP:'.$_SERVER[REMOTE_ADDR].'METHOD:'.$_SERVER[REQUEST_METHOD].'PAGE:'.$_SERVER[REQUEST_URI].'PARAS:'.$_SERVER[QUERY_STRING];
+//$log->logprint(FLAG_LOG_INFO, LEVEL_LOG_INFO, $loginfo);
+
 ?>
 <div id="main_left">
 	<div id="logo">ops_sys</div>

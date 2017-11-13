@@ -26,7 +26,7 @@ if($_POST[recid]!=''){
 			$result_pri_dtl_rel=$db_set_view->select($sql_pri_dtl_rel);
 			$html_return_content.='<table id="'.CSS_ID_TABLE_CONTENT.'"><tr><td colspan="2">权限名称</td><td>'.$result_pri_name[0][name].'</td></tr>';
 			foreach ($result_pri_dtl_rel as $val){
-				$sql_pri_view='select * from wordbook where type in (1,2) and menu_sub_id='.$val[menu_sub_id].' order by type,seq';
+				$sql_pri_view='select * from wordbook where type in (1,2,7) and menu_sub_id='.$val[menu_sub_id].' order by type,seq';
 				$sql_pri_mod='select * from wordbook where type in (3,5) and menu_sub_id='.$val[menu_sub_id].' order by type,seq';
 				$sql_pri_dtl_name='select * from menu where id='.$val[menu_sub_id].';';
 				$result_pri_view=$db_set_view->select($sql_pri_view);

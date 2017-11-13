@@ -46,8 +46,8 @@ class FuncNavGen extends DBSql {
 				$func_left_sql='select * from wordbook where type=3 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 				$func_right_sql='select * from wordbook where type=4 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 				break;
-			case 3:
-				$func_left_sql='select * from wordbook where type=8 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+			default:
+				//$func_left_sql='select * from wordbook where type=8 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 				break;
 			
 		}

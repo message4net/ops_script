@@ -11,18 +11,28 @@
 	unset($basedir);
 //定义常数参数
 	define(CFG_DIR,'cfg/');
+	define(LOG_DIR,'log/');
+	define(LOG_FILE_PATH_NAME,BASE_DIR.LOG_DIR.'log.log');
 	define(CFG_SLF,'self.cfg.php');
 	define(INC_DIR,'inc/');
 	define(INC_DB,'db.inc.php');
 	define(INC_VIEW,'view.inc.php');
+	define(INC_LOG,'log.inc.php');
 	define(INC_FUNC,'func.inc.php');
-	define(FNC_TIP,'tips_gen.fnc.php');
+	//define(FNC_TIP,'tips_gen.fnc.php');
 	define(CSS_DIR,'css/');
 	define(CSS_FILE,'default.css');
 	//set_view.mdl.php modify_view.mdl.php 使用
 	define(CSS_ID_TABLE_CONTENT, 'content_view');
 	define(CSS_ID_TD_STR_A,'str_a');
 	define(CSS_ID_TD_STR_B,'str_b');
+	
+	define(FLAG_LOG_INFO,'1');
+	define(FLAG_LOG_WARN,'1');
+	define(FLAG_LOG_ERR,'1');
+	define(LEVEL_LOG_INFO,'INFO:');
+	define(LEVEL_LOG_WARN,'WARN:');
+	define(LEVEL_LOG_ERR,'ERR :');
 	
 	define(JS_DIR,'js/');
 	define(JS_JQ,'jquery-1.11.3.min.js');

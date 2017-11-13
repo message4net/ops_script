@@ -1,6 +1,11 @@
 <?php session_start();
 
 require_once str_replace('\\','/',dirname(dirname(__FILE__))).'/cfg/base.cfg.php';
+
+require_once BASE_DIR.INC_DIR.INC_LOG;
+
+$log_login=new LogHandle();
+
 require_once BASE_DIR.INC_DIR.INC_DB;
 $db_login=new DBSql();
 $tmpusername=$_POST[username];
@@ -15,6 +20,9 @@ if (!empty($result_login)) {
 	$_SESSION[loginpasswd]=$result_login[0][password];
 	$_SESSION[loginduration]=time()+86400;
 	$_SESSION[loginflag]=1;
+	
+	$log_login->logprint(FLAG_LOG_INFO, LEVEL_LOG_INFO, 'LOGIN SUCCEED:'.$tmpusername);
+	
 	require_once BASE_DIR.MDL_DIR.MDL_MENU;
 	exit;
 }else{
