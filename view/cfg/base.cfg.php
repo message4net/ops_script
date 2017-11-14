@@ -19,6 +19,7 @@
 	define(INC_VIEW,'view.inc.php');
 	define(INC_LOG,'log.inc.php');
 	define(INC_FUNC,'func.inc.php');
+	define(INC_MOD,'modify.inc.php');
 	//define(FNC_TIP,'tips_gen.fnc.php');
 	define(CSS_DIR,'css/');
 	define(CSS_FILE,'default.css');

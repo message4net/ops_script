@@ -4,6 +4,10 @@ require_once BASE_DIR.INC_DIR.INC_DB;
 //require_once BASE_DIR.INC_DIR.FNC_TIP;
 require_once BASE_DIR.INC_DIR.INC_FUNC;
 
+require_once BASE_DIR.INC_DIR.INC_LOG;
+
+$log_set_view=new LogHandle();
+
 if($_SESSION[menu_sub_id]==''){
 	$returnarr[content][tips_nav]='不可直接调用，请通过正规方式访问';
 	require_once BASE_DIR.MDL_DIR.MDL_RETURN;

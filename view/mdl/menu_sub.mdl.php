@@ -1,6 +1,11 @@
 <?php session_start();
 require_once dirname(dirname(__FILE__)).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
+
+require_once BASE_DIR.INC_DIR.INC_LOG;
+
+$log_menu_sub=new LogHandle();
+
 $db_menu_sub=new DBSql();
 $tmpsql='select id,name from menu where parent_id='.$_POST[id];
 $result_menu_sub=$db_menu_sub->select($tmpsql);

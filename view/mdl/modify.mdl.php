@@ -2,6 +2,12 @@
 require_once str_replace('\\','/',dirname(dirname(__FILE__))).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
 
+require_once BASE_DIR.INC_DIR.INC_LOG;
+require_once BASE_DIR.INC_DIR.INC_MOD;
+
+$log_modify=new LogHandle();
+$self_modify=new ModSet();
+
 if($_SESSION[menu_sub_id]==''){
 	$returnarr[0][tips_nav]='不可直接调用，请通过正规方式访问';
 	require_once BASE_DIR.MDL_DIR.MDL_RETURN;
@@ -80,7 +86,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		$tmpresult=$db_modify->select($tmpsql);
 		if($tmpresult[0][ct]==0){
 			$tmpname=$_POST[name];
-			$tmpsql1='insert into role (name,creator) values (\''.$tmpname.'\,'.$_SESSION[loginroleid].');';
+			$tmpsql1='insert into role (name,creator) values (\''.$tmpname.'\','.$_SESSION[loginroleid].');';
 			$db_modify->insert($tmpsql1);
 			//创建role必有插入必显示菜单语句，故此处无需插入必显示菜单
 			//$tmpsql3='insert into role_menu select a.id, b.id from role a, menu b where a.name=\''.$tmpname.'\' and b.flag_set=1 and creator='.$_SESSION[loginroleid].';';
@@ -92,7 +98,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 					$tmpsql2='insert into role_menu select id,\''.$val1.'\' from role where name=\''.$tmpname.'\' and creator='.$_SESSION[loginroleid].';';
 					$db_modify->insert($tmpsql2);
 				}
-				$tmpsql4='insert into role_func select a.id, b.menu_sub_id,b.id from role a, wordbook b,role_menu c,menu d where a.id=c.role_id and d.id=c.menu_sub_id and d.id=b.menu_sub_id and a.name=\''.$tmpname.'\' and b.flag_set=1 and d.flag_set=1 and type in (1,2,3,4,5,7) and creator='.$_SESSION[loginroleid].';';
+				$tmpsql4='insert into role_func select a.id, b.menu_sub_id,b.id from role a, wordbook b,role_menu c where a.id=c.role_id and d.id=c.menu_sub_id and d.id=b.menu_sub_id and a.name=\''.$tmpname.'\' and b.flag_set=1 and d.flag_set=1 and type in (1,2,3,4,5,7) and creator='.$_SESSION[loginroleid].';';
 				$db_modify->insert($tmpsql4);
 			}
 			$tmptips='已成功创建角色';
@@ -142,7 +148,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			$tmpinssql='';
 			foreach($tmpinsertarr as $val) {
 				$tmpinssql.='('.$tmprecid.','.$val.'),';
-				$tmpfuncsql='select id from wordbook where flag_set=1 and menu_sub_id='.$val.' and role_id='.$tmprecid.';';
+				$tmpfuncsql='select id from wordbook where flag_set=1 and menu_sub_id='.$val.';';
 				$tmpfuncresult=$db_modify->select($tmpfuncsql);
 				if($tmpfuncresult){
 					foreach ($tmpfuncresult as $vala)
@@ -166,8 +172,10 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			foreach ($tmpdelarr as $val) {
 				$tmpdelsql.=$val.',';
 			}
-			$tmpdelsql1='delete from role_menu where role_id='.$tmprecid.' and menu_sub_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
-			$tmpdelsqlfunc1='delete from role_func where role_id='.$tmprecid.' and menu_sub_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
+			$creatorall_str=$self_modify->gen_creatorsonstrall($tmprecid);
+			$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, 'MOD4 DEL creatorall_str '.$creatorall_str);
+			$tmpdelsql1='delete from role_menu where role_id in ('.$creatorall_str.') and menu_sub_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
+			$tmpdelsqlfunc1='delete from role_func where role_id in ('.$creatorall_str.') and menu_sub_id in ('.substr($tmpdelsql,0,strlen($tmpdelsql)-1).');';
 			$db_modify->delete($tmpdelsql1);
 			$db_modify->delete($tmpdelsqlfunc1);
 			$tmptips.='权限明细删除成功,';
@@ -183,8 +191,10 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			break;
 		}
 		$tmpsql='delete from role where id='.$_POST[recid].';';
-		//$tmpsql1='delete from menu_role where role_id='.$_POST[recid].';';
 		$tmpsql1='delete from role_menu where role_id='.$_POST[recid].';';
+		$sql_creatorson='select * from role where creator='.$_POST[recid].';';
+		$str_log=$self_modify->change_owner_creatorson($_POST[recid], $_SESSION[loginroleid]);
+		$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, $str_log);
 		$tmptips='权限删除成功';
 		$db_modify->delete($tmpsql1);
 		$db_modify->delete($tmpsql);
@@ -192,18 +202,18 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 	;;
 	case func_delall4:
 		$tmpstrarr=explode(',',$_POST[tmpstr]);
-		$returnarr[0][0]=$tmpstrarr;
 		if(in_array('1',$tmpstrarr)){
 			$tmptips='默认权限无法修改，请重新选择删除内容';
 			break;
 		}else{
 			if($_POST[tmpstr]!=''){
 				foreach ($tmpstrarr as $val){
-					//$tmpsql='delete from menu_role where role_id='.$val.';';
 					$tmpsql='delete from role_menu where role_id='.$val.';';
 					$db_modify->delete($tmpsql);
 					$tmpsql1='delete from role where id='.$val.';';
 					$db_modify->delete($tmpsql1);
+					$str_log=$self_modify->change_owner_creatorson($val, $_SESSION[loginroleid]);
+					$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, $str_log);
 					$tmptips='删除成功';
 				}
 			}else{

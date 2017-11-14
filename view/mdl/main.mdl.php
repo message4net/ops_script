@@ -5,6 +5,11 @@ require_once BASE_DIR.INC_DIR.INC_DB;
 require_once BASE_DIR.INC_DIR.INC_VIEW;
 require_once BASE_DIR.INC_DIR.INC_FUNC;
 
+require_once BASE_DIR.INC_DIR.INC_LOG;
+
+$log_main=new LogHandle();
+
+
 $navmenusubid='-1';
 $funccategoryid=1;
 $navtailname='';
@@ -25,6 +30,7 @@ if ($_POST[func]=='reset'){
 	$_SESSION[page]='';
 }
 
+//$view=new ViewMain($_SESSION[menu_sub_id],$_SESSION[loginroleid],$_SESSION[page],$_SESSION[searchword],$_SESSION[searchcol]);
 $view=new ViewMain($_SESSION[menu_sub_id],$_SESSION[page],$_SESSION[searchword],$_SESSION[searchcol]);
 $funcnav=new FuncNavGen($_SESSION[menu_sub_id]);
 

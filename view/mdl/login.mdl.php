@@ -20,13 +20,12 @@ if (!empty($result_login)) {
 	$_SESSION[loginpasswd]=$result_login[0][password];
 	$_SESSION[loginduration]=time()+86400;
 	$_SESSION[loginflag]=1;
-	
-	$log_login->logprint(FLAG_LOG_INFO, LEVEL_LOG_INFO, 'LOGIN SUCCEED:'.$tmpusername);
-	
+	$log_login->logprint(FLAG_LOG_WARN, LEVEL_LOG_INFO, 'LOGIN SUCCEED:'.$tmpusername);
 	require_once BASE_DIR.MDL_DIR.MDL_MENU;
 	exit;
 }else{
 	$returnarr[content]=array('tips_login'=>'<span style="float:left;font-size:12px;color:green"><b><i>用户名或密码有误，请重新输入</b></i></span>');
+	$log_login->logprint(FLAG_LOG_WARN, LEVEL_LOG_INFO, 'LOGIN FAILED:'.$tmpusername.$tmpuserpassword);
 }
 
 unset($db_login,$tmploginsql,$tmpusername,$tmpuserpassword,$result_login);
