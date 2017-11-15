@@ -5,11 +5,11 @@ private $rec_init_arr=array();
 /**
 	 *功能:构造函数，使用父类__construct，连接数据库
 	 */
-	//public function __construct($menu_sub_id,$login_role_id,$rec_pagenum_post_tmp=1,$rec_word_search='',$rec_col_search=''){
-public function __construct($menu_sub_id,$login_role_id,$rec_pagenum_post_tmp=1,$rec_word_search='',$rec_col_search=''){
+	public function __construct($menu_sub_id,$login_role_id,$rec_pagenum_post_tmp=1,$rec_word_search='',$rec_col_search=''){
+//public function __construct($menu_sub_id,$login_role_id,$rec_pagenum_post_tmp=1,$rec_word_search='',$rec_col_search=''){
 		parent::__construct();
 		$this->menu_sub_id=$menu_sub_id;
-		//$this->login_role_id=$login_role_id;
+		$this->login_role_id=$login_role_id;
 		$this->pagenum_per=PERPAGENO;
 		$this->rec_pagenum_post_tmp=$rec_pagenum_post_tmp;
 		if ($rec_word_search!=''){

@@ -28,7 +28,7 @@
 	define(CSS_ID_TD_STR_A,'str_a');
 	define(CSS_ID_TD_STR_B,'str_b');
 	
-	define(FLAG_LOG_INFO,'1');
+	define(FLAG_LOG_INFO,'0');
 	define(FLAG_LOG_WARN,'1');
 	define(FLAG_LOG_ERR,'1');
 	define(LEVEL_LOG_INFO,'INFO:');

@@ -96,8 +96,7 @@ $.extend({
 			})			
 
 			
-			
-			$('#content').on('click','[id^=m_v_s_]',function(){
+			$('#content').on('click','[id^=m_v_s_set]',function(){
 				if($('#name').val()==''){
 					alert('名称不能为空');
 					$('#name').focus();
@@ -106,16 +105,35 @@ $.extend({
 					tmpfnc=$(this).attr('id').substring(0,9);
 					tmpjsfnc=$(this).attr('id').substring(6,9);
 					tmprecid=$(this).attr('id').substring(10);
-					
 					$('#content_view').find('tr').each(function(){
 						$(this).children('td').each(function(){
-							alert($(this).text());
-							//if($(this).attr('id')=='str_a');
+							if($(this).attr('id')=='str_a'){
+								tmpstrchecked='';
+								$(this).children(':checkbox').each(function(){
+									if($(this).is(':checked')){
+										tmpstrchecked+=$(this).attr('id')+',';
+									}
+								});
+								tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
+								tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
+alert(tmpdata);
+								$.ajx('mdl/modify.mdl.php',tmpdata);
+							}
 						})
-
 					});
 
-					
+				}
+			});
+			
+			$('#content').on('click','[id^=m_v_s_]:not([id^=m_v_s_set])',function(){
+				if($('#name').val()==''){
+					alert('名称不能为空');
+					$('#name').focus();
+				}else{
+					tmpname=$('#name').val();
+					tmpfnc=$(this).attr('id').substring(0,9);
+					tmpjsfnc=$(this).attr('id').substring(6,9);
+					tmprecid=$(this).attr('id').substring(10);
 					if($(':checkbox').is(':checked')){
 						tmpstrchecked='';
 						$(':checkbox:checked').each(function(){
@@ -132,7 +150,9 @@ $.extend({
 					}
 					$.ajx('mdl/modify.mdl.php',tmpdata);
 				}
-			})
+			});
+			
+//doc ready
 		});
 	}
 });
@@ -153,6 +173,7 @@ $.extend({
 	click:function(eid,ectxt,url,data){
 		$('#'+eid).on('click',ectxt,function(){
 			tmpdata=eval(data);
+			//alert(tmpdata);
 		//alert(eid+'###'+ectxt+'###'+url+'###'+tmpdata);
 			$.ajx(url,tmpdata);
 		});

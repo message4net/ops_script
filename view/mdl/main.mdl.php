@@ -30,8 +30,8 @@ if ($_POST[func]=='reset'){
 	$_SESSION[page]='';
 }
 
-//$view=new ViewMain($_SESSION[menu_sub_id],$_SESSION[loginroleid],$_SESSION[page],$_SESSION[searchword],$_SESSION[searchcol]);
-$view=new ViewMain($_SESSION[menu_sub_id],$_SESSION[page],$_SESSION[searchword],$_SESSION[searchcol]);
+$view=new ViewMain($_SESSION[menu_sub_id],$_SESSION[loginroleid],$_SESSION[page],$_SESSION[searchword],$_SESSION[searchcol]);
+//$view=new ViewMain($_SESSION[menu_sub_id],$_SESSION[page],$_SESSION[searchword],$_SESSION[searchcol]);
 $funcnav=new FuncNavGen($_SESSION[menu_sub_id]);
 
 switch ($_POST[func]) {

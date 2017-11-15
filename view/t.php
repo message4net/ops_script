@@ -1,107 +1,41 @@
-<?php session_start();
-echo date('Y-m-d H:i:s');
-var_dump($_SERVER); 
-//echo '<table><tr><td><tr></table>';
-//$a=1;
-//switch ($a) {
-//	case 1:
-//	case 2:
-//		echo 'a';
-//	;
-//	case 3:
-//		echo 'b';
-//	;
-//	default:
-//		echo $a.'c';
-//	break;
-//}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<base href="http://www.liujin.com/http/ops_script/view/"></base>
+<title>运维系统</title>
+<link href="css/default.css" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<!--  
+<script type="text/javascript" src="js/test.js"></script>
+-->
+</head>
+<body>
+	<div id="main">
+<a id="x">aaaaaa</a>
 
-//require_once dirname(__FILE__).'/cfg/base.cfg.php';
-//require_once BASE_DIR.INC_DIR.INC_DB;
-//require_once BASE_DIR.INC_DIR.INC_VIEW;
-//
-//$tmpid=4;
-//$_POST[page]='1';
-//
-//$view_tmp=new ViewMain($tmpid,$_POST[page],'name like \'%test%\' ');
-//
-//echo "###init###<br/>";
-//$a=$view_tmp->init_recarr();
-//var_dump($a);
-//echo "<br/>###<br/>";
-
-//echo "###post###<br/>";
-//$a=$view_tmp->gen_rec_pagenum_post();
-//var_dump($a);
-//echo "<br/>###<br/>";
-//
-//echo "###total###<br/>";
-//$a=$view_tmp->gen_rec_pagenum_total();
-//var_dump($a);
-//echo "<br/>###<br/>";
-//
-//echo "###init###<br/>";
-//$a=$view_tmp->init_recarr(4,2);
-//var_dump($a);
-//echo "<br/>###<br/>";
-//
-//echo "###bar###<br/>";
-//$a=$view_tmp->gen_pagebar_html();
-//var_dump($a);
-//echo "<br/>###<br/>";
-//
-//echo "###nav###<br/>";
-//$a=$view_tmp->gen_navpos_html(-1,'修改','');
-////$a=$view_tmp->gen_navpos_html();
-//var_dump($a);
-//echo "<br/>###<br/>";
-//
-//echo "###func###<br/>";
-//$a=$view_tmp->gen_func_html();
-//var_dump($a);
-//echo "<br/>###<br/>";
-//
-//echo "###content###<br/>";
-//$a=$view_tmp->gen_view_content_html();
-//var_dump($a);
-//echo "<br/>###<br/>";
-
-
-//var_dump($_SESSION);
-//$a=array(array(1,1),array(1,2),array(1,4),array(1,5));
-//$b=array(array(1,1),array(1,3),array(1,7),array(1,5));
-//$c=array_diff($a,$b);
-//$a=array(1,2,3,4);
-//$b=array(1,3,5,7);
-//$a=array();
-//$b=array();
-//$c=array_diff($a,$b);
-//$a[0][0]=1;
-//$c=$a;
-//$b[0][1]=2;
-//$c=$b;
-//var_dump($c);
-//$d=$c==''?'Yes,NULL':'No,not NULL';
-//var_dump($d);
-//$x='';
-//$y=explode(',',$x);
-//var_dump(count($y));
-
-//class a {
-//	private $arr=array();
-//	public function __construct(){
-//		
-//	}
-//	public function b() {
-//		return $this->arr[a]=1;
-//	}
-//	public function c() {
-//		return $this->arr[b]=2;
-//	}
-//}
-//
-//$a=new a();
-
-
-
-?>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	alert('aaaaaaa');
+	var a='{"aa":[{"a":"1"},{"b":"2"}],"ab":[{"A":"Aa"},{"B":"Bb"}]}';
+	var b=eval('('+a+')');
+	alert(b.aa);
+//	$('#main').on('click','a',function(){
+//		alert('bbbbbb');
+//			$.ajax({
+//				type: "POST",
+//				dataType:"json",
+//				url: "test.php",
+//				data: 'cccccc',
+//				success: function(msg){
+//					//var data=eval('('+msg+')');
+//					//$.each()
+//					alert('dddddddddd');
+//				}
+//			});
+//	});
+});
+</script>
+</body>
+</html>

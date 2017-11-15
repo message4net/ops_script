@@ -23,7 +23,7 @@ if($_POST[fnc]==''){
 $db_modify=new DBSql();
 switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 	case m_v_s_set4:
-		$returnarr[0][0]='恭喜，正在调试权限set功能';
+		//$returnarr[0][0]='恭喜，正在调试权限set功能';
 		$tmpstrarr=explode(',',$_POST[tmpstr]);
 		if($_POST[recid]==1){
 			$tmptips='默认权限无法修改，请联系管理员';
@@ -31,9 +31,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		}else{
 			$tmprecid=$_POST[recid];
 		}
-//		$tmpname=$_POST[name];
 		$tmptips='';
-//		$tmpsql='select count(*) ct from role where name=\''.$tmpname.'\' and id='.$tmprecid.';';
 		$tmpsql1='select wordbook_id menu_sub_id from role_func where role_id='.$tmprecid.' and menu_sub_id='.$_SESSION[menu_sub_id].';';
 		$tmproleoriginmenuresult=$db_modify->select($tmpsql1);
 		$count=0;
@@ -45,23 +43,16 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		}else{
 			$tmproleoriginmenuarr=array();
 		}
-//		$tmpresult=$db_modify->select($tmpsql);
 		$tmpinsertarr=array_diff($tmpstrarr,$tmproleoriginmenuarr);
 		$tmpdelarr=array_diff($tmproleoriginmenuarr,$tmpstrarr);
-//		if($tmpresult[0][ct]==0){
-//			$tmpupdatesql='update role set name=\''.$tmpname.'\' where id='.$tmprecid.';';
-//			$tmptips.='权限名称更新成功,';
-//			$db_modify->update($tmpupdatesql);
-//		}else{
-//			$tmptips.='权限名称不需改变,';
-//		}
 		if(count($tmpinsertarr)<>0){
 			$tmpinssql='';
 			foreach($tmpinsertarr as $val) {
 				$tmpinssql.='('.$tmprecid.','.$_SESSION[menu_sub_id].','.$val.'),';
 			}
-			$tmpinssql=substr($tmpinssql,0,strlen($tmpinssql)-1).';';
-			$tmpinssql1='insert into role_func values '.substr($tmpinssql,0,strlen($tmpinssql)-1).';';
+			$tmpinssql=substr($tmpinssql,0,strlen($tmpinssql)-1);
+			$tmpinssql1='insert into role_func values '.$tmpinssql.';';
+			$returnarr[0][0]=$tmpinssql1;
 			$db_modify->insert($tmpinssql1);
 			$tmptips.='功能明细设置成功,';
 		}else{
@@ -97,6 +88,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 				foreach ($tmpstrarr as $val1){
 					$tmpsql2='insert into role_menu select id,\''.$val1.'\' from role where name=\''.$tmpname.'\' and creator='.$_SESSION[loginroleid].';';
 					$db_modify->insert($tmpsql2);
+					//$returnarr[0][0].=$val1.',';
 				}
 				$tmpsql4='insert into role_func select a.id, b.menu_sub_id,b.id from role a, wordbook b,role_menu c where a.id=c.role_id and d.id=c.menu_sub_id and d.id=b.menu_sub_id and a.name=\''.$tmpname.'\' and b.flag_set=1 and d.flag_set=1 and type in (1,2,3,4,5,7) and creator='.$_SESSION[loginroleid].';';
 				$db_modify->insert($tmpsql4);
@@ -190,14 +182,21 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			$returnarr[content][tips]='默认权限无法修改，请联系管理员';
 			break;
 		}
-		$tmpsql='delete from role where id='.$_POST[recid].';';
-		$tmpsql1='delete from role_menu where role_id='.$_POST[recid].';';
-		$sql_creatorson='select * from role where creator='.$_POST[recid].';';
-		$str_log=$self_modify->change_owner_creatorson($_POST[recid], $_SESSION[loginroleid]);
-		$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, $str_log);
-		$tmptips='权限删除成功';
-		$db_modify->delete($tmpsql1);
-		$db_modify->delete($tmpsql);
+		$str_log_arr=$self_modify->del_role($_POST[recid],$_SESSION[loginroleid]);
+		$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, $str_log_arr[0]);
+		$tmptips=$str_log_arr[1];
+		//$tmpsql='delete from role where id='.$_POST[recid].';';
+		//$tmpsql1='delete from role_menu where role_id='.$_POST[recid].';';
+		//$sql_del_func='delete from role_func where role_id='.$_POST[recid].';';
+		//$sql_change_user_role='update user set role_id=2 where role_id='.$_POST[recid].';';
+		//$sql_creatorson='select * from role where creator='.$_POST[recid].';';
+		//$str_log=$self_modify->change_owner_creatorson($_POST[recid], $_SESSION[loginroleid]);
+		//$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, $str_log);
+		//$tmptips='权限删除成功';
+		//$db_modify->delete($tmpsql1);
+		//$db_modify->delete($tmpsql);
+		//$db_modify->delete($sql_del_func);
+		//$db_modify->update($sql_change_user_role);
 		break;
 	;;
 	case func_delall4:
@@ -208,13 +207,18 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		}else{
 			if($_POST[tmpstr]!=''){
 				foreach ($tmpstrarr as $val){
-					$tmpsql='delete from role_menu where role_id='.$val.';';
-					$db_modify->delete($tmpsql);
-					$tmpsql1='delete from role where id='.$val.';';
-					$db_modify->delete($tmpsql1);
-					$str_log=$self_modify->change_owner_creatorson($val, $_SESSION[loginroleid]);
-					$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, $str_log);
-					$tmptips='删除成功';
+					$str_log_arr=$self_modify->del_role($val,$_SESSION[loginroleid]);
+					$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, $str_log_arr[0]);
+					$tmptips=$str_log_arr[1];
+					//$tmpsql='delete from role_menu where role_id='.$val.';';
+					//$db_modify->delete($tmpsql);
+					//$tmpsql1='delete from role where id='.$val.';';
+					//$db_modify->delete($tmpsql1);
+					//$sql_change_user_role='update user set role_id=2 where role_id='.$val.';';
+					//$db_modify->update($sql_change_user_role);
+					//$str_log=$self_modify->change_owner_creatorson($val, $_SESSION[loginroleid]);
+					//$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, $str_log);
+					//$tmptips='权限删除成功';
 				}
 			}else{
 				$tmptips='无需删除';
@@ -230,5 +234,5 @@ $returnarr[content][tips]='<div style="float:left">'.$tmptips.'</div>';
 unset($tmprecid,$tmproleoriginmenuresult,$tmproleoriginmenuarr,$tmpinsertarr,$tmpstrarr,$tmpname,$tmpresult,$tmpsql,$val,$tmpsql1,$tmpsql2,$val1,$db_modify,$tmptips,$tmpdelarr,$tmpinssql,$tmpinssql1);
 
 require_once BASE_DIR.MDL_DIR.MDL_MAIN;
-require_once BASE_DIR.MDL_DIR.MDL_RETURN;
+//require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>

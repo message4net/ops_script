@@ -12,20 +12,43 @@ class ModSet extends DBSql{
 	}
 
 /**
+ * 功能:删除权限role，并将user对应的该role_id改为默认role_id
+ * 参数:$role_del 删除的权限role_id
+ * 		$role_change creator有$role_del变更为$role_change 及拥有者的权限role_id
+ */
+	public function del_role($role_del,$role_change){
+		$sql_del_role='delete from role where id='.$role_del.';';
+		$sql_del_role_menu='delete from role_menu where role_id='.$role_del.';';
+		$sql_del_role_func='delete from role_func where role_id='.$role_del.';';
+		$sql_change_user_role='update user set role_id=2 where role_id='.$role_del.';';
+		$sql_creatorson='select * from role where creator='.$role_del.';';
+		
+		parent::delete($sql_del_role_menu);
+		parent::delete($sql_del_role);
+		parent::delete($sql_del_role_func);
+		parent::update($sql_change_user_role);
+		
+		$str_log_arr[0]=$this->change_owner_creatorson($role_del,$role_change);
+		$str_log_arr[1]='权限删除成功';
+		
+		return $str_log_arr;
+	}
+	
+/**
  * 功能:删除权限role时,更改子role,user的归属creator
  * 参数:$creator_role_del 删除的权限role_id
  * 		$creator_role_change 变更为拥有者的权限role_id
  */
-	public function change_owner_creatorson($creator_role_del,$creator_role_change){
-		$sql_creatorson='select * from role where creator='.$creator_role_del.';';
-		$result_creatorson=$db_modify->select($sql_creatorson);
+	public function change_owner_creatorson($role_del,$role_change){
+		$sql_creatorson='select * from role where creator='.$role_del.';';
+		$result_creatorson=parent::select($sql_creatorson);
 		if ($result_creatorson){
 			foreach ($result_creatorson as $val){
 				$str_creatorson.=$val[id].',';
 			}
 			$str_creatorson=substr($str_creatorson, 0,strlen($str_creatorson)-1);
-			$sql_creatorson_role_change='update role set creator='.$creator_role_change.' where creator in ('.$str_creatorson.');';
-			$sql_creatorson_user_change='update user set creator='.$creator_role_change.' where creator in ('.$str_creatorson.');';
+			$sql_creatorson_role_change='update role set creator='.$role_change.' where creator in ('.$str_creatorson.');';
+			$sql_creatorson_user_change='update user set creator='.$role_change.' where creator in ('.$str_creatorson.');';
 			parent::$db_modify->update($sql_creatorson_role_change);
 			parent::$db_modify->update($sql_creatorson_user_change);
 			return 'DEL4 CHANGE str_creatorson '.$str_creatorson;
@@ -62,8 +85,8 @@ class ModSet extends DBSql{
 					$sql_creator_str_tmp.=$val[id].',';
 				}
 				$sql_creator_str_tmp=substr($sql_creator_str_tmp,0,strlen($sql_creator_str_tmp)-1);
+				$creator_str_tmp.=$sql_creator_str_tmp.',';
 			}
-			$creator_str_tmp.=$sql_creator_str_tmp.',';
 			return $this->traversalcreatorson($sql_creator_str_tmp,$creator_str_tmp);
 		}else{
 			return 	$creator_str_tmp;
