@@ -27,6 +27,7 @@
 	define(CSS_ID_TABLE_CONTENT, 'content_view');
 	define(CSS_ID_TD_STR_A,'str_a');
 	define(CSS_ID_TD_STR_B,'str_b');
+	define(CSS_ID_TD_STR_C,'str_c');
 	
 	define(FLAG_LOG_INFO,'0');
 	define(FLAG_LOG_WARN,'1');
@@ -34,6 +35,7 @@
 	define(LEVEL_LOG_INFO,'INFO:');
 	define(LEVEL_LOG_WARN,'WARN:');
 	define(LEVEL_LOG_ERR,'ERR :');
+	define(FLAG_ADMIN,'1');
 	
 	define(JS_DIR,'js/');
 	define(JS_JQ,'jquery-1.11.3.min.js');

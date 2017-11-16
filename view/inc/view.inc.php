@@ -5,11 +5,12 @@ private $rec_init_arr=array();
 /**
 	 *功能:构造函数，使用父类__construct，连接数据库
 	 */
-	public function __construct($menu_sub_id,$login_role_id,$rec_pagenum_post_tmp=1,$rec_word_search='',$rec_col_search=''){
+	public function __construct($menu_sub_id,$login_role_id,$login_user_id,$rec_pagenum_post_tmp=1,$rec_word_search='',$rec_col_search=''){
 //public function __construct($menu_sub_id,$login_role_id,$rec_pagenum_post_tmp=1,$rec_word_search='',$rec_col_search=''){
 		parent::__construct();
 		$this->menu_sub_id=$menu_sub_id;
 		$this->login_role_id=$login_role_id;
+		$this->login_user_id=$login_user_id;
 		$this->pagenum_per=PERPAGENO;
 		$this->rec_pagenum_post_tmp=$rec_pagenum_post_tmp;
 		if ($rec_word_search!=''){
@@ -44,11 +45,11 @@ private $rec_init_arr=array();
 	public function gen_rec_pagenum_total(){
 		if($this->rec_word_search==''){
 			//如果非user ,role 表，可能需要使用注释的语句
-			$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].';';
-			//$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].' and creator='.$this->login_role_id.';';
+			//$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].';';
+			$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].' where creator='.$this->login_role_id.';';
 		}else{
-			$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.';';
-			//$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' and creator='.$this->login_role_id.';';
+			//$rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.';';
+			 $rec_count_sql='select count(*) ct from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' and creator='.$this->login_role_id.';';
 		}
 		
 		$rec_count_result=parent::select($rec_count_sql);
@@ -56,7 +57,7 @@ private $rec_init_arr=array();
 		$rec[count]=$rec_count_result[0][ct];
 		$rec[pagenum_total]=$rec_pagenum_total;
 		
-		$rec[sql_tmp]=$rec_count_sql;
+		//$rec[sql_tmp]=$rec_count_sql;
 
 		return $rec;
 	}
@@ -76,7 +77,7 @@ private $rec_init_arr=array();
 		$this->rec_init_arr[rec_num_start]=(($this->rec_init_arr[rec_pagenum_post]-1)*$this->pagenum_per);
 		if($this->rec_init_arr[rec_num_start]>=$this->rec_init_arr[rec_count]) $this->rec_init_arr[rec_num_start]=$this->rec_init_arr[rec_count]-$this->rec_init_arr[rec_count]%$this->pagenum_per;
 
-		$this->rec_init_arr[sql_tmp]=$rec[sql_tmp];
+		//$this->rec_init_arr[sql_tmp]=$rec[sql_tmp];
 		
 		return $this->rec_init_arr;
 	}
@@ -101,17 +102,29 @@ private $rec_init_arr=array();
 	}
 
 	public function gen_view_content_html(){
-		$rec_head_sql='select * from wordbook where type=1 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+		$sql_head_user='select * from user_col where user_id='.$this->login_user_id;
+		$result_head_user=parent::select($sql_head_user);
+		if($result_head_user){
+			$rec_head_sql='select * from wordbook wb, role_func rf, user_col uc where role_id='.$this->login_role_id.' and uc.user_id='.$this->login_user_id.' and uc.menu_sub_id=wb.menu_sub_id and uc.wordbook_id=wb.id and wb.menu_sub_id=rf.menu_sub_id and wb.id=rf.wordbook_id and type=1 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+		}else{
+			$rec_head_sql='select * from wordbook wb, role_func rf where role_id='.$this->login_role_id.' and wb.id=rf.wordbook_id and type=1 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+		}
 		$rec_head_result=parent::select($rec_head_sql);
 		
 		if ($rec_head_result){
-			$func_content_sql='select * from wordbook where type=5 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+			$func_content_sql='select * from wordbook wb, role_func rf where rf.role_id='.$this->login_role_id.' and wb.id=rf.wordbook_id and type=5 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
 			$func_content_result=parent::select($func_content_sql);
-			
-			$rec_body_1m_sql='select * from wordbook where type=2 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+
+			if($result_head_user){
+//				$rec_body_1m_sql='select * from wordbook where type=2 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+//				$rec_body_1s_sql='select * from wordbook where type=7 and menu_sub_id='.$this->menu_sub_id.' order by seq';
+				$rec_body_1m_sql='select * from wordbook wb, role_func rf, user_col uc where rf.role_id='.$this->login_role_id.' and uc.user_id='.$this->login_user_id.' and uc.menu_sub_id=wb.menu_sub_id and uc.wordbook_id=wb.id and wb.menu_sub_id=rf.menu_sub_id and wb.id=rf.wordbook_id and type=2 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+				$rec_body_1s_sql='select * from wordbook wb, role_func rf, user_col uc where rf.role_id='.$this->login_role_id.' and uc.user_id='.$this->login_user_id.' and uc.menu_sub_id=wb.menu_sub_id and uc.wordbook_id=wb.id and wb.menu_sub_id=rf.menu_sub_id and wb.id=rf.wordbook_id and type=7 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+			}else{
+				$rec_body_1m_sql='select * from wordbook wb, role_func rf where rf.role_id='.$this->login_role_id.' and wb.id=rf.wordbook_id and type=2 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+				$rec_body_1s_sql='select * from wordbook wb, role_func rf where rf.role_id='.$this->login_role_id.' and wb.id=rf.wordbook_id and type=7 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+			}
 			$rec_body_1m_result=parent::select($rec_body_1m_sql);
-			
-			$rec_body_1s_sql='select * from wordbook where type=7 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 			$rec_body_1s_result=parent::select($rec_body_1s_sql);
 			
 			$rec_body_column_sql_part='';
@@ -137,9 +150,11 @@ private $rec_init_arr=array();
 			$rec_body_column_sql_part=substr($rec_body_column_sql_part,0,strlen($rec_body_column_sql_part)-1).' ';
 			$rec_head_html.='</tr>';
 			if($this->rec_word_search==''){
-				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+				//$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where creator='.$this->login_user_id.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
 			}else{
-				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+				//$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' and creator='.$this->login_user_id.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
 			}
 			$rec_body_column_result=parent::select($rec_body_column_sql);
 			//确认1m,1s对应的范围
@@ -219,6 +234,7 @@ private $rec_init_arr=array();
 		}
 
 		return $rec_html;
+		//return $rec_head_sql;
 	}
 
 }

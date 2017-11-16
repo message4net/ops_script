@@ -7,7 +7,11 @@ $.extend({
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
 			$.main(datajson.paras);
-
+			
+			$('#menu_func').on('click','a[id="func_setall"]',function(){
+				$.ajx('mdl/view_son.mdl.php','');
+			});
+			
 			$('#content').on('click','input[name="modall"]',function(){
 				if($('input[name="modall"]').prop('checked')){
 					$('input[name=mod'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
@@ -105,23 +109,37 @@ $.extend({
 					tmpfnc=$(this).attr('id').substring(0,9);
 					tmpjsfnc=$(this).attr('id').substring(6,9);
 					tmprecid=$(this).attr('id').substring(10);
+					tmpstrchecked='';
+					tmpmenusubido='';
 					$('#content_view').find('tr').each(function(){
 						$(this).children('td').each(function(){
-							if($(this).attr('id')=='str_a'){
-								tmpstrchecked='';
-								$(this).children(':checkbox').each(function(){
-									if($(this).is(':checked')){
-										tmpstrchecked+=$(this).attr('id')+',';
-									}
-								});
-								tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
-								tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
-alert(tmpdata);
-								$.ajx('mdl/modify.mdl.php',tmpdata);
+							if($(this).attr('id')=='str_a' || $(this).attr('id')=='str_b'){
+								if(tmpmenusubido==''){tmpmenusubido=$(this).attr('name');}
+								tmpmenusubidt=$(this).attr('name');
+								if(tmpmenusubido==tmpmenusubidt){
+									$(this).children(':checkbox').each(function(){
+										if($(this).is(':checked')){
+											tmpstrchecked+=$(this).attr('id')+',';
+										}
+									});
+								}else{
+									tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
+									tmpdata='fnc='+tmpfnc+'&name='+tmpmenusubido+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
+									$.ajx('mdl/modify.mdl.php',tmpdata);
+									tmpstrchecked='';
+									tmpmenusubido=tmpmenusubidt;
+									$(this).children(':checkbox').each(function(){
+										if($(this).is(':checked')){
+											tmpstrchecked+=$(this).attr('id')+',';
+										}
+									});
+								}
 							}
 						})
 					});
-
+					tmpstrchecked=tmpstrchecked.substring(0,tmpstrchecked.length-1);
+					tmpdata='fnc='+tmpfnc+'&name='+tmpmenusubido+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
+					$.ajx('mdl/modify.mdl.php',tmpdata);
 				}
 			});
 			
