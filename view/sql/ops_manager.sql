@@ -61,7 +61,7 @@ CREATE TABLE `role_func` (
 
 /*Data for the table `role_func` */
 
-insert  into `role_func`(`role_id`,`menu_sub_id`,`wordbook_id`) values (38,4,4);
+insert  into `role_func`(`role_id`,`menu_sub_id`,`wordbook_id`) values (1,4,1),(1,4,2),(1,4,3),(1,4,4),(1,4,5),(1,4,7),(1,4,8),(1,4,10),(1,4,11),(1,4,12),(1,4,13),(9,4,1),(9,4,2),(9,4,3),(9,4,4),(9,4,5),(9,4,7),(9,4,8),(9,4,10),(9,4,11),(9,4,12),(9,4,13),(35,4,1),(35,4,2),(35,4,3),(35,4,4),(35,4,5),(35,4,7),(35,4,8),(35,4,10),(35,4,11),(35,4,12),(35,4,13),(38,4,1),(38,4,2),(38,4,4),(38,4,10),(38,4,13),(41,4,1),(41,4,2),(41,4,3),(41,4,4),(41,4,5),(41,4,7),(41,4,8),(41,4,10),(41,4,11),(41,4,12),(41,4,13);
 
 /*Table structure for table `role_menu` */
 
@@ -100,11 +100,10 @@ insert  into `user`(`id`,`name`,`password`,`creator`,`role_id`) values (1,'admin
 DROP TABLE IF EXISTS `user_col`;
 
 CREATE TABLE `user_col` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `menu_sub_id` int(11) NOT NULL,
   `wordbook_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`user_id`,`menu_sub_id`,`wordbook_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_col` */
