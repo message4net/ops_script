@@ -1,0 +1,291 @@
+1.常数参数由大写字母与下划线组合而成，如:BASE_DIR
+2.wordbook表 type含义
+	a.type=1 对应表(如role)已存在的字段  等 角色元素, 通过main.mdl.php 展示
+	b.type=2 存储 对应1对多关系模式(如role的具体权限) 等 菜单元素,通过main.mdl.php 展示
+	c.type=3 存储html id=menu_func 中 删除、修改、批设置、批撤销、字段设置 等 菜单功能，通过main.mdl.php展示
+	d.type=4 存储html id=menu_func 中 搜索 等 菜单功能，通过main.mdl.php展示
+	e.type=5 存储html id=content 中 记录 纪录功能,通过main.mdl.php展示
+	f.type=6 存储html id=content 中 记录 菜单元素,通过modify_view.mdl.php展示
+	g.type=7 存储 对应1对1关系模式creator名称 等 信息元素,通过main.mdl.php 展示
+3.menu新增功能，需关联至role_menu表中
+4.默认role表中id=1的记录含所有menu中parent_id<>0的记录
+5.默认user_role表中id=1的记录含所有menu中parent_id<>0的记录
+6.默认role,user两表中都有id=1的记录
+
+
+
+aaaaaaaaaa
+
+#############################
+texas dev
+
+java简易poker
+http://www.imooc.com/article/6715
+texas AI
+https://www.yuanmas.com/info/9eaJZoXGa5.html
+texas union all
+http://www.taomadao.com/thread-411-1-1.html
+链接：http://pan.baidu.com/s/1i5BagFb 密码：ydvc
+
+############
+app开发
+
+code4app
+http://code4app.com/category/popupview
+object-c
+http://blog.csdn.net/lvxiangan/article/details/46540109
+xcode
+http://www.cocoachina.com/industry/20140224/7868.html
+dingdone
+www.dingdone.com
+
+apple app
+http://www.jb51.net/shouji/429856.html
+http://blog.csdn.net/lvxiangan/article/details/46540109
+a
+https://github.com/qinjx/30min_guides/blob/master/ios.md
+
+
+http://www.cnblogs.com/liufan9/archive/2012/05/29/2523631.html
+
+
+http://www.cocoachina.com/special/fornew.html
+
+a2
+http://www.jb51.net/shouji/429856.html
+##########
+baijia124 陆玖 167457 1/2/4 微信验证中
+niye996 gmc 1/2/4 微信确认中
+depuqipai 皇朝 100009 2/4 是否抢抓 微信确认中
+95532199 海口德州 138178 1/2-5/10 微信确认中
+15827044123 大浪淘沙 141677 1/2/4 微信确认中
+ai985313720 161152 1/2/4 微信确认中
+myf675745943 木哥 117887 1/2,2/4 是否强抓 微信确认中
+dsdj001 鼎盛 2/4 是否抢抓 微信确认中
+ss-815 思思德友圈 2/4 是否抢抓 微信确认中
+kx111188 僵小鱼 158596 1/2/4? qq:3380457704 微信确认中
+
+monoray hzw197544 海贼王 197544 1/2/4,也有2/4/8  haizeiwang197544   xiaoyu520158158 微信已添加
+
+13611340307 坚果 1/2/4,2/4/8 微信已加
+xg15288323487 1/2-5/10 微信已添加
+
+
+
+
+
+
+bosslead id 162208 20/50 金沙 介绍说1/2/4
+wx:2222595 5/10-20/50
+
+15834154097 皇朝 3524631 1/2 是否抢抓 永利 德扑圈 微信确认中
+unkefu un 137924 微信已添加 2/4/8
+德皇 155864 1/2/4/8 2/4 ante 1 微信已添加
+liuxiang884 思思德友圈 248 微信已添加
+wx:133311993 124152 5/10/20
+yx171815 yx 171815 1/2/4 不存在
+
+
+
+13486124717 monoray
+
+13735467894 laughing
+15824140644 joan
+
+18606515723 HK
+
+13516815199 KK
+
+
+http://blog.sina.com.cn/s/blog_93b4a9ee0102vvk5.html?tj=1
+原料：
+
+水1000g/咸柠一个（制作方法看这里）/糖85g/玉米淀粉35g
+
+（没有咸柠的，可换成盐18g，柠檬汁5ml）
+
+
+做法：
+
+玉米淀粉加适量水搅匀备用
+
+小锅加水、糖、切开的咸柠煮开5分钟
+
+用漏勺捞出咸柠
+
+倒入玉米淀粉糊搅匀再次煮开
+
+关火放凉
+
+冰棍液用网筛过筛到带尖嘴的杯子里
+
+分装到合适的容器里
+
+我把家里各种各样的都用上了
+
+硅胶冰棍模、自制简易模、冰块模都可以
+
+放入冰箱冷冻室冻硬即可
+
+简易模取出去掉回形针和纸杯就可以吃啦 
+
+#############################
+php poker
+http://m.jb51.net/article/66806.htm
+
+http://m.blog.csdn.net/naidecreation/article/details/69665899
+
+http://www.php.net/manual/en/function.array-rand.php
+http://m.jb51.net/article/63040.htm
+####################################
+http://www.zhiyoucheng.co/index.php
+http://blog.sina.com.cn/s/blog_7b56dde00101jzgm.html
+
+
+allnewdatou
+http://www.allnewmike.com/download.html
+http://www.pukebodog.com/forum-91-1.html
+http://www.pukeshoumike.com/article-135-1.html
+
+######################################
+#13扑app
+https://tieba.baidu.com/p/5066934307?pn=1
+id:20665665
+vx:depu-a1
+
+########################
+1/2/4
+https://tieba.baidu.com/p/5038798390?pid=105527176930&cid=0#105527176930
+vx:dsy88088
+alipay:15356790151
+id:159565
+
+https://tieba.baidu.com/p/5057175653?pid=105925996056&cid=0#105925996056
+id:196006
+客服微信:zhuzhu159248
+
+https://tieba.baidu.com/p/5131809595
+id:147497
+vx:kezhan147497
+
+https://tieba.baidu.com/p/5087064477
+id:115236
+vx:XmAAApoker
+
+https://tieba.baidu.com/p/5145933365
+id:163085
+vx:tfms124
+
+#################################
+https://tieba.baidu.com/p/5119707089
+id:169799
+白vx:baijinyehua
+夜vx:baijinqianqian
+
+#####1/2 done
+https://tieba.baidu.com/p/5121991180
+wx:jubaoku001
+德友圈星际联盟十星:俱乐部ID:118395♡主打1/2/一百买入，新人上桌有红包牌型奖励不断，四条38同花顺88皇家同花顺388鱼多浪大.，免水欢迎各位老板来围观！客服微信：a15507547892诚信第一
+a15507547892
+
+https://tieba.baidu.com/p/5112884892?pid=107038440061&cid=0#107038440061
+钓鱼客服
+钓鱼1/2免水-100买入专场局，同开四桌
+
+https://tieba.baidu.com/p/5141126587
+id:135638
+vx:xiami1800
+
+
+#################################
+导航条置顶
+https://zhidao.baidu.com/question/1430947883576392259.html
+http://www.myexception.cn/HTML-CSS/1964410.html
+
+php集成开发工具
+https://wenku.baidu.com/view/7c9ab6d276a20029bd642d1e.html
+
+php移动开发工具
+http://www.wex5.com/portfolio-items/wex5-taobao/
+
+VR_A-FRAME
+http://mt.sohu.com/20160429/n446837665.shtml
+http://www.qdfuns.com/notes/25805/afd74aff0b565de5437e6f7b6bb0d2ae.html
+http://www.cnblogs.com/lemonphp/p/5395834.html
+
+OpenGL原理介绍
+http://blog.csdn.net/kesalin/article/details/7168967
+http://blog.csdn.net/lyx2007825/article/details/8792475
+
+VR实现原理
+http://blog.csdn.net/jmz19910110/article/details/52440299
+
+VR源码
+http://www.taomadao.com/thread-681-1-1.html
+
+记忆
+http://cul.sohu.com/20170326/n484896361.shtml
+
+yxcq
+ 1.cpu逆时针:项羽韩信刘邦      行动顺序:先发   手动:5慕容关羽               挂机:勾践|李逵慕容2-勾践慕容嬴政      半挂:6慕容2
+ 2.cpu逆时针:师师吕雉小乔      行动顺序:2发    手动:6鸡2                    挂机:勾践慕容2-李逵2嬴政              半挂:6慕容2         
+ 3.cpu逆时针:宋江2世民商鞅     行动顺序:先发   手动:6鸡2                    挂机:勾践慕容2-李逵嬴政2              半挂:6嬴政2 
+ 4.cpu逆时针:李闯陈胜2李逵     行动顺序:最后发 手动:宋江师师小乔|慕容鸡小乔 挂机:勾践慕容|2嬴政-勾践慕容2                          
+ 5.cpu逆时针:勾践宋江吕雉      行动顺序:2发    手动:6师师2|5师师2           挂机:世民慕容2-世民嬴政2-世民嬴政慕容 半挂:6嬴政2 
+ 6.cpu逆时针:岳飞圆圆2李闯     行动顺序:先发   手动:宋江鸡师师              挂机:小乔慕容2                        半挂:6慕容2
+ 7.cpu逆时针:世民2时迁元樟     行动顺序:最后发 手动:宋江师师小乔            挂机:小乔慕容|关羽嬴政           
+ 8.cpu逆时针:程咬金秦琼曹操2   行动顺序:2发    手动:6鸡2-52鸡               挂机:小乔|世民慕容2-小乔|世民嬴政李逵
+ 9.cpu逆时针:项羽圆圆关羽      行动顺序:先发   手动:宋江师师慕容            挂机:小乔|李逵嬴政慕容
+10.cpu逆时针:宋江褒姒祝融2     行动顺序:2发    手动:嬴政2李逵               挂机:世民慕容小乔
+11.cpu逆时针:勾践法朱世民      行动顺序:先发   手动:宋江小乔诗诗|62鸡       挂机:小乔慕容|李逵嬴政
+12.cpu逆时针:吕雉关羽项羽      行动顺序:最后发 手动:宋江诗诗小乔            挂机:世民慕容嬴政
+13.cpu逆时针:程2陈胜小乔步兵   行动顺序:先发   手动:宋江诗诗慕容            挂机:世民慕容嬴政
+14.cpu逆时针:诗诗2宋江嬴政步兵 行动顺序:2发    手动:慕容关羽小乔            挂机:世民慕容2
+15.cpu逆时针:武松2陈胜秦琼     行动顺序:首发   手动:慕容小乔关羽-6鸡2       挂机:世民|勾践嬴政慕容                半挂:6嬴政2
+16.cpu逆时针:商鞅2刘邦嬴政     行动顺序:最后发 手动:武松虞姬小乔            挂机:勾践慕容嬴政
+17.cpu逆时针:陈胜时迁秦琼2     行动顺序:2发    手动:武松慕容2               挂机:世民慕容嬴政
+18.cpu逆时针:李逵2圆圆师师     行动顺序:首发   手动:武松慕容2               挂机:小乔2慕容
+19.cpu逆时针:项羽华佗2李闯     行动顺序:2发    手动:武松慕容2               挂机:世民2嬴政
+
+
+#############################
+http://bbs.3dmgame.com/thread-4888331-1-1.html
+http://www.wolframalpha.com
+
+
+######起手3,4个地，6回合到6个地
+32174166034424494080000+3628800((x-60)*(x-59)*(x-58)2*(x-57)*(x-56)*(x-55)*(x-5)*(x-4)*(x-3)*(x-2)*(x-1)*x+(x-60)*(x-59)*(x-58)*(x-57)*(x-56)*(x-55)*(x-54)*(x-5)*(x-4)*(x-3)*(x-2)*(x-1)*x)<=0
+
+
+
+-3628800((x-60)*(x-59)*(x-58)2*(x-57)*(x-56)*(x-55)*(x-5)*(x-4)*(x-3)*(x-2)*(x-1)*x+(x-60)*(x-59)*(x-58)*(x-57)*(x-56)*(x-55)*(x-54)*(x-5)*(x-4)*(x-3)*(x-2)*(x-1)*x)/32174166034424494080000>=0.95
+
+7.6595<x<49.131
+
+
+######起手4个地，6回合到6个地
+7*x*6*(x-1)*5*(x-2)*4*(x-3)*3*(60-x)*2*(59-x)*(58-x)*6*(58-x)*5*(57-x)*4*(56-x)*3*(55-x)*2*(x-4)*(x-5)-60*59*58*57*56*55*54*53*52*51*50*49*48
+
+3628800(55-x)*(56-x)*(570x)*(58-x)2*(59-x)*(60-x)*(x-5)*(x-4)*(x-3)*(x-2)*(x-1)*x-32174166034424494080000
+
+
+
+7.5<x<50
+
+######起手3个地，6回合到6个地
+7*x*6*(x-1)*5*(x-2)*4*(60-x)*3*(59-x)*2*(58-x)*(57-x)*6*(56-x)*5*(55-x)*4*(54-x)*3*(x-3)*2*(x-4)*(x-5)-60*59*58*57*56*55*54*53*52*51*50*49*48
+
+7*x*6*(x-1)*5*(x-2)*4*(60-x)*3*(59-x)*2*(58-x)*(57-x)*6*(56-x)*5*(55-x)*4*(54-x)*3*(x-3)*2*(x-4)*(x-5)
+
+-3628800(x-60)*(x-59)*(x-58)*(x-57)*(x-56)*(x-55)*(x-54)*(x-5)*(x-4)*(x-3)*(x-2)*(x-1)*x
+
+x>7.6 x<49
+
+7*x*6*(x-1)*5*(x-2)*4*(60-x)*3*(59-x)*2*(58-x)*(57-x)-60*59*58*57*56*55*54
+
+x<50.9548 x>4.6
+
+
+7*x*6*(x-1)*5*(x-2)*4*(x-3)*3*(60-x)*2*(59-x)*(58-x)--60*59*58*57*56*55*54
+
+x<62 

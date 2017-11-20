@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta charset="gb2312">
+<title>js点击文本框弹出可选择的checkbox复选框</title>
+<style type="text/css">
+#div{
+ margin-bottom:10px;
+ position:relative;
+}
+#div1{
+ width:153px;
+ padding-top:0px;
+ padding-left:0px;
+ position:absolute;
+}
+#div1 ul{
+ margin-top:0px;
+ padding-left:0px;
+ background-color:#ccc;
+ list-style:none;
+}
+#div1 ul li{
+ padding-left:0px;
+}
+#div1 ul li input{
+ margin-left:15px;
+}
+.close{
+ display:none;
+}
+.open{
+ display:block;
+}
+</style>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	//$('#a').click(function(){
+//	$('#ck').on('click','input',function(){
+//		alert($('#a').prop('checked'));
+//	});
+alert('123');
+	$('#t').on('click','button',function(){
+		alert($('#tst').val());
+	});
+});
+//$(function(){ 
+// var position=$("#xx").offset(); 
+// $("#div1").offset({ 
+//  top:position.top+22,
+//  left:position.left
+// }); 
+// $("#xx").click(function(){ 
+//  $("#NG").toggleClass("open"); 
+// });
+// $("#div1 input[name=ng]").click(function(){ 
+//  var arr=new Array(); 
+//  $("input[name=ng]:checked").each(function(key,value){
+//   arr[key]=$(value).val();
+//  }); 
+//  $("#xx").val(arr.join(",")); 
+// }) 
+//}) 
+
+</script>
+</head>
+<body>
+<div id='t'>
+<input id='tst' /><button>dianji</button>
+</div>
+<div id="ck"><input id="a" type="checkbox"/>zz</div>
+<div id="div">
+ <div align="center" id="div2" >
+  <form id="form1">
+   <input type="text" readonly="readonly" id="xx"/>
+   <input type="submit" value="查询"/>
+  </form>
+ </div>
+ <div id="div1">
+  <ul class="close" id="NG" >
+   <li><input type="checkbox" name="ng" value=1 />1</li>
+   <li><input type="checkbox" name="ng" value=2 />2</li>
+   <li><input type="checkbox" name="ng" value=3 />3</li>
+  </ul>
+ </div>
+</div>
+</body>
+</html>
