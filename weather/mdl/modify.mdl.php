@@ -99,6 +99,21 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		}
 		break;
 	;;
+	case m_v_s_add5:
+		$tmpsql='select count(*) ct from user where name=\''.$_POST[name].'\' and creator='.$_SESSION[loginroleid].';';
+		$tmpresult=$db_modify->select($tmpsql);
+		if($tmpresult[0][ct]==0){
+			$tmpname=$_POST[name];
+			$tmpsql1='insert into user (name,creator,password,role_id) values (\''.$tmpname.'\','.$_SESSION[loginroleid].',\''.$_POST[pwd].'\','.$_POST[pri].');';
+			$db_modify->insert($tmpsql1);
+			$tmptips='已成功创建用户';
+			$returnarr[0][0]=$tmpsql1;
+		}else{
+			$tmptips='用户名称重复，请重新输入';
+			$returnarr[fcs]=array('name');
+		}
+		break;
+		;;
 	case m_v_s_mod4:
 		if($_POST[tmpstr]=='ZZZ'){
 			$tmpstrarr=array();
@@ -187,6 +202,19 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		$tmptips=$str_log_arr[1];
 		break;
 	;;
+	case func_del5:
+		if(FLAG_ADMIN==0){
+			if($_POST[recid]==1){
+				$returnarr[content][tips]='默认权限无法修改，请联系管理员';
+				break;
+			}
+		}
+		$sql_del_user='delete from user where id='.$_POST[recid];
+		$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, 'DEL SINGLE USERID '.$_POST[recid]);
+		$db_modify->delete($sql_del_user);
+		$tmptips='删除账号成功';
+		break;
+		;;
 	case func_delall4:
 		$tmpstrarr=explode(',',$_POST[tmpstr]);
 		if(in_array('1',$tmpstrarr)){
@@ -205,6 +233,26 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		}
 		break;
 	;;
+	case func_delall5:
+		$tmpstrarr=explode(',',$_POST[tmpstr]);
+		if(in_array('1',$tmpstrarr)){
+			$tmptips='默认权限无法修改，请重新选择删除内容';
+			break;
+		}else{
+			if($_POST[tmpstr]!=''){
+				foreach ($tmpstrarr as $val){
+					$sql_del_user='delete from user where user_id in ('.$_POST[tmpstr].');';
+					$log_modify->logprint(FLAG_LOG_INFO, LEVEL_LOG_WARN, 'DELALL USERSTR '.$_POST[tmpstr]);
+					//$db_modify->delete($sql_del_user);
+					$returnarr[0][0]=$sql_del_user;
+					$tmptips='成功删除用户';
+				}
+			}else{
+				$tmptips='无需删除';
+			}
+		}
+		break;
+		;;
 	default:
 		$tmptips='<div style="float:left">参数有误，请确认</div>';
 }

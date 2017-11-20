@@ -10,6 +10,8 @@
 	define(BASE_DIR,$basedir);
 	unset($basedir);
 //定义常数参数
+	define(NAME_SYS, Weather);
+	
 	define(CFG_DIR,'cfg/');
 	define(LOG_DIR,'log/');
 	define(LOG_FILE_PATH_NAME,BASE_DIR.LOG_DIR.'log.log');

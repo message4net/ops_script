@@ -13,24 +13,26 @@ $.extend({
 			});
 			
 			$('#content').on('click','input[name="modall"]',function(){
-				if($('input[name="modall"]').prop('checked')){
-					$('input[name=mod'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
+				modid=$(this).attr('id');
+				if($('input[name="modall"][id="'+modid+'"]').prop('checked')){
+					$('input[name="mod'+modid+'"][disabled!="disabled"]').each(function(){
 						$(this).prop('checked',true);
 					})
 				}else{
-					$('input[name=mod'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
+					$('input[name="mod'+modid+'"][disabled!="disabled"]').each(function(){
 						$(this).prop('checked',false);
 					})
 				}
 			})
 			
 			$('#content').on('click','input[name="viewall"]',function(){
-				if($('input[name="viewall"]').prop('checked')){
-					$('input[name=view'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
+				viewid=$(this).attr('id');
+				if($('input[name="viewall"][id="'+viewid+'"]').prop('checked')){
+					$('input[name=view'+viewid+'][disabled!="disabled"]').each(function(){
 						$(this).prop('checked',true);
 					})
 				}else{
-					$('input[name=view'+$(this).attr('id')+'][disabled!="disabled"]').each(function(){
+					$('input[name=view'+viewid+'][disabled!="disabled"]').each(function(){
 						$(this).prop('checked',false);
 					})
 				}
@@ -148,7 +150,24 @@ $.extend({
 					alert('名称不能为空');
 					$('#name').focus();
 				}else{
+					if($('input[name="arr1s"]').length>0){
+						tmprole=$('input[name="arr1s"]:checked').val();
+						if(tmprole==null){
+							alert('单选项必选，请确认');
+							return false;
+						}
+					}
+					if($('#password').length>0){
+						tmppwd=$('#password').val();
+						if(tmppwd==''){
+							alert('密码必填，请确认');
+							$('#password').focus();
+						}
+					}
 					tmpname=$('#name').val();
+					tmprole=$('input[name="arr1s"]:checked').val();
+					tmppwd=$('#password').val();
+					//alert(tmprole);
 					tmpfnc=$(this).attr('id').substring(0,9);
 					tmpjsfnc=$(this).attr('id').substring(6,9);
 					tmprecid=$(this).attr('id').substring(10);
@@ -164,7 +183,7 @@ $.extend({
 					if(tmpjsfnc=="mod" || tmpjsfnc=="set"){
 						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
 					}else{
-						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked;
+						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&pri='+tmprole+'&pwd='+tmppwd;
 					}
 					$.ajx('mdl/modify.mdl.php',tmpdata);
 				}

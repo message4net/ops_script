@@ -14,7 +14,7 @@ MySQL - 5.5.5-10.1.19-MariaDB : Database - ops_manager
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`ops_manager` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `ops_manager`;
+USE `weather`;
 
 /*Table structure for table `menu` */
 

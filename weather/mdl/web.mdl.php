@@ -9,7 +9,7 @@ $log_web=new LogHandle();
 
 ?>
 <div id="main_left">
-	<div id="logo">ops_sys</div>
+	<div id="logo"><?php echo NAME_SYS;?></div>
 	<div id="menu_sub"></div>
 </div>
 <div id="main_right">

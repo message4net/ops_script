@@ -135,15 +135,33 @@ private $rec_init_arr=array();
 					$rec_head_html.='<th><input type="checkbox" id="0" name="contentall"/></th><th>序号</th><th style="text-align:center">操作</th>';
 				}else{
 					$rec_head_html.='<th>'.$val[name].'</th>';
-					if($rec_body_1s_result){
-						foreach ($rec_body_1s_result as $vala){
-							$rec_head_html.='<th>'.$vala[name].'</th>';
-						}
+//					if($rec_body_1s_result){
+//						foreach ($rec_body_1s_result as $vala){
+//							$rec_head_html.='<th>'.$vala[name].'</th>';
+//						}
+//					}
+//					if ($rec_body_1m_result) {
+//						foreach ($rec_body_1m_result as $val1){
+//							$rec_head_html.='<th>'.$val1[name].'</th>';
+//						}
+//					}
+				}
+			}
+			if($rec_body_1s_result){
+				foreach ($rec_body_1s_result as $vala){
+					$rec_head_html.='<th>'.$vala[name].'</th>';
+					$result_arr_1s=parent::select($vala[sql_head]);
+					foreach ($result_arr_1s as $valb) {
+						$arr_1s[$vala[id]][$valb[mainid]]=$valb[name];
 					}
-					if ($rec_body_1m_result) {
-						foreach ($rec_body_1m_result as $val1){
-							$rec_head_html.='<th>'.$val1[name].'</th>';
-						}
+				}
+			}
+			if ($rec_body_1m_result) {
+				foreach ($rec_body_1m_result as $val1){
+					$rec_head_html.='<th>'.$val1[name].'</th>';
+					$result_arr_1m=parent::select($val1[sql_head]);
+					foreach ($result_arr_1m as $val2) {
+						$arr_1s[$vala[id]][$val2[mainid]][$val2[subid]]=$val2[name];
 					}
 				}
 			}
@@ -158,33 +176,37 @@ private $rec_init_arr=array();
 			}
 			$rec_body_column_result=parent::select($rec_body_column_sql);
 			//确认1m,1s对应的范围
-			$rec_body_1m_colname_sql='';
-			foreach ($rec_body_column_result as $val){
-				$rec_body_1m_colname_sql.=$val[id].',';
-			}
-			$rec_body_1m_colname_sql=substr($rec_body_1m_colname_sql,0,strlen($rec_body_1m_colname_sql)-1);
-			foreach ($rec_body_1m_result as $val){
-				if ($val[sqlstr_body]=='') {
-					$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-				}else{
-					$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-				}
-				$rec_body_1m_str_result=parent::select($rec_body_1m_str_sql);
-				foreach ($rec_body_1m_str_result as $val1) {
-					$rec_body_1m_str_arr[$val[seq]][$val1[mainid]][$val1[subid]]=$val1[name];
-				}
-			}
-			foreach ($rec_body_1s_result as $val){
-				if ($val[sqlstr_body]=='') {
-					$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-				}else{
-					$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-				}
-				$rec_body_1s_str_result=parent::select($rec_body_1m_str_sql);
-				foreach ($rec_body_1s_str_result as $val1) {
-					$rec_body_1s_str_arr[$val[seq]][$val1[mainid]]=$val1[name];
-				}
-			}
+			//$rec_body_1m_colname_sql='';
+			//foreach ($rec_body_column_result as $val){
+				//if($this->menu_sub_id==4){
+				//	$rec_body_1m_colname_sql.=$val[id].',';
+				//}else{
+					//$rec_body_1m_colname_sql.=$val[creator].',';
+				//}
+			//}
+			//$rec_body_1m_colname_sql=substr($rec_body_1m_colname_sql,0,strlen($rec_body_1m_colname_sql)-1);
+			//foreach ($rec_body_1m_result as $val){
+			//	if ($val[sqlstr_body]=='') {
+			//		$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+			//	}else{
+			//		$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+			//	}
+			//	$rec_body_1m_str_result=parent::select($rec_body_1m_str_sql);
+			//	foreach ($rec_body_1m_str_result as $val1) {
+			//		$rec_body_1m_str_arr[$val[seq]][$val1[mainid]][$val1[subid]]=$val1[name];
+			//	}
+			//}
+			//foreach ($rec_body_1s_result as $val){
+			//	if ($val[sqlstr_body]=='') {
+			//		$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+			//	}else{
+			//		$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
+			//	}
+			//	$rec_body_1s_str_result=parent::select($rec_body_1m_str_sql);
+			//	foreach ($rec_body_1s_str_result as $val1) {
+			//		$rec_body_1s_str_arr[$val[seq]][$val1[mainid]]=$val1[name];
+			//	}
+			//}
 	
 			$rec_body_html='';
 			$count=1;
@@ -208,14 +230,17 @@ private $rec_init_arr=array();
 					//当key为id时，根据id的具体值确定1m,1s对应的显示文本
 					if ($key1=='id') {
 						$rec_body_1s_html='';
-						foreach ($rec_body_1s_str_arr as $valb){
-							$rec_body_1s_html.='<td style="font-size:10px;word-break:break-all">'.$valb[$val1].'</td>';
+						foreach ($rec_body_1s_result as $valb){
+							$rec_body_1s_html.='<td style="font-size:10px;word-break:break-all">'.$arr_1s[$valb[id]][$val1[$valb[colnameid]]].'</td>';
 						}
 						$rec_body_1m_html_str='';
-						foreach ($rec_body_1m_str_arr as $valb){
-							if ($valb[$val1]) {
-								foreach ($valb[$val1] as $val2){
-									$rec_body_1m_html_str.='@'.$val2;
+						foreach ($rec_body_1m_result as $valb){
+							if ($valb[$val1[id]]) {
+								$result_arr_1m_tmp=parent::select('select * from role_menu where role_id='.$val1[id]);
+								if ($result_arr_1m_tmp){
+									foreach ($result_arr_1m_tmp as $val2){
+										$rec_body_1m_html_str.='@'.$valb[$val2[menu_sub_id]];
+									}
 								}
 							}else{
 								$rec_body_1m_html_str.='';
@@ -234,7 +259,8 @@ private $rec_init_arr=array();
 		}
 
 		return $rec_html;
-		//return $rec_head_sql;
+		//return 'aaaaa';
+		//return $rec_body_1m_str_sql;
 	}
 
 }

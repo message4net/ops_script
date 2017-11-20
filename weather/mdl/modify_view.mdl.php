@@ -20,13 +20,38 @@ $funccategoryid=2;
 $tablenamesql='select * from menu where id='.$_SESSION[menu_sub_id];
 $tableheadsql='select * from wordbook where type=1 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $table1msql='select * from wordbook where type=6 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
+$table1ssql='select * from wordbook where type=8 and menu_sub_id='.$_SESSION[menu_sub_id].' order by seq';
 $tableheadresult=$db_modify_view->select($tableheadsql);
 $tablenameresult=$db_modify_view->select($tablenamesql);
 $table1mresult=$db_modify_view->select($table1msql);
+$table1sresult=$db_modify_view->select($table1ssql);
+if ($table1sresult){
+	foreach ($table1sresult as $val){
+		$count=0;
+		$result_arr_1s=$db_modify_view->select($val[sqlstr_head]);
+		if($result_arr_1s){
+			foreach ($result_arr_1s  as $val1){
+				$arr_1s[$val[id]][$val1[id]]=$val1[name];
+			}
+		}	
+	}
+}
 
 if($_POST[recid]!=''){
 	switch ($_SESSION[menu_sub_id]) {
 		case 4:
+			$reccontentsql='select * from '.$tablenameresult[0][tablename].' where id='.$_POST[recid];
+			$rec1msql='select * from role_menu where role_id='.$_POST[recid];
+			$reccontentresult=$db_modify_view->select($reccontentsql);
+			$rec1mresult=$db_modify_view->select($rec1msql);
+			$tmpcount=0;
+			foreach ($rec1mresult as $val){
+				$rec1marr[$tmpcount]=$val[menu_sub_id];
+				$tmpcount++;
+			}
+			break;
+			;;
+		case 5:
 			$reccontentsql='select * from '.$tablenameresult[0][tablename].' where id='.$_POST[recid];
 			$rec1msql='select * from role_menu where role_id='.$_POST[recid];
 			$reccontentresult=$db_modify_view->select($reccontentsql);
@@ -56,6 +81,16 @@ foreach ($tableheadresult as $val) {
 	}
 }
 
+foreach ($table1sresult as $val){
+	$addhtml.='<tr><td>'.$val[name].'</td><td>';
+	if($arr_1s[$val[id]]){
+		foreach ($arr_1s[$val[id]] as $key1=>$val1){
+			$addhtml.='<input name="arr1s" type="radio" value="'.$key1.'" />'.$val1;
+		}
+	}
+	$addhtml.='</td></tr>';
+}
+
 foreach ($table1mresult as $val) {
 	$addhtml.='<tr>';
 	$tmpresult=$db_modify_view->select($val[sqlstr_head]);
@@ -74,27 +109,6 @@ foreach ($table1mresult as $val) {
 				$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
 			}
 		}
-//		if($rec1marr){
-//			if(in_array($val1[id], $rec1marr)){
-//				if($val1[id]==7){
-//					$addhtml.='<input id="'.$val1[id].'" type="checkbox" disabled="disabled" checked="checked"/>'.$val1[name].'<br />';
-//				}else{
-//					$addhtml.='<input id="'.$val1[id].'" type="checkbox" checked="checked"/>'.$val1[name].'<br />';
-//				}
-//			}else{
-//				if($val1[id]==7){
-//					$addhtml.='<input id="'.$val1[id].'" type="checkbox" disabled="disabled" checked="checked"/>'.$val1[name].'<br />';
-//				}else{
-//					$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
-//				}
-//			}
-//		}else {
-//			if($val1[id]==7){
-//				$addhtml.='<input id="'.$val1[id].'" type="checkbox" disabled="disabled" checked="checked"/>'.$val1[name].'<br />';
-//			}else{
-//				$addhtml.='<input id="'.$val1[id].'" type="checkbox" />'.$val1[name].'<br />';
-//			}
-//		}
 	}
 	$addhtml.='</td></tr>';
 }

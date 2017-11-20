@@ -2,7 +2,7 @@
 <html>
 <head>
 <base href="<?php echo BASE_URL; ?>"></base>
-<title>运维系统</title>
+<title><?php echo NAME_SYS;?></title>
 <link href="<?php echo CSS_DIR.CSS_FILE?>" rel="stylesheet"
 	type="text/css" />
 <script type="text/javascript" src="<?php echo JS_DIR.JS_JQ?>"></script>
