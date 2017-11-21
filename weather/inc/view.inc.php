@@ -118,15 +118,15 @@ private $rec_init_arr=array();
 			if($result_head_user){
 //				$rec_body_1m_sql='select * from wordbook where type=2 and menu_sub_id='.$this->menu_sub_id.' order by seq';
 //				$rec_body_1s_sql='select * from wordbook where type=7 and menu_sub_id='.$this->menu_sub_id.' order by seq';
-				$rec_body_1m_sql='select * from wordbook wb, role_func rf, user_col uc where rf.role_id='.$this->login_role_id.' and uc.user_id='.$this->login_user_id.' and uc.menu_sub_id=wb.menu_sub_id and uc.wordbook_id=wb.id and wb.menu_sub_id=rf.menu_sub_id and wb.id=rf.wordbook_id and type=2 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
-				$rec_body_1s_sql='select * from wordbook wb, role_func rf, user_col uc where rf.role_id='.$this->login_role_id.' and uc.user_id='.$this->login_user_id.' and uc.menu_sub_id=wb.menu_sub_id and uc.wordbook_id=wb.id and wb.menu_sub_id=rf.menu_sub_id and wb.id=rf.wordbook_id and type=7 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+				$rec_body_1m_sql='select wb.* from wordbook wb, role_func rf, user_col uc where rf.role_id='.$this->login_role_id.' and uc.user_id='.$this->login_user_id.' and uc.menu_sub_id=wb.menu_sub_id and uc.wordbook_id=wb.id and wb.menu_sub_id=rf.menu_sub_id and wb.id=rf.wordbook_id and type=2 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+				$rec_body_1s_sql='select wb.* from wordbook wb, role_func rf, user_col uc where rf.role_id='.$this->login_role_id.' and uc.user_id='.$this->login_user_id.' and uc.menu_sub_id=wb.menu_sub_id and uc.wordbook_id=wb.id and wb.menu_sub_id=rf.menu_sub_id and wb.id=rf.wordbook_id and type=7 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
 			}else{
-				$rec_body_1m_sql='select * from wordbook wb, role_func rf where rf.role_id='.$this->login_role_id.' and wb.id=rf.wordbook_id and type=2 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
-				$rec_body_1s_sql='select * from wordbook wb, role_func rf where rf.role_id='.$this->login_role_id.' and wb.id=rf.wordbook_id and type=7 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+				$rec_body_1m_sql='select wb.* from wordbook wb, role_func rf where rf.role_id='.$this->login_role_id.' and wb.id=rf.wordbook_id and type=2 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
+				$rec_body_1s_sql='select wb.* from wordbook wb, role_func rf where rf.role_id='.$this->login_role_id.' and wb.id=rf.wordbook_id and type=7 and wb.menu_sub_id='.$this->menu_sub_id.' order by seq';
 			}
 			$rec_body_1m_result=parent::select($rec_body_1m_sql);
 			$rec_body_1s_result=parent::select($rec_body_1s_sql);
-			
+
 			$rec_body_column_sql_part='';
 			$rec_head_html='<table id="content_table" name="'.$this->menu_sub_id.'">';
 			foreach ($rec_head_result as $val) {
@@ -135,82 +135,59 @@ private $rec_init_arr=array();
 					$rec_head_html.='<th><input type="checkbox" id="0" name="contentall"/></th><th>序号</th><th style="text-align:center">操作</th>';
 				}else{
 					$rec_head_html.='<th>'.$val[name].'</th>';
-//					if($rec_body_1s_result){
-//						foreach ($rec_body_1s_result as $vala){
-//							$rec_head_html.='<th>'.$vala[name].'</th>';
-//						}
-//					}
-//					if ($rec_body_1m_result) {
-//						foreach ($rec_body_1m_result as $val1){
-//							$rec_head_html.='<th>'.$val1[name].'</th>';
-//						}
-//					}
 				}
 			}
 			if($rec_body_1s_result){
 				foreach ($rec_body_1s_result as $vala){
 					$rec_head_html.='<th>'.$vala[name].'</th>';
-					$result_arr_1s=parent::select($vala[sql_head]);
-					foreach ($result_arr_1s as $valb) {
-						$arr_1s[$vala[id]][$valb[mainid]]=$valb[name];
+					$result_arr_1s=parent::select($vala[sqlstr_head]);
+					if($result_arr_1s){
+						foreach ($result_arr_1s as $valb) {
+							$arr_1s[$vala[id]][$valb[mainid]]=$valb[name];
+						}
+						$arr_1s[$vala[id]][-1]=$vala[colnameid];
 					}
 				}
 			}
 			if ($rec_body_1m_result) {
 				foreach ($rec_body_1m_result as $val1){
 					$rec_head_html.='<th>'.$val1[name].'</th>';
-					$result_arr_1m=parent::select($val1[sql_head]);
-					foreach ($result_arr_1m as $val2) {
-						$arr_1s[$vala[id]][$val2[mainid]][$val2[subid]]=$val2[name];
+					$result_arr_1m=parent::select($val1[sqlstr_head]);
+					if($result_arr_1m){
+						foreach ($result_arr_1m as $val2) {
+							$arr_1m[$val1[id]][$val2[mainid]][$val2[subid]]=$val2[name];
+						}
+						//$arr_1m[$vala[id]][$val2[mainid]][-1]=$val1[colnameid];
 					}
 				}
 			}
+
 			$rec_body_column_sql_part=substr($rec_body_column_sql_part,0,strlen($rec_body_column_sql_part)-1).' ';
 			$rec_head_html.='</tr>';
 			if($this->rec_word_search==''){
 				//$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
-				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where creator='.$this->login_user_id.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where creator='.$this->login_role_id.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+				$rec_bodyall_column_sql='select * from '.$this->rec_init_arr[rec_tablename].' where creator='.$this->login_role_id.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
 			}else{
 				//$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
-				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' and creator='.$this->login_user_id.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+				$rec_body_column_sql='select '.$rec_body_column_sql_part.' from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' and creator='.$this->login_role_id.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
+				$rec_bodyall_column_sql='select * from '.$this->rec_init_arr[rec_tablename].' where '.$this->rec_word_search.' and creator='.$this->login_role_id.' order by id desc limit '.$this->rec_init_arr[rec_num_start].','.$this->pagenum_per.';';
 			}
 			$rec_body_column_result=parent::select($rec_body_column_sql);
-			//确认1m,1s对应的范围
-			//$rec_body_1m_colname_sql='';
-			//foreach ($rec_body_column_result as $val){
-				//if($this->menu_sub_id==4){
-				//	$rec_body_1m_colname_sql.=$val[id].',';
-				//}else{
-					//$rec_body_1m_colname_sql.=$val[creator].',';
-				//}
-			//}
-			//$rec_body_1m_colname_sql=substr($rec_body_1m_colname_sql,0,strlen($rec_body_1m_colname_sql)-1);
-			//foreach ($rec_body_1m_result as $val){
-			//	if ($val[sqlstr_body]=='') {
-			//		$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-			//	}else{
-			//		$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-			//	}
-			//	$rec_body_1m_str_result=parent::select($rec_body_1m_str_sql);
-			//	foreach ($rec_body_1m_str_result as $val1) {
-			//		$rec_body_1m_str_arr[$val[seq]][$val1[mainid]][$val1[subid]]=$val1[name];
-			//	}
-			//}
-			//foreach ($rec_body_1s_result as $val){
-			//	if ($val[sqlstr_body]=='') {
-			//		$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-			//	}else{
-			//		$rec_body_1m_str_sql=$val[sqlstr_head].$rec_body_1m_colname_sql.$val[sqlstr_body].$rec_body_1m_colname_sql.$val[sqlstr_foot];
-			//	}
-			//	$rec_body_1s_str_result=parent::select($rec_body_1m_str_sql);
-			//	foreach ($rec_body_1s_str_result as $val1) {
-			//		$rec_body_1s_str_arr[$val[seq]][$val1[mainid]]=$val1[name];
-			//	}
-			//}
-	
+			$rec_bodyall_column_result=parent::select($rec_bodyall_column_sql);
+
+//$z='';
+//if($rec_body_column_result){
+//foreach ($rec_body_column_result as $v){
+//foreach ($v as $k1=>$v1){
+//	$z.=$k1.'#K#'.$v1.'#V#<br/>';
+//}
+//}
+//}
 			$rec_body_html='';
 			$count=1;
 			foreach ($rec_body_column_result as $key=>$val) {
+				$tmp_body_arr=$rec_bodyall_column_result[$key];
 				$rec_body_html.='<tr>';
 				$rec_body_1m_html='';
 				foreach ($val as $key1=>$val1){
@@ -227,28 +204,43 @@ private $rec_init_arr=array();
 					}else{
 						$rec_body_html.='<td>'.$val1.'</td>';
 					}
-					//当key为id时，根据id的具体值确定1m,1s对应的显示文本
-					if ($key1=='id') {
-						$rec_body_1s_html='';
-						foreach ($rec_body_1s_result as $valb){
-							$rec_body_1s_html.='<td style="font-size:10px;word-break:break-all">'.$arr_1s[$valb[id]][$val1[$valb[colnameid]]].'</td>';
-						}
-						$rec_body_1m_html_str='';
-						foreach ($rec_body_1m_result as $valb){
-							if ($valb[$val1[id]]) {
-								$result_arr_1m_tmp=parent::select('select * from role_menu where role_id='.$val1[id]);
-								if ($result_arr_1m_tmp){
-									foreach ($result_arr_1m_tmp as $val2){
-										$rec_body_1m_html_str.='@'.$valb[$val2[menu_sub_id]];
-									}
-								}
-							}else{
-								$rec_body_1m_html_str.='';
+				}
+				
+				
+				//处理1m
+				$rec_body_1m_html_str='';
+				if($arr_1m){
+					foreach ($arr_1m as $valb){
+						if($valb[$key]){
+							//$z='';
+							//if($rec_body_column_result){
+							//	foreach ($valb[$key] as $k=>$v){
+							//$z.=$k.'#K#'.$v.'#V#<br/>';
+							////		foreach ($v as $k1=>$v1){
+							////			$z.=$k1.'#K#'.$v1.'#V#<br/>';
+							////		}
+							//	}
+							//}
+							foreach($valb[$key] as $valc) {
+								$rec_body_1m_html_str.='@'.$valc;
 							}
-							$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
+						}else{
+							$rec_body_1m_html_str.='';
 						}
 					}
+					$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
 				}
+				
+						$rec_body_1s_html='';
+						if($arr_1s){
+							foreach ($arr_1s as $valb){
+								$rec_body_1s_html.='<td style="font-size:10px;word-break:break-all">'.$valb[$tmp_body_arr[$valb[-1]]].'</td>';
+							}
+						}
+
+				
+						////////////////////////////////////////////////}
+//				}
 				$rec_body_html.=$rec_body_1s_html.$rec_body_1m_html.'</tr>';
 				$count++;
 			}
@@ -259,8 +251,9 @@ private $rec_init_arr=array();
 		}
 
 		return $rec_html;
-		//return 'aaaaa';
-		//return $rec_body_1m_str_sql;
+		//return $z;
+		//return $rec_body_1s_sql;
+		//return count($rec_body_1s_result);
 	}
 
 }

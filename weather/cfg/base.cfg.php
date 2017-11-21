@@ -10,7 +10,7 @@
 	define(BASE_DIR,$basedir);
 	unset($basedir);
 //定义常数参数
-	define(NAME_SYS, Weather);
+	define(NAME_SYS, '新闻稿件管理系统');
 	
 	define(CFG_DIR,'cfg/');
 	define(LOG_DIR,'log/');
