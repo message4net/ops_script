@@ -7,7 +7,7 @@
 	e.type=5 存储html id=content 中 记录 纪录功能,通过main.mdl.php展示
 	f.type=6 存储html id=content 中 记录 菜单元素,通过modify_view.mdl.php展示
 	g.type=7 存储html id=content 中 记录 对应1对1关系模式creator名称 等 信息元素,通过main.mdl.php 展示
-	h.type=8 存储html id=content 中 对应1对1关系模式role名称 等 信息元素,通过modify_view.mdl.php 展示
+	h.type=8 存储html id=content 中 radio 对应1对1关系模式role名称 等 信息元素,通过modify_view.mdl.php 展示
 3.menu新增功能，需关联至role_menu表中
 4.默认role表中id=1的记录含所有menu中parent_id<>0的记录
 5.默认user_role表中id=1的记录含所有menu中parent_id<>0的记录

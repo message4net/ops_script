@@ -109,11 +109,33 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 			$tmpsql1='insert into user (name,creator,password,role_id) values (\''.$tmpname.'\','.$_SESSION[loginroleid].',\''.$_POST[pwd].'\','.$_POST[pri].');';
 			$db_modify->insert($tmpsql1);
 			$tmptips='已成功创建用户';
-			$returnarr[0][0]=$tmpsql1;
+			//$returnarr[0][0]=$tmpsql1;
 		}else{
 			$tmptips='用户名称重复，请重新输入';
 			$returnarr[fcs]=array('name');
 		}
+		break;
+		;;
+	case m_v_s_mod5:
+		if (FLAG_ADMIN==0 && $_POST[recid]==1){
+			$tmptips='默认权限无法修改，请联系管理员';
+			break;
+		}else{
+			$tmprecid=$_POST[recid];
+		}
+		$pwd=$_POST[pwd];
+		$tmpname=$_POST[name];
+		$tmpsql='select count(*) ct from user where name=\''.$_POST[name].'\' and creator='.$_SESSION[loginroleid].' and id='.$tmprecid.';';
+		$tmpresult=$db_modify->select($tmpsql);
+		if($tmpresult[0][ct]==0){
+			$tmptips='已成功修改用户名称等信息';
+		}else{
+			$tmptips='已修改用户信息';
+		}
+		$tmpsql1='update user set username=\''.$tmpname.'\',password=\''.$pwd.'\',role_id='.$_POST[pri].' where id='.$tmprecid.';';
+		//$db_modify->insert($tmpsql1);
+		//$returnarr[0][0]=$tmpsql1;
+		$returnarr[0][0]='#name:#'.$tmpname.'#pwd:#'.$pwd.'#pri:#'.$_POST[pri];
 		break;
 		;;
 	case m_v_s_mod4:
@@ -257,6 +279,12 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		;;
 	default:
 		$tmptips='<div style="float:left">参数有误，请确认</div>';
+		//$z='';
+		//foreach ($_POST as $k=>$v){
+		//	$z.=$k.'#K#'.$v.'#V#';
+		//}
+		//$tmptips=$z;
+		$tmptips=$_POST[fnc].'#F#'.$_SESSION[menu_sub_id].'#id#';
 }
 
 $returnarr[content][tips]='<div style="float:left">'.$tmptips.'</div>';

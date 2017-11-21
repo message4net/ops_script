@@ -108,6 +108,9 @@ $.extend({
 					$('#name').focus();
 				}else{
 					tmpname=$('#name').val();
+	//tmprole=$('input[name="arr1s"]:checked').val();
+	//tmppwd=$('#password').val();
+	alert('aaaaaaaaaaaa');
 					tmpfnc=$(this).attr('id').substring(0,9);
 					tmpjsfnc=$(this).attr('id').substring(6,9);
 					tmprecid=$(this).attr('id').substring(10);
@@ -160,14 +163,18 @@ $.extend({
 					if($('#password').length>0){
 						tmppwd=$('#password').val();
 						if(tmppwd==''){
-							alert('密码必填，请确认');
-							$('#password').focus();
+							if($('#password').attr('value')==''){
+								alert('密码必填，请确认');
+								$('#password').focus();
+								return false;
+							}
 						}
 					}
 					tmpname=$('#name').val();
 					tmprole=$('input[name="arr1s"]:checked').val();
 					tmppwd=$('#password').val();
-					//alert(tmprole);
+					//alert($('#password').attr('value'));
+					//alert('密码必填1111，请确认');
 					tmpfnc=$(this).attr('id').substring(0,9);
 					tmpjsfnc=$(this).attr('id').substring(6,9);
 					tmprecid=$(this).attr('id').substring(10);
@@ -181,7 +188,7 @@ $.extend({
 						tmpstrchecked='ZZZ';
 					}
 					if(tmpjsfnc=="mod" || tmpjsfnc=="set"){
-						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid;
+						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid+'&pri='+tmprole+'&pwd='+tmpwd;
 					}else{
 						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&pri='+tmprole+'&pwd='+tmppwd;
 					}

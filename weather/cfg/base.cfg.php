@@ -37,7 +37,7 @@
 	define(LEVEL_LOG_INFO,'INFO:');
 	define(LEVEL_LOG_WARN,'WARN:');
 	define(LEVEL_LOG_ERR,'ERR :');
-	define(FLAG_ADMIN,'1');
+	define(FLAG_ADMIN,'0');
 	
 	define(JS_DIR,'js/');
 	define(JS_JQ,'jquery-1.11.3.min.js');
