@@ -132,10 +132,10 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		}else{
 			$tmptips='已修改用户信息';
 		}
-		$tmpsql1='update user set username=\''.$tmpname.'\',password=\''.$pwd.'\',role_id='.$_POST[pri].' where id='.$tmprecid.';';
-		//$db_modify->insert($tmpsql1);
+		$tmpsql1='update user set name=\''.$tmpname.'\',password=\''.$pwd.'\',role_id='.$_POST[pri].' where id='.$tmprecid.';';
+		$db_modify->insert($tmpsql1);
 		//$returnarr[0][0]=$tmpsql1;
-		$returnarr[0][0]='#name:#'.$tmpname.'#pwd:#'.$pwd.'#pri:#'.$_POST[pri];
+		//$returnarr[0][0]='#name:#'.$tmpname.'#pwd:#'.$pwd.'#pri:#'.$_POST[pri];
 		break;
 		;;
 	case m_v_s_mod4:
@@ -144,7 +144,7 @@ switch ($_POST[fnc].$_SESSION[menu_sub_id]) {
 		}else{
 			$tmpstrarr=explode(',',$_POST[tmpstr]);
 		}
-		if (FLAG_ADMIN==0 && $_POST[recid]==1){
+		if (FLAG_ADMIN==1 && $_POST[recid]==1){
 				$tmptips='默认权限无法修改，请联系管理员';
 		}else{
 				$tmprecid=$_POST[recid];

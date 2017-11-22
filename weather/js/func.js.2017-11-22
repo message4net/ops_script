@@ -160,11 +160,11 @@ $.extend({
 					if($('#password').length>0){
 						tmppwd=$('#password').val();
 						if(tmppwd==''){
-							//if($('#password').attr('value')==''){
+							if($('#password').attr('value')==''){
 								alert('密码必填，请确认');
 								$('#password').focus();
 								return false;
-							//}
+							}
 						}
 					}
 					tmpname=$('#name').val();
@@ -185,11 +185,11 @@ $.extend({
 						tmpstrchecked='ZZZ';
 					}
 					if(tmpjsfnc=="mod" || tmpjsfnc=="set"){
-						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid+'&pri='+tmprole+'&pwd='+tmppwd;
+						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&recid='+tmprecid+'&pri='+tmprole+'&pwd='+tmpwd;
 					}else{
 						tmpdata='fnc='+tmpfnc+'&name='+tmpname+'&tmpstr='+tmpstrchecked+'&pri='+tmprole+'&pwd='+tmppwd;
 					}
-					//alert('111111');
+					alert('111111');
 					$.ajx('mdl/modify.mdl.php',tmpdata);
 				}
 			});
