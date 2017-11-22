@@ -110,7 +110,6 @@ $.extend({
 					tmpname=$('#name').val();
 	//tmprole=$('input[name="arr1s"]:checked').val();
 	//tmppwd=$('#password').val();
-	alert('aaaaaaaaaaaa');
 					tmpfnc=$(this).attr('id').substring(0,9);
 					tmpjsfnc=$(this).attr('id').substring(6,9);
 					tmprecid=$(this).attr('id').substring(10);
