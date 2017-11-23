@@ -1,7 +1,7 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=memu&id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
+			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=menu&id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
 
 			tmpurl='mdl/menu.mdl.php';
 			tmpdata='';
@@ -66,7 +66,12 @@ $.extend({
 
 			$('#menu_func').on('click','#func_add',function(){
 				$.ajx('mdl/modify_view.mdl.php','');
-			})			
+			})	
+			
+			$('#menu_func').on('click','#artl_add',function(){
+				$.ajx('mdl/article_view.mdl.php','');
+				//alert('11111111');
+			})	
 						
 			$('#content').on('click','[id^=func_mod_]',function(){
 				tmpid=$(this).attr('id').substring(9);
@@ -215,7 +220,7 @@ $.extend({
 	click:function(eid,ectxt,url,data){
 		$('#'+eid).on('click',ectxt,function(){
 			tmpdata=eval(data);
-			//alert(tmpdata);
+		//	alert(tmpdata);
 		//alert(eid+'###'+ectxt+'###'+url+'###'+tmpdata);
 			$.ajx(url,tmpdata);
 		});

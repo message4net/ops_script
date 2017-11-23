@@ -192,63 +192,44 @@ private $rec_init_arr=array();
 
 
 			$rec_body_html='';
-			$count=1;
-//$z='';
 
-			foreach ($rec_body_column_result as $key=>$val) {
-//$z='';
-//$z.=$key.'#K#'.$val.'#V#<br/>';
-//if($rec_body_column_result){
-//	foreach ($val as $k=>$v){
-//$z.=$k.'#K#'.$v.'#V#<br/>';
-//		foreach ($v as $k1=>$v1){
-//			$z.=$k1.'#K#'.$v1.'#V#<br/>';
-//		}
-//	}
-//}				
-				$tmp_body_arr=$rec_bodyall_column_result[$key];
-//$z='';
-//$z.=$key.'#K#'.$val.'#V#<br/>';
-//if($tmp_body_arr){
-//	foreach ($tmp_body_arr as $k=>$v){
-//		$z.=$k.'#K#'.$v.'#V#<br/>';
-//		foreach ($v as $k1=>$v1){
-//			$z.=$k1.'#K#'.$v1.'#V#<br/>';
-//		}
-//	}
-//}
-				$rec_body_html.='<tr>';
-				$rec_body_1m_html='';
-				foreach ($val as $key1=>$val1){
-					if ($key1=='id') {
-						$rec_body_html.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
-						foreach ($func_content_result as $val2){
-							if ($val2[flag]==1) {
-								$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
-							}else{
-								$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
+			if($rec_body_column_result){
+				$count=1;
+				foreach ($rec_body_column_result as $key=>$val) {
+					$tmp_body_arr=$rec_bodyall_column_result[$key];
+					$rec_body_html.='<tr>';
+					$rec_body_1m_html='';
+					foreach ($val as $key1=>$val1){
+						if ($key1=='id') {
+							$rec_body_html.='<td><input type="checkbox" id="'.$val1.'" name="contentlist"/></td><td>'.$count.'</td><td id="content_func" mid="'.$_POST[id].'" rid="'.$val1.'">';
+							foreach ($func_content_result as $val2){
+								if ($val2[flag]==1) {
+									$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);" onclick="if(confirm(\'确实要删除此条记录吗？\')) return true;else return false;">'.$val2[name].'</a>|';
+								}else{
+									$rec_body_html.='<a id="'.$val2[colnameid].$val1.'" href="javascript:void(0);">'.$val2[name].'</a>|';
+								}
 							}
-						}
-						$rec_body_html.='</td>';
-					}else{
-						$rec_body_html.='<td>'.$val1.'</td>';
-					}
-				}
-				
-				//处理1m
-				$rec_body_1m_html_str='';
-				if($arr_1m){
-					foreach ($arr_1m as $valb){
-						if($valb[$key]){
-							foreach($valb[$key] as $valc) {
-								$rec_body_1m_html_str.='@'.$valc;
-							}
+							$rec_body_html.='</td>';
 						}else{
-							$rec_body_1m_html_str.='';
+							$rec_body_html.='<td>'.$val1.'</td>';
 						}
 					}
-					$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
-				}
+
+				
+					//处理1m
+					$rec_body_1m_html_str='';
+					if($arr_1m){
+						foreach ($arr_1m as $valb){
+							if($valb[$key]){
+								foreach($valb[$key] as $valc) {
+									$rec_body_1m_html_str.='@'.$valc;
+								}
+							}else{
+								$rec_body_1m_html_str.='';
+							}
+						}
+						$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
+					}
 				
 				//处理1s
 //if (true){
@@ -263,16 +244,17 @@ private $rec_init_arr=array();
 	//	}
 	//}
 //}
-				$rec_body_1s_html='';
-				if($arr_1s){
-					foreach ($arr_1s as $valb){
-						$rec_body_1s_html.='<td style="font-size:10px;word-break:break-all">'.$valb[$tmp_body_arr[$valb[-1]]].'</td>';
-					}							
-				}
-
-				$rec_body_html.=$rec_body_1s_html.$rec_body_1m_html.'</tr>';
-				$count++;
+					$rec_body_1s_html='';
+					if($arr_1s){
+						foreach ($arr_1s as $valb){
+							$rec_body_1s_html.='<td style="font-size:10px;word-break:break-all">'.$valb[$tmp_body_arr[$valb[-1]]].'</td>';
+						}							
+					}
+	
+					$rec_body_html.=$rec_body_1s_html.$rec_body_1m_html.'</tr>';
+					$count++;
 			}
+		}
 			$rec_body_html.='</tr></table>';
 			$rec_html=$rec_head_html.$rec_body_html;
 		}else{

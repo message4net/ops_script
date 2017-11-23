@@ -1,5 +1,6 @@
 <?php session_start();
 
+
 require_once dirname(dirname(__FILE__)).'/cfg/base.cfg.php';
 require_once BASE_DIR.INC_DIR.INC_DB;
 require_once BASE_DIR.INC_DIR.INC_VIEW;
@@ -62,6 +63,15 @@ switch ($_POST[func]) {
 		$returnarr[content][content]=$view->gen_view_content_html();
 	break;
 }
+
+
+
+//$returnarr[0][0]=$_POST[func];
+//echo json_encode($returnarr);
+//unset($returnarr);
+//exit;
+
+
 
 require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 ?>
