@@ -1,12 +1,95 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=menu&id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
+			//var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=menu&id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
+			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
+			//,{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=menu&id=\'+$(this).attr(\'id\')'}
+			
+			$('#menu_sub').on('click','a',function(){
+				if($(this).attr('id')==8){
+					$.ajx('mdl/article_index.mdl.php','');
+				}else{
+					dt='func=menu&id='+$(this).attr('id');
+					$.ajx('mdl/main.mdl.php',dt);
+				}
+			})
 
 			tmpurl='mdl/menu.mdl.php';
 			tmpdata='';
 			$.ajx(tmpurl,tmpdata);
 			$.main(datajson.paras);
+			
+			$('#content').on('click','#artl_sav',function(){
+				title=$('#name').val();
+				author=$('#author').val();
+				//alert(title);
+				//alert($('#pic_str').html()+'pic_str');
+				if($('#pic_show').length>0){
+					picstr=$('#pic_str').html();
+				}else{
+					picstr='';
+				}
+				//alert($('#pic_show').html()+'prc_show');
+				arttxt=$('#art_txt').val();
+				cntntdata='name='+title+'&author='+author+'&arttxt='+arttxt+'&picstr='+picstr;
+				$.ajx('mdl/article_save.mdl.php',cntntdata);
+			})
+			
+			$('#content').on('click','#uppic',function(){
+				var ttdt = new FormData($( "#fmpic" )[0]); 
+				$.ajax({
+					type: "POST",
+					url: "mdl/article_pic_save.mdl.php",
+					data: ttdt,
+					contentType: false,
+					processData: false, 
+					success: function(msg){
+						var data=eval('('+msg+')');
+						$.each(data,function(htmlFlag,htmlArr){
+							switch(htmlFlag){
+								case('content'):
+									$.each(htmlArr,function(htmlID,htmlContent){
+										$('#'+htmlID).html(htmlContent);
+									})
+								break;
+								case('apd'):
+									$.each(htmlArr,function(htmlID,htmlContent){
+										$.each(htmlContent,function(htmlIDsub,htmlContentsub){
+											if($('#'+htmlIDsub).length==0){
+												//$('#'+htmlID).remove('#'+htmlIDsub);
+												$('#'+htmlID).append('<div id="'+htmlIDsub+'" style="z-index:10001;width:800px;height:600px;margin-top:400px;opacity:1;"></div>');
+											}
+											$('#'+htmlIDsub).empty();
+											$('#'+htmlIDsub).append(htmlContentsub);
+										})
+									})
+								break;
+								case('fcs'):
+									$.each(htmlArr,function(htmlID,htmlContent){
+											$('#'+htmlContent).focus();
+									})
+								break;
+								case('rmv'):
+									$.each(htmlArr,function(htmlID,htmlContent){
+										$.each(htmlContent,function(htmlIDsub,htmlContentsub){
+//											$('#'+htmlID).remove('#'+htmlContent);
+											$('#'+htmlContent).remove();
+											//alert(htmlID+htmlContent);
+										})
+									})
+								break;
+								default:
+									alert(data);
+									alert(htmlArr);
+								break;
+							}
+						});
+					}
+				});
+
+				
+				
+			})
 			
 			$('#menu_func').on('click','a[id="func_setall"]',function(){
 				$.ajx('mdl/view_son.mdl.php','');

@@ -30,6 +30,8 @@
 	define(CSS_ID_TD_STR_A,'str_a');
 	define(CSS_ID_TD_STR_B,'str_b');
 	define(CSS_ID_TD_STR_C,'str_c');
+	define(PIC_DIR, 'pic/');
+	define(PIC_POSTFIX, 'jpeg');
 	
 	define(FLAG_LOG_INFO,'0');
 	define(FLAG_LOG_WARN,'1');
