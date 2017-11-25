@@ -10,7 +10,7 @@ $log_article_index=new LogHandle();
 $db_article_index=new DBSql();
 
 //初始化功能
-$returnarr[content][menu_func]='<div style="float:left"><a id="artl_add" href="javascript:void(0)">新增</a>&nbsp;|&nbsp;</div><div style="float:right;padding-right:200px"><select id="search_bar"><option value="name">标题</option><option value="author">作者</option><option value="user_id">上传者</option></select><input id="search_word" type="text"><button id="word_search" name="art">搜索</button><button id="word_reset" name="art">重置</button></div>';
+$returnarr[content][menu_func]='<div style="float:left"><a id="artl_add" href="javascript:void(0)">新增</a>&nbsp;|&nbsp;<a id="artl_out" href="'.MDL_DIR.'article_output.mdl.php">导出</a></div><div style="float:right;padding-right:200px"><select id="search_bar"><option value="name">标题</option><option value="author">作者</option><option value="user_id">上传者</option></select><input id="search_word" type="text"><button id="word_search" name="art">搜索</button><button id="word_reset" name="art">重置</button></div>';
 $returnarr[content][tips_nav]='<div style="float:left"><b>当前位置:<i>文档管理-&gt;文章管理</i></b></div>';
 $returnarr[content][content]='<table id="content_table" name="8"><tbody><tr><th>序号</th><th>标题</th><th>作者</th><th>日期</th><th>状态</th><th>上传者</th></tr>';
 

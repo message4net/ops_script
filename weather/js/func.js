@@ -24,23 +24,6 @@ $.extend({
 				$.ajx('mdl/article_status_update.mdl.php',dt);
 			})
 			
-			/*
-			$('#content').on('click','button[id="artl_pic_save"]',function(){
-				dt='name='+$(this).attr('name');
-				//alert(dt);
-				/*
-				$.ajx("mdl/pic_save.mdl.php",dt);
-				
-			*/
-			/*
-			 * 
-				$.ajax({
-					type:"POST",
-					url:"mdl/pic_save.mdl.php?"+dt,
-				});
-				
-			})
-			*/
 			
 			$('#content').on('click','a[id^="artid"]',function(){
 				tmpid=$(this).attr('id').substring(5);
