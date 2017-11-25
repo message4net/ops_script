@@ -47,7 +47,7 @@ $addtime=date("Y-m-d H:i:s");
 $sql_article_ins='insert into article (name,author,addtime,user_id,content) values (\''.$title.'\',\''.$_POST[author].'\',\''.$addtime.'\','.$_SESSION[loginuserid].',\''.$arttxt.'\');';
 $db_article_save->insert($sql_article_ins);
 
- $returnarr[0][0]='';
+ //$returnarr[0][0]='';
 if ($picarr){
 	$sql_article_qr='select id from article where name=\''.$title.'\' and author=\''.$_POST[author].'\' and user_id='.$_SESSION[loginuserid].' and addtime=\''.$addtime.'\';';
 	$result_article_id=$db_article_save->select($sql_article_qr);
@@ -55,14 +55,19 @@ if ($picarr){
 	if ($result_article_id){
 		foreach ($picarr as $val){
 			$sql_article_up='update pic_art set art_id='.$result_article_id[0][id].' where name=\''.$val.'\';';
-			//$db_article_save->update($sql_article_up);
-			$returnarr[0][0].=$sql_article_up;
+			$db_article_save->update($sql_article_up);
+			//$returnarr[0][0].=$result_article_id[0][id].'picid';
 			
 			//$returnarr[0][0].=$val.'###';
 		}
-
 	}
+	$tips=count($picarr).'图片';
+}else{
+	//$returnarr[0][0]='nopic';
+	$tips='无图片';
 }
+
+$returnarr[content][tips]=$tips.'新闻提交成功!';
 
 
 

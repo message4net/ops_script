@@ -1,13 +1,82 @@
 $.extend({
 	firstinit:function(){
 		$(document).ready(function(){
-			//var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=menu&id=\'+$(this).attr(\'id\')'},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
-			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
-			//,{'eid':'menu_sub','txt':'a','url':'mdl/main.mdl.php','data':'\'func=menu&id=\'+$(this).attr(\'id\')'}
+			//var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''},{'eid':'page_bar','txt':'a','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(this).attr(\'id\')+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'},{'eid':'page_bar','txt':'button','url':'mdl/main.mdl.php','data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}]};
+			var datajson={'paras':[{'eid':'form_login','txt':'button','url':$('#form_login').attr('action'),'data':'\'username=\'+$(\'#username\').val()+\'&userpassword=\'+$(\'#userpassword\').val()'},{'eid':'menu_nav','txt':'a','url':'mdl/menu_sub.mdl.php','data':'\'id=\'+$(this).attr(\'id\')'},{'eid':'info','txt':'a','url':'mdl/logout.mdl.php','data':''}]};
+			//'data':'\'func=page&page=\'+$(\'#pageinput\').val()+\'&searchcol=\'+$(\'#search_bar\').val()+\'&searchword=\'+$(\'#search_word\').val()'}
+			
+			$('#content').on('click','#passwd_change',function(){
+				dt='op='+$('#op').val()+'&np='+$('#np').val()+'&rp='+$('#rp').val();
+				//alert(dt);
+				$.ajx('mdl/passwd_change.mdl.php',dt);
+			})
+			
+			$('#content').on('click','button[id=artl_save_stat]',function(){
+				//alert('11111');
+				dt='func=updt&recid='+$(this).attr('name')+'&statid='+$('#artl_stat').find('option:selected').attr('value');
+				//alert(dt);
+				$.ajx('mdl/article_status_update.mdl.php',dt);
+			})
+			
+			$('#content').on('click','button[id=artl_del]',function(){
+				dt='func=del&recid='+$(this).attr('name');
+				//alert(dt);
+				$.ajx('mdl/article_status_update.mdl.php',dt);
+			})
+			
+			/*
+			$('#content').on('click','button[id="artl_pic_save"]',function(){
+				dt='name='+$(this).attr('name');
+				//alert(dt);
+				/*
+				$.ajx("mdl/pic_save.mdl.php",dt);
+				
+			*/
+			/*
+			 * 
+				$.ajax({
+					type:"POST",
+					url:"mdl/pic_save.mdl.php?"+dt,
+				});
+				
+			})
+			*/
+			
+			$('#content').on('click','a[id^="artid"]',function(){
+				tmpid=$(this).attr('id').substring(5);
+				dt='recid='+tmpid;
+				$.ajx('mdl/article_view.mdl.php',dt);
+			})
+			
+			$('#page_bar').on('click','a',function(){
+				dt='func=page&page='+$(this).attr('id')+'&searchcol='+$('#search_bar').val()+'&searchword='+$('#search_word').val();
+				if($(this).attr('name')=='art'){
+					url='mdl/article_index.mdl.php';
+				}else{
+					url='mdl/main.mdl.php';
+				}
+				$.ajx(url,dt);
+			})
+			$('#page_bar').on('click','button',function(){
+				dt='func=page&page='+$('#pageinput').val()+'&searchcol='+$('#search_bar').val()+'&searchword='+$('#search_word').val();
+				if($(this).attr('name')=='art'){
+					url='mdl/article_index.mdl.php';
+				}else{
+					url='mdl/main.mdl.php';
+				}
+				$.ajx(url,dt);
+			})
 			
 			$('#menu_sub').on('click','a',function(){
 				if($(this).attr('id')==8){
-					$.ajx('mdl/article_index.mdl.php','');
+					//alert('1');
+					dt='func=menu&id='+$(this).attr('id');
+					//alert('2');
+					$.ajx('mdl/article_index.mdl.php',dt);
+					//alert('3');
+				}else if($(this).attr('id')==7){
+					dt='func=menu&id='+$(this).attr('id');
+					$.ajx('mdl/passwd_view.mdl.php',dt);
 				}else{
 					dt='func=menu&id='+$(this).attr('id');
 					$.ajx('mdl/main.mdl.php',dt);
@@ -122,17 +191,31 @@ $.extend({
 			})
 			
 			$('#menu_func').on('click','#word_search',function(){
+				//alert('11111');
 				if($('#search_word').val()!=''){
 					//str_tmp='searchword='+$('#search_bar').val()+' like \'%'+$('#search_word').val()+'%\' ';
 					str_tmp='func=search&searchword='+$('#search_word').val()+'&searchcol='+$('#search_bar').val();
-//				}else if($('#search_word').attr('value')!=''){
-//					str_tmp=$('#search_word').attr('value');
 				}
-				$.ajx('mdl/main.mdl.php',str_tmp);
+//				else if($('#search_word').attr('value')!=''){
+//					str_tmp='func=search&searchword='+$('#search_word').val()+'&searchcol='+$('#search_bar').val();
+//				}
+				//alert('bbbbb');
+				if($('#word_search').attr('name')!='art'){
+					//alert('U_SERACH');
+					$.ajx('mdl/main.mdl.php',str_tmp);
+				}else{
+					//alert('aaaa');
+					$.ajx('mdl/article_index.mdl.php',str_tmp);
+				}
 			})	
 			
 			$('#menu_func').on('click','#word_reset',function(){
-				$.ajx('mdl/main.mdl.php','func=reset');
+				if($(this).attr('name')=='art'){
+					$.ajx('mdl/article_index.mdl.php','func=reset');
+				}else{
+					$.ajx('mdl/main.mdl.php','func=reset');
+				}
+				
 			})	
 			
 			$('#content').on('click','input[name="contentall"]',function(){
@@ -152,7 +235,7 @@ $.extend({
 			})	
 			
 			$('#menu_func').on('click','#artl_add',function(){
-				$.ajx('mdl/article_view.mdl.php','');
+				$.ajx('mdl/article_add.mdl.php','');
 				//alert('11111111');
 			})	
 						

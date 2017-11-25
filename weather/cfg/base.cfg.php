@@ -34,8 +34,8 @@
 	define(PIC_POSTFIX, 'jpeg');
 	
 	define(FLAG_LOG_INFO,'0');
-	define(FLAG_LOG_WARN,'1');
-	define(FLAG_LOG_ERR,'1');
+	define(FLAG_LOG_WARN,'0');
+	define(FLAG_LOG_ERR,'0');
 	define(LEVEL_LOG_INFO,'INFO:');
 	define(LEVEL_LOG_WARN,'WARN:');
 	define(LEVEL_LOG_ERR,'ERR :');
@@ -62,6 +62,8 @@
 	define(MDL_HEAD,'head.mdl.php');
 	//web.mdl.php 引用
 	define(MDL_FOOT,'foot.mdl.php');
+	//pic_save.mdl.php引用
+	define(MDL_PIC_SAVE,'pic_save.mdl.php');
 	//
 	define(PERPAGENO,'5');
 //加载变量配置

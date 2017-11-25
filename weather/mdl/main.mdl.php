@@ -17,6 +17,9 @@ $navtailname='';
 $namestrtips='';
 
 if ($_POST[id]!='') {
+	if ($_POST[id]<>$_SESSION[menu_sub_id]){
+		$_SESSION[searchword]='';
+	}
 	$_SESSION[menu_sub_id]=$_POST[id];
 }
 if ($_POST[page]!='') {
