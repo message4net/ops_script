@@ -19,8 +19,17 @@ switch ($_POST[func]){
 		;;
 	case del:
 		$sql_del='delete from article where id='.$_POST[recid];
+		$sql_pic_arr='select * from pic_art where art_id='.$_POST[recid];
+		$result_pic_arr=$db_stat_u->select($sql_pic_arr);
+		if ($result_pic_arr){
+			foreach ($result_pic_arr as $val){
+				unlink(BASE_DIR.PIC_DIR.$val[name]);
+			}
+		}		
+		$sql_del1='delete from pic_art where art_id='.$_POST[recid];
 		$db_stat_u->delete($sql_del);
-		//$returnarr[0][0]=$sql_del.'#za#REC_STAT_SAVE';
+		$db_stat_u->delete($sql_del1);
+		//$returnarr[0][0]=BASE_DIR.PIC_DIR.$val[name].'#az#REC_STAT_SAVE';
 		$returnarr[content][tips]='<div style="float:left">新闻删除成功!</div>';
 		require_once BASE_DIR.MDL_DIR.MDL_RETURN;
 		break;

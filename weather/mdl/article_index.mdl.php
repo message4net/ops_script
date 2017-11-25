@@ -54,6 +54,30 @@ $z.='F';
 		$sql_part_search=' '.$_SESSION[searchcol].' like \'%'.$_SESSION[searchword].'%\' ';
 	}
 }
+if ($_SESSION[searchword]!=''){
+	if ($_SESSION[searchcol]=='user_id'){
+		$sql_search_user_arr='select id from user where name like \'%'.$_SESSION[searchword].'%\'';
+		$result_search_user_arr=$db_article_index->select($sql_search_user_arr);
+		if ($result_search_user_arr){
+			//foreach ($result_search_user_arr as $val)
+				//$z.='T';
+			$sql_search_user_str='';
+			foreach ($result_search_user_arr as $val){
+				$sql_search_user_str.=$val[id].',';
+				//$z.=$val[id].',';
+			}
+			$sql_search_user_str=substr($sql_search_user_str,0,strlen($sql_search_user_str)-1);
+			if ($sql_search_user_str==''){
+				$sql_search_user_str='-1';
+			}
+		}else{
+			$z.='F';
+		}
+		$sql_part_search=' '.$_SESSION[searchcol].' in ('.$sql_search_user_str.') ';
+	}else{
+		$sql_part_search=' '.$_SESSION[searchcol].' like \'%'.$_SESSION[searchword].'%\' ';
+	}
+}
 if ($_POST[func]=='reset'){
 	$_SESSION[searchword]='';
 	$_SESSION[page]='';
