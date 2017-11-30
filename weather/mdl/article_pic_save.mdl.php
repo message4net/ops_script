@@ -63,6 +63,7 @@ $returnarr[apd][content][pic_show].='</div>';
 $pic_str=substr($pic_str,0,strlen($pic_str)-1);
 if ($pic_str!=''){
 	$returnarr[apd][content][pic_show].='<br/><div id="pic_str" style="display:none">'.$pic_str.'</div>';
+	$returnarr[content][tips]='<div style="float:left">图片上传成功!共'.count($_FILES[pic][name]).'张</div>';
 }
 
 

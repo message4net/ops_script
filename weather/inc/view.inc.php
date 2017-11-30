@@ -149,18 +149,7 @@ private $rec_init_arr=array();
 					}
 				}
 			}
-//if (true){
-	//$z='';
-	//$z.=$key.'#K#'.$val.'#V#<br/>';
-	//if($tmp_body_arr){
-	//	foreach ($arr_1s as $k=>$v){
-	//		$z.=$k.'#K#'.$v.'#V#<br/>';
-	//		foreach ($v as $k1=>$v1){
-	//			$z.=$k1.'#K#'.$v1.'#V#<br/>';
-	//		}
-	//	}
-	//}
-//}
+
 			if ($rec_body_1m_result) {
 				foreach ($rec_body_1m_result as $val1){
 					$rec_head_html.='<th>'.$val1[name].'</th>';
@@ -193,6 +182,7 @@ private $rec_init_arr=array();
 
 			$rec_body_html='';
 
+			//if($rec_body_column_result && $this->menu_sub_id<>8){
 			if($rec_body_column_result){
 				$count=1;
 				foreach ($rec_body_column_result as $key=>$val) {
@@ -214,7 +204,7 @@ private $rec_init_arr=array();
 							$rec_body_html.='<td>'.$val1.'</td>';
 						}
 					}
-
+		
 				
 					//处理1m
 					$rec_body_1m_html_str='';
@@ -231,36 +221,35 @@ private $rec_init_arr=array();
 						$rec_body_1m_html.='<td style="font-size:10px;word-break:break-all">'.$rec_body_1m_html_str.'</td>';
 					}
 				
-				//处理1s
-//if (true){
-	//$z='';
-	//$z.=$key.'#K#'.$val.'#V#<br/>';
-	//if($tmp_body_arr){
-	//	foreach ($tmp_body_arr as $k=>$v){
-	//		$z.=$k.'#K#'.$v.'#V#<br/>';
-	//		foreach ($v as $k1=>$v1){
-	//			$z.=$k1.'#K#'.$v1.'#V#<br/>';
-	//		}
-	//	}
-	//}
-//}
+					//处理1s
 					$rec_body_1s_html='';
 					if($arr_1s){
 						foreach ($arr_1s as $valb){
 							$rec_body_1s_html.='<td style="font-size:10px;word-break:break-all">'.$valb[$tmp_body_arr[$valb[-1]]].'</td>';
 						}							
 					}
-	
+			
 					$rec_body_html.=$rec_body_1s_html.$rec_body_1m_html.'</tr>';
 					$count++;
+				}
 			}
-		}
 			$rec_body_html.='</tr></table>';
 			$rec_html=$rec_head_html.$rec_body_html;
 		}else{
 			$rec_html='<div style="float:left">制作中，请联系管理员</div>';
 		}
-
+//if (true){
+//$z='';
+//$z.=$key.'#K#'.$val.'#V#<br/>';
+//if($tmp_body_arr){
+//	foreach ($arr_1s as $k=>$v){
+//		$z.=$k.'#K#'.$v.'#V#<br/>';
+//		foreach ($v as $k1=>$v1){
+//			$z.=$k1.'#K#'.$v1.'#V#<br/>';
+//		}
+//	}
+//}
+//}
 		return $rec_html;
 		//return $z;
 		//return $rec_body_1s_sql;
