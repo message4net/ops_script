@@ -12,11 +12,17 @@
 5.默认user_role表中id=1的记录含所有menu中parent_id<>0的记录
 6.默认role,user两表中都有id=1的记录
 
-
+https://www.cnblogs.com/itshark/p/5849750.html
+https://unmi.cc/apache2-htaccess-redirect-alias/
 h5
 http://bbs.zzfriend.com/forum-65-4.html
 css模版
 http://www.cssmoban.com/tags.asp?page=6&n=html5
+comper php frame
+https://lvwenhan.com/php/405.html
+https://lvwenhan.com/php/410.html
+composer
+http://docs.phpcomposer.com/00-intro.html
 
 php 动态网站实现
 http://blog.csdn.net/poiu_poiu/article/details/1209578
