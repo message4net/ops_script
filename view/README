@@ -12,6 +12,9 @@
 5.默认user_role表中id=1的记录含所有menu中parent_id<>0的记录
 6.默认role,user两表中都有id=1的记录
 
+php pdo
+https://www.cnblogs.com/siqi/p/3774871.html
+
 https://www.cnblogs.com/itshark/p/5849750.html
 https://unmi.cc/apache2-htaccess-redirect-alias/
 h5
