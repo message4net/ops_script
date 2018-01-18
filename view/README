@@ -12,6 +12,13 @@
 5.默认user_role表中id=1的记录含所有menu中parent_id<>0的记录
 6.默认role,user两表中都有id=1的记录
 
+微信小游戏
+https://mp.weixin.qq.com/debug/wxagame/dev/document/system/life-cycle/wx.onHide.html?t=2018115
+http://developer.egret.com/cn/github/egret-docs/Engine2D/minigame/introduction/index.html
+http://gad.qq.com/wenda/detail/11099
+http://gad.qq.com/wenda/detail/11107
+
+
 php pdo
 https://www.cnblogs.com/siqi/p/3774871.html
 
